@@ -38,3 +38,11 @@ Seven unit tests cover pinned preflight, zero, pending, paused, unavailable, mis
 accounts, precision and validation. Browser QA verified live ru.near and empty
  treasury.linear-protocol.near results, withdrawal dialog, official destination,
 and desktop/mobile layout. Mainnet balances change; no values are hardcoded.
+
+## Public leaderboard
+
+The Waiting room lists the ten largest matured LiNEAR balances from the verified
+9 November 2026 snapshot at block 223800610. It includes the largest account and
+discloses its concentration. This snapshot is not automatically refreshed and
+is not labelled lost or abandoned money. Clicking an account performs a live
+scan and withdrawal preflight. Sources are public on-chain account state.

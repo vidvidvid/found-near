@@ -13,7 +13,7 @@ function render(state,result){
  content.append(element('p',result.account+(example?' · public example':''),'account-name'));
  if(state==='empty'){content.append(element('h2','All clear in this pocket.'),element('p','No NEAR waiting in LiNEAR. Other protocols haven’t been checked.'));}
  else {
-  const amount=element('h2',formatNear(result.amount,4)+' ','amount');amount.title=exactNear(result.amount)+' NEAR';amount.append(nearIcon(),element('small','NEAR'));content.append(amount);
+  const amount=element('h2',formatNear(result.amount,4)+' ','amount');if(formatNear(result.amount,4).length>10)amount.classList.add('amount-long');amount.title=exactNear(result.amount)+' NEAR';amount.append(nearIcon(),element('small','NEAR'));content.append(amount);
   content.append(element('p',state==='found'?'Unstaked. Available. Still yours.':state==='pending'?'Your NEAR is still unlocking in LiNEAR. Check again after the waiting period.':'Your balance is there, but availability couldn’t be confirmed. Recheck before withdrawing.','result-caption'));
   if(state==='found') {const button=element('button',example?'See how the owner can withdraw':'Bring it home','withdraw-button');button.append(linkIcon());button.type='button';button.addEventListener('click',()=>{ $('withdraw-account').textContent=result.account;$('copy-account').textContent='Copy';$('withdraw-dialog').showModal();});content.append(button);}
   else if(state==='unavailable'){const button=element('button','Check availability again ↻','withdraw-button');button.type='button';button.onclick=()=>scan(result.account,example);content.append(button);}
