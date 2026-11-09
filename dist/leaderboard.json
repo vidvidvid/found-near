@@ -1,0 +1,67 @@
+{
+  "block": 223800610,
+  "asOf": "2026-11-09",
+  "scope": "LiNEAR only; matured balances, not proven abandoned funds",
+  "accounts": [
+    {
+      "account_id": "bb273c1b4fe46a54743de83f92513d644e57423d2fee2ad4549cd4b40737f3d3",
+      "unstaked_balance": "1072024639765801159522222585738",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "467dfd532548755b040be80a29e5f1c01e9735d6ef9c0b9be50a33a24b86ff44",
+      "unstaked_balance": "4870343600000000000000000003",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "meomeo.near",
+      "unstaked_balance": "1834206281580056700586848575",
+      "staked_balance": "5917872875450076943",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "611f9c6d0b42a1126ad1f0a6f3966afc6c602aa57cd1d51967e0f0b3a63a06e0",
+      "unstaked_balance": "509723400000000000000000002",
+      "staked_balance": "25262131610109561632",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "ru.near",
+      "unstaked_balance": "500307262171597331335415343",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "pahol.near",
+      "unstaked_balance": "500232340755013116960624527",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "19d482683dfbe5a3faf343ef96e895d2f8e1813e66f8cec7f30afa3987001493",
+      "unstaked_balance": "486517049537667964507777204",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "ekongmusk.near",
+      "unstaked_balance": "402923247120086510676000007",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "within4d45.near",
+      "unstaked_balance": "401497286241847209517214832",
+      "staked_balance": "21661164588985585058073",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "a_liutiev.near",
+      "unstaked_balance": "303743293479354268451001667",
+      "staked_balance": "0",
+      "can_withdraw": true
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+{"name":"found-near","private":true,"type":"module","scripts":{"dev":"python3 -m http.server 8084 --bind 127.0.0.1 --directory dist","test":"node --test tests/*.test.js"}}
