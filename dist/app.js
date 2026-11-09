@@ -36,16 +36,27 @@ $('withdraw-dialog').addEventListener('click',e=>{if(e.target===$('withdraw-dial
 $('copy-account').onclick=async()=>{try{await navigator.clipboard.writeText(current.account);$('copy-account').textContent='Copied ✓';}catch{$('copy-account').textContent='Select to copy';}};
 $('recheck').onclick=()=>{$('withdraw-dialog').close();if(current)scan(current.account,example);};
 
-let leaderboardExpanded=false;
+const PAGE_SIZE=10;
+let leaderboardPage=0;
 async function loadLeaderboard(){
  try{const response=await fetch('./leaderboard.json');if(!response.ok)throw Error();const data=await response.json();
- const renderRows=()=>{const body=$('leaderboard');body.replaceChildren();data.accounts.slice(0,leaderboardExpanded?10:5).forEach((a,i)=>{
- const row=element('tr',''),rank=element('td',String(i+1).padStart(2,'0'),'rank'),name=element('td','');
+ const pageCount=Math.ceil(data.accounts.length/PAGE_SIZE);
+ const renderRows=()=>{const body=$('leaderboard');body.replaceChildren();const start=leaderboardPage*PAGE_SIZE;
+ data.accounts.slice(start,start+PAGE_SIZE).forEach((a,i)=>{
+ const row=element('tr',''),rank=element('td',String(start+i+1).padStart(2,'0'),'rank'),name=element('td','');
  const short=a.account_id.length>32?a.account_id.slice(0,10)+'…'+a.account_id.slice(-8):a.account_id;
  const button=element('button',short,'account-link');button.title=a.account_id;button.setAttribute('aria-label','Check '+a.account_id+' live');button.onclick=()=>{scan(a.account_id,true);document.querySelector('.hero').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});};
- name.append(button);const amount=element('td',formatNear(a.unstaked_balance,2),'align-right');amount.title=exactNear(a.unstaked_balance)+' NEAR';row.append(rank,name,amount);body.append(row);
- });$('more-accounts').textContent=leaderboardExpanded?'Show fewer accounts':'Show all 10 accounts';};
- $('more-accounts').onclick=()=>{leaderboardExpanded=!leaderboardExpanded;renderRows();};renderRows();
- }catch{$('leaderboard').replaceChildren();$('more-accounts').hidden=true;const row=element('tr',''),cell=element('td','The snapshot couldn’t load. The live account checker above still works.');cell.colSpan=3;row.append(cell);$('leaderboard').append(row);}
+ name.append(button);const amount=element('td',formatNear(a.unstaked_balance,4),'align-right');amount.title=exactNear(a.unstaked_balance)+' NEAR';row.append(rank,name,amount);body.append(row);
+ });
+ $('page-range').textContent=`${start+1}–${Math.min(start+PAGE_SIZE,data.accounts.length)} of ${data.accounts.length} accounts`;
+ $('previous-page').disabled=leaderboardPage===0;$('next-page').disabled=leaderboardPage===pageCount-1;
+ $('page-numbers').replaceChildren();
+ const pages=[...new Set([0,leaderboardPage-1,leaderboardPage,leaderboardPage+1,pageCount-1])].filter(p=>p>=0&&p<pageCount).sort((a,b)=>a-b);
+ pages.forEach((page,i)=>{if(i&&page-pages[i-1]>1)$('page-numbers').append(element('span','…','page-ellipsis'));
+ const button=element('button',String(page+1),'page-number');button.type='button';button.setAttribute('aria-label',`Page ${page+1}`);if(page===leaderboardPage)button.setAttribute('aria-current','page');button.onclick=()=>{leaderboardPage=page;renderRows();};$('page-numbers').append(button);});
+ };
+ $('previous-page').onclick=()=>{if(leaderboardPage>0){leaderboardPage--;renderRows();}};
+ $('next-page').onclick=()=>{if(leaderboardPage<pageCount-1){leaderboardPage++;renderRows();}};renderRows();
+ }catch{$('leaderboard').replaceChildren();$('pagination').hidden=true;const row=element('tr',''),cell=element('td','The snapshot couldn’t load. The live account checker above still works.');cell.colSpan=3;row.append(cell);$('leaderboard').append(row);}
 }
 loadLeaderboard();

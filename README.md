@@ -41,8 +41,14 @@ and desktop/mobile layout. Mainnet balances change; no values are hardcoded.
 
 ## Public leaderboard
 
-The Waiting room lists the ten largest matured LiNEAR balances from the verified
+The Waiting room lists all 538 matured LiNEAR balances above 0.01 NEAR, ordered by amount from the verified
 9 November 2026 snapshot at block 223800610. It includes the largest account and
 discloses its concentration. This snapshot is not automatically refreshed and
-is not labelled lost or abandoned money. Clicking an account performs a live
+is not labelled lost or abandoned money. It uses ten accounts per page, numbered navigation, and Previous/Next controls. Clicking an account performs a live
 scan and withdrawal preflight. Sources are public on-chain account state.
+
+## Visual direction
+
+Original generated pixel-art illustration in dist/found-night.png, integrated with
+a dark navy, violet and amber interface. Reduced-motion preferences disable
+ambient fireflies. Core financial checks and withdrawal routing are unchanged.
