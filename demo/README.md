@@ -14,7 +14,7 @@ Run `python3 demo/serve.py` and open http://127.0.0.1:8086/ to preview. The loca
 | 17–24 s | Use the official app. | Actual withdrawal instructions; owner approval required |
 | 24–30 s | One account. One check. | Real Meta Pool result; LiNEAR + Meta Pool coverage |
 | 30–37 s | 538 accounts. NEAR waiting. | Dated LiNEAR waiting-room snapshot |
-| 37–44 s | Find the NEAR you left behind. | Night shop and public demo URL |
+| 37–44 s | Find the NEAR you left behind. | Night shop, public demo URL, and NEAR mark with “Built on NEAR” |
 
 Visual direction: original dark navy/violet/amber scene, DM Sans, restrained crossfades, tiny drifting lights. The lantern and wallet advance together: a small search sweep, a discovery hop, then a walk toward the official-app handoff. Positions persist through the middle scenes; there are no speech bubbles, confetti, fake balance counters, or recovery claims.
 
@@ -70,3 +70,5 @@ On the landing page, character motion follows the real scan state: search while 
 The export renders text and graphics natively at 1080p. All five UI shots were recaptured from the live site using `capture-frame.html` (600×1080 CSS viewport, 2× browser rendering) and cropped to measured element bounds. This gives readable type without enlarging the old compressed desktop shots. The leaderboard excerpt includes its complete heading and first three complete rows, rather than shrinking the whole desktop table. Original captures remain archived.
 
 The renderer adds no stroke or frame around UI shots. Rounded masks follow the existing component corners. Input and leaderboard crops have breathing room and soft edge masks; the input's focus halo is absent and its tap cue is centered on the button. Each of the seven scenes was visually checked for clipping, overlap, duplicate borders, and readable labels.
+
+The closing frame uses the same NEAR mark as the app (`dist/near.svg`), rasterized in the existing cream foreground color as `assets/near-mark.png`. The mark’s geometry is unchanged.

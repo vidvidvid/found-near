@@ -39,6 +39,7 @@ def lines(im,x,y,ss,n=54,step=64,color=INK):
 def ease(v):v=max(0,min(1,v));return v*v*(3-2*v)
 plate=Image.open(A/'night-plate.png').convert('RGB').resize((W,1280),Image.Resampling.LANCZOS).crop((0,98,W,1178))
 dim=Image.blend(Image.new('RGB',(W,H),BG),plate,.20)
+near_mark=Image.open(A/'near-mark.png').convert('RGBA').resize((px(24),px(24)),Image.Resampling.LANCZOS)
 atlas=Image.open(A/'characters.png').convert('RGBA');cw,ch=atlas.width//2,atlas.height//2
 sprites={}
 for row in range(2):
@@ -164,7 +165,8 @@ def scene(i,t):
   characters(im,t,i)
   text(im,(65,578),'Try FOUND',24,INK,600)
   text(im,(65,617),'found-production-e549.up.railway.app',21,GOLD)
-  footer(im,'Built at NEAR HACKATHON')
+  im.paste(near_mark,(px(65),px(672)),near_mark)
+  text(im,(101,672),'Built on NEAR',18,INK,500)
  return im
 DUR=[5,5,7,7,6,7,7];TOTAL=sum(DUR);START=[];v=0
 for d in DUR:START.append(v);v+=d
