@@ -284,3 +284,5 @@ dialog{background:linear-gradient(145deg,#261c2e,#18111f);border-color:#745343;c
 .waiting-summary #leaderboard-count{font-size:24px;line-height:1.2}
 
 .waiting-summary{display:flex;flex-wrap:wrap;align-items:flex-end;gap:24px}.waiting-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:30px;width:min(100%,430px)}.waiting-stat{display:flex;flex-direction:column;align-items:flex-start;gap:5px}.waiting-stat strong{font-size:24px;line-height:1.2;color:#e9ca90;font-variant-numeric:tabular-nums}.waiting-stat>span{font-size:11px}.waiting-stat .stat-value{display:inline-flex;align-items:center;gap:7px}.waiting-stat .stat-value .near-icon{width:17px;height:17px}.waiting-stat small{font-size:10px;line-height:1.4;color:#a99ab3}.waiting-stat #leaderboard-count-label{line-height:1.4}
+
+.waiting-stats{grid-template-columns:repeat(4,minmax(0,1fr));width:100%;gap:24px}.waiting-summary{margin-bottom:22px}@media(max-width:720px){.waiting-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 20px}}

@@ -267,7 +267,8 @@ async function loadLeaderboard(){
   const listedTotal=data.accounts.reduce((sum,a)=>sum+BigInt(a.unstaked_balance),0n);
   if(data.totalListedYocto!==listedTotal.toString())throw Error('Snapshot total mismatch');
   $('leaderboard-total').textContent=compactNear(listedTotal);$('leaderboard-total').title=exactNear(listedTotal)+' NEAR';
-  $('leaderboard-scope').textContent=`3 protocols + ${data.counts.validatorPools} validator pools · each account counted once`;
+  $('leaderboard-protocols').textContent=data.counts.protocols.toLocaleString('en-US');
+  $('leaderboard-pools').textContent=data.counts.validatorPools.toLocaleString('en-US');
   $('snapshot-date').textContent=date+' · snapshot';
   $('leaderboard-caption').textContent=`Matured NEAR withdrawal balances across supported staking sources, ${date} snapshot`;
   $('snapshot-note').textContent='At least one matured balance above 0.01 NEAR per account. This isn’t a lost-money list; owners may be waiting intentionally. Click an account to check what is available now.';
