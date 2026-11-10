@@ -1,5 +1,6 @@
+import {createWalletUi} from './wallet-ui.js';
 import {scanProtocols,normalizeAccount,validAccount,formatNear,exactNear,PROTOCOLS} from './rpc.js';
-const $=id=>document.getElementById(id);let request=null,current=null,example=false;
+const $=id=>document.getElementById(id);let request=null,current=null,example=false,walletUi;
 function journey(state){$('discovery').dataset.journey=state;}
 function resultJourney(result){
  if(result.results.some(item=>item.state==='found'))return 'found';
@@ -14,11 +15,11 @@ function openWithdrawal(result){
  const protocol=PROTOCOLS[result.protocol];
  $('withdraw-account').textContent=result.account;
  $('copy-account').textContent='Copy';
- $('withdraw-description').textContent=`Withdraw through ${protocol.name}’s official app. FOUND never handles your money.`;
- const steps=result.protocol==='linear'?['Connect the wallet that controls this account.','In My Account, find your available NEAR and choose Withdraw.','Review and approve in your wallet.']:['Connect the wallet that controls this account.','Select NEAR and find your completed delayed unstake on the Dashboard.','Choose Withdraw, then review and approve in your wallet.'];
+ $('withdraw-description').textContent=`Withdraw from ${protocol.name} here on FOUND. The protocol sends NEAR straight to your wallet.`;
+ const steps=['Connect the wallet that controls this account.','Choose Withdraw NEAR on the result card.','Approve in your wallet. FOUND checks the receipt and refreshes your balance.'];
  $('withdraw-steps').replaceChildren(...steps.map(step=>element('li',step)));
  $('withdraw-link').href=protocol.appUrl;
- $('withdraw-link').replaceChildren(`Open ${protocol.name} to withdraw`,linkIcon());
+ $('withdraw-link').replaceChildren(`Use the official ${protocol.name} app instead`,linkIcon());
  $('withdraw-domain').textContent=protocol.appHost+' · Network fees may apply';
  journey('guide');
  $('withdraw-dialog').showModal();
@@ -33,6 +34,18 @@ function amountElement(amount){
  heading.append(unit);
  return heading;
 }
+function welcomePanel(){
+ const panel=element('div','','pocket-welcome'),art=element('div','','welcome-art');
+ art.setAttribute('aria-hidden','true');
+ const wallet=element('span','','welcome-wallet'),sprite=element('span','','friend-sprite wallet-sprite');wallet.append(sprite);
+ const coin=element('span','','welcome-coin');coin.append(nearIcon());
+ art.append(wallet,coin,element('span','','welcome-spark spark-left'),element('span','','welcome-spark spark-right'));
+ const title=element('h2','See what’s waiting.');title.id='welcome-title';
+ const description=element('p','Find NEAR you unstaked but haven’t withdrawn.','welcome-description');
+ const button=element('button','Try a real account','welcome-example');button.type='button';button.onclick=()=>scan('ru.near',true);
+ panel.append(art,title,description,button,element('p','Checks LiNEAR + Meta Pool','welcome-coverage'));
+ return panel;
+}
 function protocolResult(result){
  const protocol=PROTOCOLS[result.protocol],section=element('section','','protocol-result');
  section.dataset.result=result.state;
@@ -43,8 +56,10 @@ function protocolResult(result){
  const known=result.amount!==undefined;
  section.append(known?amountElement(result.amount):element('div',result.state==='error'?'Unknown':'—','balance-placeholder'));
  if(result.state==='found'){
-  const button=element('button',`Withdraw with ${protocol.name}`,'withdraw-button');
-  button.append(linkIcon());button.type='button';button.onclick=()=>openWithdrawal(result);section.append(button);
+  const actions=element('div','','withdraw-actions'),link=element('button',walletUi.actionLabel(result),'withdraw-button');
+  link.type='button';link.disabled=walletUi.disabled();link.onclick=()=>walletUi.withdraw(result);
+  const help=element('button','Help','withdraw-help');help.type='button';help.setAttribute('aria-label',`How to withdraw from ${protocol.name}`);help.onclick=()=>openWithdrawal(result);
+  actions.append(link,help);section.append(actions);
  }else if(result.state==='unavailable'||result.state==='error'){
   const button=element('button','Check again','retry-button');button.type='button';button.onclick=()=>scan(result.account,example);section.append(button);
  }else{
@@ -58,6 +73,7 @@ function render(state,result){
  discovery.dataset.state=state;
  journey(state==='idle'?'idle':state==='loading'?'searching':state==='done'?resultJourney(result):'error');
  $('pocket').setAttribute('aria-busy',String(state==='loading'));
+ $('pocket').setAttribute('aria-labelledby',state==='idle'?'welcome-title':'pocket-title');
  const incomplete=state==='done'&&result.results.some(item=>item.state==='error'||item.state==='unavailable');
  $('status').textContent=incomplete?'Needs a recheck':{idle:'Mainnet',loading:'Checking…',done:'Checked',error:'Try again'}[state];
  $('status').classList.toggle('incomplete',incomplete);
@@ -68,7 +84,7 @@ function render(state,result){
  account.classList.toggle('check-error',state==='error');
  // Both services keep their place throughout a lookup, including partial failures.
  const rows=state==='done'?result.results:Object.keys(PROTOCOLS).map(protocol=>({protocol,state,account:result?.account||$('account').value}));
- content.replaceChildren(...rows.map(protocolResult));
+ content.replaceChildren(...(state==='idle'?[welcomePanel()]:rows.map(protocolResult)));
  proof.replaceChildren();
  if(state!=='done'){
   proof.textContent=state==='loading'?'Checking both services at the same block…':state==='error'?'Balances unknown. Nothing has moved.':'LiNEAR and Meta Pool only.';
@@ -122,5 +138,6 @@ async function loadLeaderboard(){
  $('next-page').onclick=()=>{if(leaderboardPage<pageCount-1){leaderboardPage++;renderRows();}};renderRows();
  }catch{$('leaderboard').replaceChildren();$('pagination').hidden=true;const row=element('tr',''),cell=element('td','The snapshot couldn’t load. The live account checker above still works.');cell.colSpan=3;row.append(cell);$('leaderboard').append(row);}
 }
+walletUi=createWalletUi({current:()=>current,isExample:()=>example,scan,refresh:()=>{if(current&&$('discovery').dataset.state==='done')render('done',current);},accept:result=>{current=result;render('done',result);}});
 render('idle');
 loadLeaderboard();

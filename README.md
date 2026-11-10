@@ -1,6 +1,6 @@
 # FOUND
 
-A small read-only finder for unfinished LiNEAR and Meta Pool withdrawals on NEAR mainnet.
+Find unfinished LiNEAR and Meta Pool withdrawals on NEAR mainnet, then withdraw directly with your own wallet.
 
 ## Live demo
 
@@ -12,7 +12,7 @@ The Open Innovation submission description, demo script, X post draft, and recov
 
 `npm run dev` serves `dist/` on http://127.0.0.1:8084.
 `npm test` verifies the financial-state and census logic using deterministic RPC fixtures.
-No dependencies or build step are required.
+The checked-in `dist/` runs directly. After changing the pinned wallet connector, run `npm ci` and `npm run build` to rebuild its local browser bundle.
 
 Independent verification findings are in [VERIFICATION.md](VERIFICATION.md).
 
@@ -27,8 +27,10 @@ Independent verification findings are in [VERIFICATION.md](VERIFICATION.md).
   including the contract’s possible dust sweep, at that block.
 - Identifies Meta Pool lockup accounts separately instead of sending them through a
   regular wallet withdrawal flow.
-- Routes owners to the official LiNEAR account page or Meta Pool dashboard for wallet
-  connection and withdrawal; includes account copy and a return/recheck action.
+- Connects through NEAR Connect without requesting an access key. Owners can withdraw directly from FOUND; official apps remain available in optional Help.
+- Rechecks ownership, readiness and the exact balance immediately before asking the wallet to approve. Both contracts receive `withdraw({amount})`, zero attached NEAR, and a 100 TGas limit.
+- Verifies the transaction on public RPC: matching signer, contract, method, amount, zero deposit, finalized status, and the complete successful receipt chain. A failed transfer receipt cannot display success.
+- Remembers pending requests through reloads and checks confirmation without submitting again. An uncertain wallet response remains uncertain; it never becomes a successful withdrawal just because the balance changed.
 - Treats RPC failures as unknown, never as zero. A failure in one protocol does not hide
   a successful result from the other. Zero and pending are shown separately.
 - The public example is a fresh read of ru.near, not a recorded or invented balance.
@@ -39,12 +41,12 @@ Only LiNEAR and Meta Pool are checked. No estimate of missing funds in other pro
 no claims that the owner forgot, and no account-age claim. All accounts and balances are public.
 The public leaderboard contains LiNEAR only and says so wherever it appears.
 A view preflight is a snapshot, not a guarantee a future transaction succeeds.
-FOUND never connects a wallet, holds funds, signs transactions, or charges a fee.
-Withdrawals happen in the official protocol apps or through the appropriate lockup contract;
-no real withdrawal was sent in QA.
+Scanning needs no wallet. Withdrawing requires the controlling wallet and its approval; FOUND does not hold keys, custody funds, request an access key, or charge a fee. Network gas is paid by the account. Lockup accounts still require their lockup contract.
+
+**No real owner-signed withdrawal was executed during QA.** Transaction construction, rejection cases and confirmation handling are covered by fixtures. Live wallet selection and mainnet balance reads are checked separately. See [verification/direct-withdrawals.md](verification/direct-withdrawals.md).
 
 The page sends the entered public account to two public RPC providers for resilience.
-It has no analytics, application backend, or account database. Typography loads from
+It has no analytics, application backend, or account database. Connecting loads the NEAR Connect wallet manifest and the selected wallet’s sandboxed integration. The browser remembers wallet selection and pending transaction metadata, not wallet keys. Typography loads from
 Google Fonts with local fallbacks. Amount calculations use BigInt, with exact values
 preserved and a truncated display (never rounded up).
 
@@ -74,4 +76,4 @@ Run `npm run census -- --block 223800610 --check` to independently regenerate an
 Original generated pixel-art scene, integrated with a dark navy, violet and amber
 interface. The clean background plate and small sprite strips animate the lantern
 spirit and wallet with a gentle float, blink and nod. Reduced-motion preferences
-disable all character motion and ambient fireflies. Financial checks remain read-only and use official protocol handoffs.
+disable all character motion and ambient fireflies. Balance checks remain read-only; withdrawals require an explicit wallet-approved contract call.

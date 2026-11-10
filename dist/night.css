@@ -143,3 +143,71 @@ dialog{background:linear-gradient(145deg,#261c2e,#18111f);border-color:#745343;c
 .discovery .status.incomplete{background:#49302d;color:#efc0a2}
 
 .pocket .amount.amount-huge small{font-size:10px}
+
+/* Welcome is an invitation, not an empty balance sheet. Its footprint stays fixed. */
+#pocket-content{min-height:302px}
+.discovery[data-state=idle] .pocket-top,.discovery[data-state=idle] .checked-account,.discovery[data-state=idle] #result-proof{visibility:hidden}
+.discovery[data-state=idle] .pocket{background:radial-gradient(ellipse at 50% 35%,#78522b24,transparent 68%),linear-gradient(145deg,#241b2bf5,#15121efc 70%)}
+.pocket-welcome{position:absolute;inset:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:15px}
+.welcome-art{position:relative;width:204px;height:137px;isolation:isolate}
+.welcome-art:before{content:'';position:absolute;inset:14px 8px -12px;background:radial-gradient(ellipse,#d7a65b38,transparent 65%);filter:blur(10px);z-index:-1}
+.welcome-wallet{position:absolute;left:17px;top:0;width:136px;height:136px;transform:rotate(-6deg);animation:welcome-sway 6s ease-in-out infinite}
+.welcome-coin{position:absolute;right:10px;top:34px;width:48px;height:48px;display:grid;place-items:center;border-radius:50%;background:linear-gradient(135deg,#ffe4a5,#dba75c);border:3px solid #e7bd74;box-shadow:0 3px 0 #916337,0 0 27px #f6bd5c22;animation:welcome-float 4.5s ease-in-out infinite}
+.welcome-coin .near-icon{width:23px;height:23px;filter:none;opacity:.85}
+.welcome-spark{position:absolute;width:5px;height:5px;background:#eed09a;box-shadow:0 0 12px #efbb7266;transform:rotate(45deg)}
+.spark-left{left:2px;top:43px}.spark-right{right:35px;top:10px;width:3px;height:3px;background:#c3aed8}
+.pocket-welcome h2{font-size:28px;line-height:1.15;letter-spacing:-.8px;font-weight:500;margin:0;color:#f3e8da}
+.pocket .welcome-description{max-width:245px;font-size:13px;line-height:1.65;color:#bcacC6}
+.welcome-example{border:1px solid #b892594d;background:linear-gradient(#ecc98f,#dcb579);color:#342419;border-radius:8px;padding:12px 24px;min-height:43px;font-size:12px;font-weight:600;box-shadow:0 1px 0 #fff3 inset;transition:filter .18s,box-shadow .18s}
+.welcome-example:hover{filter:brightness(1.07);box-shadow:0 0 18px #dba8551a}
+.pocket .welcome-coverage{font-size:10px;color:#ac97b8;letter-spacing:.02em}
+@keyframes welcome-sway{0%,100%{transform:rotate(-6deg) translateY(0)}50%{transform:rotate(-3deg) translateY(-3px)}}
+@keyframes welcome-float{0%,100%{transform:translateY(0) rotate(8deg)}50%{transform:translateY(-6px) rotate(-3deg)}}
+/* Hover changes light, never the button's background layer or geometry. */
+#scan-button,#scan-button:hover{background:linear-gradient(#f3cf90,#e5b976);box-shadow:0 1px 0 #fff4 inset;transition:filter .18s ease,transform .12s ease}
+#scan-button:hover:not(:disabled){filter:brightness(1.07)}
+#scan-button:disabled{background:linear-gradient(#ddc18f,#cfad76);filter:none}
+/* Wallet approval is primary; instructions are a separate, optional action. */
+.withdraw-actions{display:flex;align-items:stretch;gap:8px;margin-top:auto}
+.withdraw-actions .withdraw-button{display:flex;align-items:center;justify-content:center;flex:1;min-width:0;width:auto;margin:0;min-height:34px;padding:8px 10px;text-align:center}
+.withdraw-actions .withdraw-button,.withdraw-actions .withdraw-button:hover{background:linear-gradient(#f1cf92,#dfb572);box-shadow:0 1px 0 #fff3 inset;transition:filter .18s}
+.withdraw-actions .withdraw-button:hover{filter:brightness(1.07)}
+.withdraw-help{flex:none;border:1px solid #66506d;background:#2b2034;color:#cdb7d6;border-radius:7px;padding:8px 11px;font-size:10px;transition:background .18s,color .18s}
+.withdraw-help:hover{background:#3c2a46;color:#eee0f2}
+@media(max-width:1000px) and (min-width:621px){.withdraw-actions{gap:6px}.withdraw-actions .withdraw-button{font-size:10px;padding:8px}.withdraw-help{padding:8px}.withdraw-actions .icon-wrap{margin-left:4px}}
+@media(max-width:620px){.pocket-welcome{inset:19px;gap:14px}.pocket-welcome h2{font-size:26px}.pocket .welcome-description{font-size:12px}.withdraw-actions .withdraw-button{font-size:10px}.withdraw-help{padding:8px 10px}}
+@media(prefers-reduced-motion:reduce){.welcome-wallet,.welcome-coin{animation:none!important}}
+
+#pocket .withdraw-button:disabled{opacity:.65;cursor:wait;filter:none}
+#pocket .withdraw-button:focus-visible{outline-offset:3px}
+#wallet-connect{border:1px solid #80634770;border-radius:8px;background:#302236;color:#efcf99;min-height:38px;min-width:117px;max-width:170px;padding:9px 13px;font-size:11px;white-space:nowrap;transition:background .18s}
+#wallet-connect:hover{background:#463047}#wallet-connect:disabled{opacity:.7;cursor:wait}
+#wallet-connect[data-connected=true]{color:#d6dfbc;border-color:#83956b60}
+.header-right{gap:20px}
+.wallet-account-choice{display:block;width:100%;padding:13px;text-align:left;border:1px solid #70506c;background:#2d2035;color:#f2d39e;border-radius:8px;margin:9px 0;overflow-wrap:anywhere;font-size:13px}
+.wallet-notice{position:fixed;right:24px;bottom:24px;z-index:1000;width:min(410px,calc(100% - 32px));padding:21px 40px 20px 22px;background:#281d30f7;color:#f0e3df;border:1px solid #927046;border-radius:14px;box-shadow:0 10px 50px #0008;backdrop-filter:blur(14px)}
+.wallet-notice[hidden]{display:none}.wallet-notice p{font-size:13px;line-height:1.6;margin:0}
+#wallet-notice-close{position:absolute;right:9px;top:7px;font-size:22px;background:none;border:0;color:#bcabbf;padding:5px}
+.wallet-notice-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:11px}.wallet-notice-actions:has(> :not([hidden])){display:flex}
+.wallet-notice-actions a,.wallet-notice-actions button{font-size:11px;text-decoration:underline;text-underline-offset:3px;color:#e9c68c;background:none;border:0;padding:0}
+.wallet-notice-actions [hidden]{display:none}
+.hot-connector-popup .modal-content{background:#201728!important;border-color:#775343!important;box-shadow:0 15px 70px #0008}
+.hot-connector-popup .modal-container{backdrop-filter:blur(5px)}
+@media(max-width:620px){.header-right{gap:10px}#wallet-connect{min-width:105px;max-width:144px;font-size:10px;padding:8px 10px}.network{font-size:10px;gap:5px}.wallet-notice{right:16px;bottom:16px}}
+
+/* Keep navigation legible over the lantern and foliage. */
+.header-right{padding:9px 12px;background:#17101fed;border:1px solid #81644c55;border-radius:12px;backdrop-filter:blur(14px);box-shadow:0 4px 20px #0003}
+.header-right .network,.header-right>a{color:#f3e6e1}.header-right .near-icon{opacity:1}.header-right>a{border-color:#b8a0b0}
+@media(max-width:620px){.header-right{padding:7px 9px;gap:9px}}
+@media(max-width:360px){.header-right{padding:7px;gap:7px}#wallet-connect{min-width:98px;padding:8px}}
+
+/* Keep the original high-resolution scene and its sprite coordinates intact.
+   The generated layer supplies only scenery beyond its right and bottom edges. */
+.night-scene{mask-image:none}
+.scene-plate{position:absolute;left:0;top:0;width:100%;height:auto;max-width:none;mask-image:linear-gradient(to right,transparent,black 25%,black 96%,transparent),linear-gradient(to bottom,transparent,black 12%,black 85%,transparent);mask-composite:intersect}
+.scene-extension{position:absolute;left:0;top:-4.8%;width:178%;max-width:none;height:auto;filter:brightness(.72) saturate(.85);mask-image:linear-gradient(to right,transparent,black 18%),linear-gradient(to bottom,transparent,black 7%,black 72%,transparent),linear-gradient(to right,transparent 51%,black 56%),linear-gradient(to bottom,transparent 48%,black 58%);mask-composite:intersect,intersect,add}
+.lantern-friend{bottom:30.9%}.wallet-friend{bottom:30.5%}
+@media(max-width:620px){.art{width:calc(100% + 24px)}.night-scene{right:-36px}}
+@media(max-width:360px){.art{width:calc(100% + 18px)}.night-scene{right:-42px}}
+
+@media(max-width:360px){h1{font-size:40px}.brand{font-size:32px}.brand-o:after{top:19px;left:7px;width:4px;height:4px}}

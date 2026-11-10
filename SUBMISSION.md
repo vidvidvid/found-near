@@ -13,7 +13,7 @@
 
 Unstaked does not always mean withdrawn. NEAR can finish unlocking inside a staking protocol while still requiring a separate owner-signed withdrawal.
 
-FOUND finds those unfinished LiNEAR and Meta Pool withdrawals without requiring a wallet connection to scan. It reads both protocols at the same finalized block, applies protocol-specific maturity and liquidity checks, and guides the owner to the official withdrawal flow. FOUND never takes custody, requests a signature, or charges a fee.
+FOUND finds those unfinished LiNEAR and Meta Pool withdrawals without requiring a wallet connection to scan. It reads both protocols at the same finalized block, applies protocol-specific maturity and liquidity checks, and lets the owner request a withdrawal directly in FOUND. The connected wallet approves each transaction; the protocol sends funds to that account. FOUND never takes custody or charges a finder’s fee. Official protocol apps remain available as an alternative.
 
 Its public waiting room is reproducible evidence rather than a curated screenshot: one command reads all 47,882 LiNEAR accounts at block 223800610 and verifies the 538 matured balances above 0.01 NEAR. The snapshot does not label owners as forgetful or funds as abandoned.
 
@@ -48,7 +48,7 @@ Replace `[VIDEO_URL]` with the uploaded video or the post’s attached video bef
 ```text
 Unstaked doesn’t always mean withdrawn.
 
-FOUND finds matured LiNEAR + Meta Pool withdrawals—no wallet connection needed to scan. Its waiting room is reproducible from 47,882 onchain accounts. Withdraw through the official apps.
+FOUND finds matured LiNEAR + Meta Pool withdrawals—no wallet connection needed to scan. Its waiting room is reproducible from 47,882 onchain accounts. Connect your wallet and approve the withdrawal in FOUND.
 
 Built at NEAR HACKATHON.
 @NEARProtocol #NEARHackathon
@@ -63,7 +63,7 @@ Only complete this section after an actual owner successfully withdraws. Do not 
 
 - [ ] Obtain the owner’s permission to document the account, transaction, and quote. Never request a seed phrase or private key.
 - [ ] Record the protocol, account, amount, FOUND result, and block before withdrawal.
-- [ ] Let the owner connect their own wallet and withdraw through the official protocol flow.
+- [ ] Let the owner connect their own wallet and approve a withdrawal in FOUND or through the official protocol app.
 - [ ] Preserve the public transaction URL and confirmation status.
 - [ ] Recheck the account in FOUND and capture the updated result.
 - [ ] Add a short owner quote and identify what they found and withdrew.

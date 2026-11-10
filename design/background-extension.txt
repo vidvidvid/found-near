@@ -1,0 +1,20 @@
+FOUND background extension — 10 November 2026
+Mode: built-in image_gen editing, two passes. No CLI fallback.
+
+Final project assets:
+- dist/found-night-plate.webp: original 1536×1024 plate, preserved without modification.
+- dist/found-night-extended.webp: generated 1559×1009 outer scenery.
+
+The generator changed the original composition and reduced its effective detail. The final site therefore renders the original plate at its original scale on top, with its original sprite coordinates. CSS masks reveal the generated layer only at the outer right and lower edges. The extension is darkened in CSS; the original pixel data and lighting are untouched.
+
+Pass 1 — right extension, edit target: original plate
+Use case: precise-object-edit / background outpainting.
+Asset: an extended background plate for the existing FOUND website.
+Edit target: the attached 1536×1024 pixel-art scene. Extend ONLY its right edge by about 1024 pixels, producing a wide approximately 2560×1024 canvas. Keep the original image unchanged in the left 1536×1024 area: same scale, exact positions of the arch, lantern, counter, chest, purple drapery, foliage, and existing dark negative space. Do not reframe, zoom out, move the original composition, or redesign it.
+Continue the wooden shop counter, existing shelves, stonework, ivy and purple fabric naturally into the added right-hand area, with consistent perspective, crisp hand-painted pixel-art texture, amber lantern glow and dark violet ambient lighting. Carry the scene all the way to the right edge; no border, black strip, fade to black at the right edge, or visible seam. The added area can become quieter and darker but remains detailed scenery.
+The original plate intentionally has no characters; the app overlays animated characters separately. Add NO people, faces, creatures, characters, lettering, UI, logos or watermarks. Preserve original height and original layout so the animated sprites still sit on the same counter.
+
+Pass 2 — bottom extension, edit target: pass 1
+Use case: precise-object-edit / bottom outpainting. Asset: FOUND website background.
+Use the attached extended scene as the exact edit target. Keep the entire existing image unchanged across the top of the output: same width, exact positions and scale of the arch, lantern, ivy, shop, counter, chest, shelves and drapery. Extend the canvas DOWNWARD only, adding about 480 pixels of cobblestone floor beneath the current approximately 1983×793 image, for a total canvas approximately 1984×1280. Do not zoom or reframe the existing composition.
+Continue the wet, dark cobblestones and their amber and violet reflections naturally toward the viewer. Preserve the crisp pixel-art texture and perspective. Lower floor should get gradually quieter and darker toward the bottom, but remain real cobblestones all the way to the bottom edge. Preserve the existing dark negative space on the left and the new shop extension on the right. No hard horizontal seam, frame or border. No new characters, faces, text, UI, watermarks or logos. This is a background plate; animated characters are separate layers in the website.

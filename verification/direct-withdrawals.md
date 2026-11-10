@@ -1,0 +1,25 @@
+# Direct withdrawals — 10 November 2026
+
+FOUND now supports owner-approved withdrawals on NEAR mainnet. This is an application integration, not a new custody contract or a security audit.
+
+## Transaction path
+
+1. Connect using `@hot-labs/near-connect` 0.12.0. Require mainnet, `signInWithoutAddKey`, and `signAndSendTransaction`. No access-key plugin or delegated signing permission is requested.
+2. Connecting never automatically signs a withdrawal. It shows fresh balances for the connected owner.
+3. Before signing, check the wallet account, reread both protocols at one finalized block, require `found` for the selected protocol, require the displayed amount still matches, and check the wallet account again.
+4. Request exactly one `withdraw` function call on `linear-protocol.near` or `meta-pool.near`, `{amount: <exact yoctoNEAR string>}`, attached deposit `0`, gas limit `100000000000000`. The protocol pays its predecessor account; there is no arbitrary destination field. Meta Pool can include its documented available-balance dust sweep, covered by the existing preflight.
+5. Store pending metadata before opening the wallet, then store the returned hash. Reloads resume receipt checks, never signing. If the wallet gives no hash, show an explicit unresolved state and wallet activity link. Clearing this marker is a separate user action after checking activity.
+6. Check `tx` with `wait_until: FINAL` through the existing two mainnet providers. Require the expected hash, signer, receiver, single function call, amount, gas, deposit, successful statuses, and complete receipt references. A failed downstream transfer prevents a success message. Then refresh balances.
+
+## Source references
+
+- [NEAR Connect](https://docs.near.org/tools/near-connect) and [wallet transaction API](https://docs.near.org/web3-apps/tutorials/wallet-login).
+- [LiNEAR withdrawal source](https://github.com/linear-protocol/LiNEAR/blob/main/contracts/linear/src/stake.rs).
+- [Meta Pool withdrawal source, pinned revision](https://github.com/Meta-Pool/liquid-staking-contract/blob/e9855e283fb167d5ad01fbc6b76cc86f8cce4182/metapool/src/lib.rs) and [transfer/accounting implementation](https://github.com/Meta-Pool/liquid-staking-contract/blob/e9855e283fb167d5ad01fbc6b76cc86f8cce4182/metapool/src/internal.rs).
+- [NEAR receipt finality](https://docs.near.org/api/rpc/transactions).
+
+## Verification limits
+
+No real owner-signed withdrawal was sent in QA. Public example accounts are not controlled by us. Automated fixtures verify transaction construction, wrong owners, changed accounts/balances, not-ready states, lockups, exact integers, matching receipts, downstream transfer failure, missing receipt chains, provider fallback, and uncertain confirmation. Browser QA passed with a clearly labeled local simulated wallet: connecting showed balances without signing; cancelling left the LiNEAR balance unchanged; an approved simulated LiNEAR withdrawal showed the matching final receipt and refreshed to zero; a failed Meta Pool transfer showed failure and kept its balance. The local fixture it is not part of the deployed app and is not evidence of recovered money.
+
+The contracts are upgradeable and state may change between preflight and wallet approval. Contract rejection and wallet cancellation remain ordinary failure paths. An RPC outage may delay confirmation; FOUND keeps the pending request and does not auto-resubmit it. The connector loads provider-managed wallet integration scripts in sandboxes, as described by NEAR Connect. No claim of reproducible deployed-contract equivalence or independent connector audit is made here.
