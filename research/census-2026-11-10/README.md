@@ -53,3 +53,9 @@ To produce a future snapshot, use a new finalized block and a fresh cache direct
 - ../../dist/leaderboard.json: compact qualified rows and scope metadata served by the app.
 
 No mainnet transaction was sent to create this snapshot.
+
+## Lockup classification
+
+The snapshot contains **110 account IDs ending in `.lockup.near`**, summing to **777,029.79408724816839127411321 NEAR** (`777029794087248168391274113210` yoctoNEAR). The UI labels these rows because FOUND cannot directly withdraw for them; their lockup contract must perform the withdrawal. This is a name-suffix classification, not a code audit of every account or a complete inventory of contract-controlled balances. They remain included in the gross table total. API tests recompute the count and exact sum from the archived table.
+
+A protocol’s own balance can represent the same NEAR as its users’ balances. Adding both can count the same money twice; the gross listed total is not net recoverable or unique lost funds.

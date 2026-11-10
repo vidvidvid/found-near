@@ -6,10 +6,12 @@ FOUND now supports owner-approved withdrawals on NEAR mainnet. This is an applic
 
 1. Connect using `@hot-labs/near-connect` 0.12.0. Require mainnet, `signInWithoutAddKey`, and `signAndSendTransaction`. No access-key plugin or delegated signing permission is requested.
 2. Connecting never automatically signs a withdrawal. It shows fresh balances for the connected owner.
-3. Before signing, check the wallet account, reread both protocols at one finalized block, require `found` for the selected protocol, require the displayed amount still matches, and check the wallet account again.
-4. Request exactly one `withdraw` function call on `linear-protocol.near` or `meta-pool.near`, `{amount: <exact yoctoNEAR string>}`, attached deposit `0`, gas limit `100000000000000`. The protocol pays its predecessor account; there is no arbitrary destination field. Meta Pool can include its documented available-balance dust sweep, covered by the existing preflight.
+3. Before signing, check the wallet account, reread the supported protocols and discovered validator pools at one finalized block, require `found` for the selected protocol, require the displayed amount still matches, and check the wallet account again.
+4. Request exactly one `withdraw` function call on the selected supported contract, `{amount: <exact yoctoNEAR string>}`, attached deposit `0`. LiNEAR (`linear-protocol.near`), Meta Pool (`meta-pool.near`) and recognized validator pools use `100000000000000` gas; rNEAR (`lst.rhealab.near`) uses `200000000000000`. rNEAR and validator pools also require the exact reviewed deployed code hash; a code change disables their action until reviewed. The protocol pays its predecessor account; there is no arbitrary destination field. Meta Pool can include its documented available-balance dust sweep, covered by the existing preflight.
 5. Store pending metadata before opening the wallet, then store the returned hash. Reloads resume receipt checks, never signing. If the wallet gives no hash, show an explicit unresolved state and wallet activity link. Clearing this marker is a separate user action after checking activity.
 6. Check `tx` with `wait_until: FINAL` through the existing two mainnet providers. Require the expected hash, signer, receiver, single function call, amount, gas, deposit, successful statuses, and complete receipt references. A failed downstream transfer prevents a success message. Then refresh balances.
+
+The additional rNEAR and validator-pool readiness/liquidity checks and exact code hashes are documented in [coverage verification](../research/coverage-expansion/README.md). Unknown pool implementations and lockup accounts have no direct withdrawal action.
 
 ## Source references
 

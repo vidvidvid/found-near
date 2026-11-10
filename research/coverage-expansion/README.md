@@ -39,11 +39,11 @@ Verified examples include:
 - `ru.near` and `lb3.near`: regression checks for existing LiNEAR and Meta Pool behavior.
 - `root.near`: a 1-yoctoNEAR validator remainder is treated as a tiny balance in the UI, not a prominent recovery opportunity. Tiny balances stay inspectable and actionable, with a fee qualification.
 
-These are current availability examples, not evidence of abandonment or age. The later [expanded census](../census-2026-11-10/README.md) completed rNEAR enumeration and the standard factory-pool inventory. The public leaderboard now contains 30,681 deduplicated accounts across three protocols and 858 recognized pools; the old 538-account LiNEAR snapshot is preserved separately.
+These are dated availability examples, not evidence of abandonment or age. The later [expanded census](../census-2026-11-10/README.md) completed rNEAR enumeration and the standard factory-pool inventory. The public leaderboard now contains 30,681 deduplicated accounts across three protocols and 858 recognized pools; the old 538-account LiNEAR snapshot is preserved separately.
 
 ## Verification coverage
 
-44 tests cover prior behavior plus rNEAR pause/method-pause/liquidity/code checks, standard-pool maturity/liquidity/code checks, null indexer heights, malformed identities, duplicates, caps, outages, cancellation, independent pool failures, exact transaction targets, reload-safe pending metadata, changed code/amount rejection, and failure/incomplete/mismatched receipt handling.
+The test suite covers prior behavior plus rNEAR pause/method-pause/liquidity/code checks, standard-pool maturity/liquidity/code checks, null indexer heights, malformed identities, duplicates, caps, outages, cancellation, independent pool failures, exact transaction targets, reload-safe pending metadata, changed code/amount rejection, and failure/incomplete/mismatched receipt handling.
 
 Browser QA uses actual mainnet views separately from a clearly labeled local wallet simulator. The simulator verified rNEAR approval at the correct contract and amount with 200 TGas/zero deposit, successful complete-receipt confirmation and balance refresh; a downstream validator transfer failure produced failure rather than success. No real owner-signed withdrawal was performed. A mainnet owner should approve and document the first real recovery before claiming one.
 

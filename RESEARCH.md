@@ -1,79 +1,26 @@
-# FOUND research
+# FOUND research and evidence
 
-## Expanded staking census
+## Current scope
 
-The current leaderboard counts 30,681 unique account IDs across LiNEAR, Meta Pool, rNEAR and 858 recognized validator pools at block 223975859. [Full evidence and methodology](research/census-2026-11-10/README.md). Use `npm run census:verify` for the archived consistency check or `npm run census:expanded -- --check` for a fresh RPC reread.
+FOUND scans delayed withdrawals in LiNEAR (`linear-protocol.near`), Meta Pool (`meta-pool.near`), rNEAR (`lst.rhealab.near`), and up to 24 validator relationships discovered through FastNEAR. Balance checks run against the same finalized block. Source methods, deployed-code provenance, pause/liquidity rules and known limitations are in [coverage verification](research/coverage-expansion/README.md). Wallet approval and receipt verification are described in [direct withdrawals](verification/direct-withdrawals.md).
 
-## Original LiNEAR withdrawal census (archived)
+The separate public census reads all registered ledger IDs across three protocols and the two standard staking-pool factories. It includes **30,681 unique qualifying IDs**, from **305,908 distinct IDs checked**, across **858 recognized validator pools + 3 protocols**, at block **223975859**, 10 November 2026. Four unrecognized pool versions are excluded. [Complete evidence and derivation](research/census-2026-11-10/README.md).
 
-The leaderboard is derived entirely from public NEAR mainnet contract state. No account labels, private data, third-party balance database, or inferred abandonment are used.
+- Inclusion: at least one source reports a matured unstaked balance strictly above 0.01 NEAR. Accounts appear once; their qualifying amounts are summed exactly.
+- Total: **10,558,075.187594404327945091284701 NEAR**, shown as **10.55M**. A protocol’s own balance can represent the same NEAR as its users’ balances, so the gross sum can count the same money twice.
+- **110 `.lockup.near` IDs**, **777,029.79408724816839127411321 NEAR**, are labelled Lockup and cannot withdraw directly in FOUND. This is a suffix classification, not an exhaustive account-code audit.
+- This is not a count of people, proof of abandonment, guaranteed liquidity, net recoverable assets, or recovered money. Live scans recheck current availability.
 
-### Source and method
+## Reproduce
 
-- Contract: `linear-protocol.near`; [account enumeration and readiness source](https://github.com/linear-protocol/LiNEAR/blob/main/contracts/linear/src/view.rs), [withdrawal source](https://github.com/linear-protocol/LiNEAR/blob/main/contracts/linear/src/stake.rs).
-- Snapshot block: `223800610`, whose RPC block timestamp is 9 November 2026 UTC.
-- RPC methods: `block` for the timestamp and `query` for `get_number_of_accounts` and `get_accounts`.
-- Every account is read sequentially in pages of 1,000 with bounded retries. Every query specifies the same `block_id`; the generator rejects responses from another height/hash, incomplete pages, duplicate account IDs, and malformed records. The page size stays within the contract's view-call gas limit.
-- RPC providers: historical regeneration tries [FastNEAR archival RPC](https://docs.fastnear.com/rpc) at `archival-rpc.mainnet.fastnear.com` and NEAR's public archival endpoint. Regular providers may prune old blocks; archival providers preserve the pinned historical state. Every provider is queried for the same block. Public archival tiers are rate-limited, so regeneration is deliberately sequential.
-- Inclusion rule: `can_withdraw == true` and `unstaked_balance > 0.01 NEAR` (`10000000000000000000000` yoctoNEAR). Zero, pending, and exactly-at-threshold balances are excluded.
-- Entries are sorted by `unstaked_balance` descending using BigInt comparisons. Equal amounts retain contract enumeration order.
-- `staked_balance` is preserved as returned by the contract but is not included in the waiting amount.
+`npm run census:verify` validates the archived records and reproduces the checked-in table offline. `npm run census:expanded -- --block 223975859 --check` independently rereads the chain; it is slower, rate-limited, and may require archival RPC access. Full commands and evidence checks are in the [census README](research/census-2026-11-10/README.md).
 
-At this block the contract reports 47,882 accounts. The method above yields 538 qualifying accounts. Their balances are matured according to LiNEAR; the snapshot does not claim that their owners forgot them or intend to withdraw.
+`node scripts/verify-coverage.mjs --output /tmp/found-coverage.json` performs read-only live adapter verification. Public balances can change. Existing saved evidence is in [live-verification.json](research/coverage-expansion/live-verification.json).
 
-### Exact regeneration
+## Historical research
 
-From the repository root, run:
+- [Original LiNEAR and Meta Pool research](docs/history/2026-11-10-research.md), including the original 538-account LiNEAR snapshot and earlier Meta Pool census. Those counts are retained as dated source-specific evidence.
+- [Initial coverage investigation](research/coverage-2026-11-10/README.md), recorded before rNEAR and standard validator pools were implemented. Its token and storage-deposit candidates remain outside current app coverage.
+- [Earlier independent verification](docs/history/2026-11-10-two-protocol-verification.md), including accounting fixes and source references.
 
-```sh
-npm run census -- --block 223800610 --check
-```
-
-This repeats the full mainnet census and compares the serialized result with `research/census/linear-2026-11-09.json` without writing a file. A byte-for-byte match was verified on 9 November 2026.
-
-To write the regenerated snapshot instead, run:
-
-```sh
-npm run census -- --block 223800610
-```
-
-To refresh only this historical LiNEAR dataset, choose a finalized block and an explicit --output destination. Use census:expanded for the current combined leaderboard. All accounts and the timestamp then come from that one block. The generator writes atomically and leaves the existing snapshot untouched if a page or provider fails.
-
-Optional `--output PATH` selects another JSON destination, and `--help` prints command usage.
-
-## Meta Pool validation
-
-Meta Pool was selected as the second protocol because its mainnet contract supports both direct account lookup and complete account enumeration. Its official application also exposes a wallet-based withdrawal action for completed delayed unstakes.
-
-### Sources
-
-- Mainnet contract: `meta-pool.near`; [official contract documentation](https://docs.metapool.app/master/for-developers/meta-pool-contracts/near-network).
-- Contract source: [account and enumeration methods](https://github.com/Meta-Pool/liquid-staking-contract/blob/master/metapool/src/lib.rs), [withdrawal preconditions](https://github.com/Meta-Pool/liquid-staking-contract/blob/master/metapool/src/account.rs), [withdrawal implementation](https://github.com/Meta-Pool/liquid-staking-contract/blob/master/metapool/src/internal.rs).
-- Official withdrawal workflow: [Meta Pool Dashboard](https://docs.metapool.app/master/meta-pool-ecosystem/dashboard) and [Delayed Unstake](https://docs.metapool.app/master/meta-pool-ecosystem/stake/delayed-unstake).
-- User destination: `https://www.metapool.app/dashboard`.
-
-### Balance discovery
-
-`get_number_of_accounts` and `get_accounts` expose the same census fields needed for LiNEAR research: `account_id`, `unstaked_balance`, `staked_balance`, and `can_withdraw`. A complete pinned-block validation at block `223892176` read 21,018 accounts and found 457 positive unfinished balances: 455 mature and two pending. This validation informed the live integration; it is not presented as a second public leaderboard.
-
-For an individual scan, FOUND first confirms that the NEAR account exists, then reads both protocols at that account-view block. Meta Pool uses `get_account`, which also returns a well-formed zero result for an unregistered protocol account. RPC or decoding failures remain unknown rather than becoming zero.
-
-### Withdrawal readiness
-
-For a positive balance, FOUND applies these rules in order:
-
-1. `can_withdraw == false` means pending.
-2. An account ending in `.lockup.near` is marked as requiring its lockup contract. The regular Meta Pool dashboard handoff is not presented as compatible with that workflow.
-3. For a regular account, `get_contract_state` and `get_account_available_balance` are read at the same block. Both `retrieved_for_unstake_claims` and `total_unstake_claims` must cover the unstaked amount. The contract can sweep a pre-existing available balance of up to and including 0.001 NEAR into the payout. `contract_account_balance` must cover that payout, and `total_available` plus the newly finished unstake must cover it too. FOUND displays the unfinished unstake amount, not a promise of the final transaction’s exact payout.
-
-The reserve requirement comes from `in_memory_try_finish_unstaking`; the contract-balance check covers the internal accounting used for the subsequent transfer. It is not a simulation of the transfer receipt, actual runtime storage reserve, or future state. Missing fields, RPC errors, and insufficient liquidity produce an unavailable result with the balance preserved. Staking pause state is not used because Meta Pool’s delayed-unstake withdrawal method does not require unstaking or staking to be unpaused.
-
-These are read-only snapshot checks, not transaction simulations or guarantees. No withdrawal transaction was sent during validation. Live checks confirmed a mature balance for `lb3.near`, a pending balance for `41a5bf8e8abcd00bd7b9081e944c51c5407bdb7cff80eb64b8ad6543a34dea3e`, and zero for `ru.near`; future scans may differ.
-
-## Coverage expansion investigation
-
-[10 November 2026 findings](research/coverage-2026-11-10/README.md) document additional validator-pool withdrawals, rNEAR delayed withdrawals, Rhea/Ref internal wNEAR and available storage deposits. Includes pinned mainnet evidence and an explicitly incomplete rNEAR census. This historical investigation predates the implemented rNEAR and validator-pool adapters described below; token/storage candidates remain outside current coverage.
-
-## Implemented coverage expansion
-
-[rNEAR and validator-pool verification](research/coverage-expansion/README.md): implementation scope, exact deployed-code provenance, independent RPC checks, tests and remaining limits.
+Research reference copies retain upstream authorship and licenses; see [credits](THIRD_PARTY_NOTICES.md).

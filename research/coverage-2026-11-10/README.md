@@ -1,3 +1,5 @@
+Historical investigation — 10 November 2026, commit `8a4fcf8`, before the rNEAR/validator implementation. The recommendations below describe that stage. Current supported scope: [coverage verification](../coverage-expansion/README.md); complete census: [census evidence](../census-2026-11-10/README.md).
+
 # Additional claimable NEAR: verified opportunities
 
 Investigated 10 November 2026. Mainnet snapshot: **223,971,985**. This is read-only research, not added production support and not a record of successful withdrawals.

@@ -1,98 +1,98 @@
-# FOUND — NEAR HACKATHON submission
+# FOUND — submission packet
 
-## Submission details
+## Ready-to-use details
 
-- Recommended tracks: **Open Innovation** (primary); **Unstoppable DeFi** (secondary, weaker fit). Final selection remains the team’s decision.
+- Project: **FOUND**
 - Pitch: **Find the NEAR you left behind.**
-- Live demo: https://found-production-e549.up.railway.app/
-- Repository: https://github.com/vidvidvid/found-near
-- Demo video: add the public URL after recording.
-- X demo post: add the public URL after posting.
+- Recommended primary track: **Open Innovation** (`open`). Unstoppable DeFi (`defi`) is a possible secondary choice, but FOUND does not implement cross-chain settlement or a trading protocol; confirm the final selection.
+- Live app: https://found-production-e549.up.railway.app/
+- Example: https://found-production-e549.up.railway.app/?account=ru.near
+- Repository: https://github.com/vidvidvid/found-near — **private until the owner publishes it**.
+- Final demo video and public X post: **pending the owner’s real withdrawal and recording**. The older local export is not the final proof.
+- Deadline: **14 November 2026, 23:59 UTC**. Planned early publication date: **13 November**; this is a checklist date, not an automated publication job.
+
+Rules checked against [the official handbook](https://nearhackathon.com/HACKATHON.md). Recheck before submitting. A saved submission cannot be edited directly; the organizers do offer a manual [change-request process](https://nearhackathon.com/request-changes). Do not submit the same project twice.
 
 ## Project description
 
-Unstaked does not always mean withdrawn. NEAR can finish unlocking inside a staking protocol while still requiring a separate owner-signed withdrawal.
+Unstaked does not always mean withdrawn. After NEAR finishes unlocking inside a staking protocol, the account owner still needs to make a separate withdrawal.
 
-FOUND finds unfinished withdrawals in LiNEAR, Meta Pool, rNEAR and supported indexed validator pools without requiring a wallet connection to scan. It reads every checked source at the same finalized block, applies protocol-specific maturity and liquidity checks, and lets the owner request a withdrawal directly in FOUND. The connected wallet approves each transaction; the protocol sends funds to that account. FOUND never takes custody or charges a finder’s fee. Official protocol apps remain available as an alternative.
+FOUND finds these unfinished withdrawals in LiNEAR, Meta Pool, rNEAR and supported indexed validator pools without requiring a wallet connection to scan. Every checked source is read at the same finalized block. Protocol-specific checks cover maturity, pauses, liquidity and supported implementations. Owners can connect their wallet and approve the exact withdrawal directly in FOUND; the app verifies the transaction and complete receipt chain. FOUND does not hold keys, take custody or charge a finder’s fee.
 
-Its public waiting room contains 30,681 unique account IDs with matured balances above 0.01 NEAR, deduplicated across three staking protocols and 858 recognized validator pools at block 223975859. A fast offline command verifies the archived evidence; a separate script can reread the chain. The snapshot does not label owners as forgetful or funds as abandoned.
+The public waiting room lists 30,681 unique account IDs with qualifying matured balances across three protocols and 858 recognized validator pools, from 305,908 unique ledger IDs checked at block 223975859. Its 10.55M NEAR total is a gross sum: a protocol’s own balance can represent the same money as users’ balances. It is not unique lost funds or confirmed recoveries. The 110 lockup IDs, totaling 777,029.79 NEAR, are labelled because they require their lockup contracts and cannot withdraw directly through FOUND.
 
-FOUND is deliberately small, useful ecosystem infrastructure: make an easy-to-miss final step visible, then let owners bring their money home safely.
+Read-only account links and a JSON scan API make results shareable. A fast offline command reproduces the archived census, while a separate tool can reread the chain. No claim is made that the owners forgot their balances. Real owner-withdrawal evidence remains pending; local simulations are labelled as simulations.
 
-## What judges can verify
+## Checks judges can run
+
+Start with [README.md](README.md), which lists commands, expected outputs, network requirements and source locations.
 
 ```sh
+npm ci
 npm test
 npm run census:verify
-# Optional independent chain reread:
+curl -fsS 'https://found-production-e549.up.railway.app/api/scan/ru.near'
+```
+
+The first install and API call need network access. Tests and the archived census check run offline after setup. A fresh chain reread is optional and slower:
+
+```sh
 npm run census:expanded -- --block 223975859 --check
 ```
 
-- The test suite covers financial-state transitions, exact withdrawal preflights, pagination, malformed responses, failures, and server safety.
-- The offline census command validates archived records and reproduces the leaderboard byte-for-byte. The separate expanded command independently rereads on-chain state at the same block.
-- `ru.near` provided a live LiNEAR example during development.
-- `deportivo.near` provided a live rNEAR example, with a separate Lonk validator withdrawal.
-- `within4d45.near` provided Shitzu and Meteor validator-pool examples; its custom Aurora pool remains explicitly unsupported.
-- `lb3.near` provided a live Meta Pool example during development.
-- Balances are live and may change; no result is hardcoded in the checker.
-- Methodology and protocol sources are documented in [RESEARCH.md](RESEARCH.md).
+- Current implementation evidence: [VERIFICATION.md](VERIFICATION.md).
+- Census, exact totals and scope: [research/census-2026-11-10/README.md](research/census-2026-11-10/README.md).
+- License and tools/assets: [LICENSE](LICENSE), [README built-with list](README.md#built-with), [credits](THIRD_PARTY_NOTICES.md).
+- Public accounts such as ru.near, lb3.near, deportivo.near and within4d45.near are live read examples, not owner recovery stories.
 
-## Demo video draft
+## Final demo
 
-A 44-second, narrated demo is prepared in [demo/output/found-demo.mp4](demo/output/found-demo.mp4). Preview it with [demo/index.html](demo/index.html) served locally. The [edit notes](demo/README.md) include timing, capture provenance, asset prompts and rebuild instructions.
+Record one continuous take: **scan the owner’s account → connect → owner approves → receipt verified → updated balance**. Keep the approved pixel-art aesthetic, quiet character motion and clear Faye narration for an optional edited cut. Preserve the uncut take as proof. Details and the clearly labelled old export: [demo/README.md](demo/README.md).
 
-The cut leads with the user task: paste an account, discover a real balance, then show connecting a wallet and approving directly in FOUND. Meta Pool coverage and the reproducible LiNEAR census follow as evidence. The existing pixel-art characters are subtly animated. Public examples are labelled; no completed withdrawal is implied.
+Do not publish the older two-protocol/538-account video as the current UI. The combined count is 30,681; the old 538 number remains valid only for the dated LiNEAR-only dataset.
 
-This recorded demo shows the earlier two-protocol UI and the original 538-account LiNEAR snapshot. The expanded coverage and combined census are verified in the live app and archived evidence. Refresh that recorded coverage/count scene before final publication.
+## X post draft
 
-This is a local draft, not a published demo URL. Review it before uploading and add the final public video/post links above.
-
-## X demo post
-
-Replace `[VIDEO_URL]` with the uploaded video or the post’s attached video before publishing. Attach the video directly if possible.
+Attach the final video directly. Publish only after the repository is public and the recorded receipt is genuine. This draft fits a standard 280-character post with X’s URL counting:
 
 ```text
-Unstaked doesn’t always mean withdrawn.
+Unstaked isn’t withdrawn.
 
-FOUND finds unfinished staking withdrawals across NEAR—no wallet connection needed to scan. Its waiting room counts 30,681 accounts with matured balances across supported staking protocols and pools. Connect your wallet and approve the withdrawal in FOUND.
+FOUND checks 3 protocols + 858 NEAR pools. Snapshot: 30,681 accounts, 10.55M NEAR listed—not unique lost funds.
 
-Built at NEAR HACKATHON.
+Built at NEAR HACKATHON
 @NEARProtocol #NEARHackathon
-
-[VIDEO_URL]
 https://found-production-e549.up.railway.app/
+https://github.com/vidvidvid/found-near
 ```
 
-## Real recovery evidence
+The app page explains lockups, overlap, snapshot dates and supported scope. The post must not describe the census amount as recovered money.
 
-Only complete this section after an actual owner successfully withdraws. Do not use the public examples as recovery stories.
+## Real recovery evidence — pending
 
-- [ ] Obtain the owner’s permission to document the account, transaction, and quote. Never request a seed phrase or private key.
-- [ ] Record the protocol, account, amount, FOUND result, and block before withdrawal.
-- [ ] Let the owner connect their own wallet and approve a withdrawal in FOUND or through the official protocol app.
-- [ ] Preserve the public transaction URL and confirmation status.
-- [ ] Recheck the account in FOUND and capture the updated result.
-- [ ] Add a short owner quote and identify what they found and withdrew.
-- [ ] Offer to omit the account ID or other details if the owner prefers.
-- [ ] Update the submission and demo only with evidence the owner approved for publication.
+No real owner-signed withdrawal was executed during QA. A newly created wallet needs a matured unstaked balance before the final recording can happen. The owner signs in their own wallet; no private keys or recovery phrases are needed by FOUND or the developer.
 
-### Recovery record
+| Field | Status |
+| --- | --- |
+| Owner-approved public account | Pending |
+| Protocol / contract | Pending |
+| Amount and pre-withdrawal block | Pending |
+| Final transaction hash / explorer URL | Pending |
+| Result after recheck | Pending |
+| Permission to publish account and receipt | Pending |
+| Optional owner quote | Pending; never fabricate one |
 
-- Owner-approved account/reference: pending
-- Protocol: pending
-- Amount before withdrawal: pending
-- Transaction URL: pending
-- Result after recheck: pending
-- Owner quote and publication permission: pending
+Once the hash exists, add `npm run verify:tx -- <hash>` using FOUND’s existing exact receipt verifier, not a separate looser implementation. Add its real output and the approved record here and in README. Update all current “no owner-signed withdrawal” statements to match the actual evidence. Historical reports remain dated records.
 
-## Final submission checklist
+## Publication and submission handoff
 
-- [ ] Latest code is deployed at the public demo URL.
-- [ ] Repository is public and contains the latest code and documentation.
-- [ ] Live demo URL and demo video URL are added above and to the README.
-- [ ] Demo video or screenshots are attached to a public X post.
-- [ ] X post says the project was built at NEAR HACKATHON and includes @NEARProtocol and #NEARHackathon.
-- [ ] Submission selects **Open Innovation**.
-- [ ] Submission includes the public repository and X demo-post URLs.
-- [ ] A valid NEAR mainnet account is entered for the payout.
-- [ ] Submission is completed before **14 November 2026 at 23:59 UTC**.
+The owner publishes and submits; this packet does not send a submission or schedule one.
+
+1. Finish the real-withdrawal take, review the final video and add its public URL here and in README.
+2. On **13 November**, or earlier once ready, make the repo public and keep it public through judging. GitHub description has been updated to the expanded withdrawal workflow.
+3. Confirm the final commit passes the fresh-clone checks, then tag it `hackathon-submission`. Keep the live app available through judging (ideally through 25 November).
+4. Publish the X post with the video attached, then add its public URL here.
+5. Supply/confirm team lead name, contact email, team size, selected tracks, mainnet payout account, public repo/post links and contact-notice consent. Do not guess these values or commit the private payload.
+6. Review the exact submission payload before the single submission. Record its successful response privately. Corrections go through the organizers’ request-changes process.
+
+**Still required from the owner:** wallet/account and matured withdrawal; publication permission for its receipt; final video/X link; submission identity, payout address, track selection and consent. No submission has been sent as part of this preparation.
