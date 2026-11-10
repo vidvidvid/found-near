@@ -241,3 +241,6 @@ dialog{background:linear-gradient(145deg,#261c2e,#18111f);border-color:#745343;c
 .discovery[data-state=loading][data-refreshing=true] .proof{display:flex;color:#ac9ab7;overflow:visible}
 .discovery[data-view=idle] #refresh-balance{visibility:hidden}
 @media(max-width:620px){#refresh-balance{font-size:9px}.checked-row{gap:8px}}
+
+/* Field validation stays in the reserved feedback row, without moving the result. */
+.input-row:has(input[aria-invalid=true]){border-color:#d79682}

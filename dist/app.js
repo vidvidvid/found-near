@@ -1,7 +1,7 @@
 import {createWalletUi} from './wallet-ui.js';
-import {scanProtocols,normalizeAccount,validAccount,formatNear,exactNear,PROTOCOLS} from './rpc.js';
+import {scanProtocols,rpc,normalizeAccount,validAccount,formatNear,exactNear,PROTOCOLS} from './rpc.js';
 const $=id=>document.getElementById(id);let request=null,current=null,example=false,walletUi;
-let welcomeExit=null;
+let welcomeExit=null,validation=null;
 function journey(state){$('discovery').dataset.journey=state;}
 function resultJourney(result){
  if(result.results.some(item=>item.state==='found'))return 'found';
@@ -85,10 +85,10 @@ function leaveWelcome(content){
  const fade=panel.animate([{opacity:1},{opacity:0}],{duration:560,easing:'cubic-bezier(.4,0,.2,1)',fill:'forwards'});
  fade.finished.catch(()=>{}).finally(()=>{panel.remove();if(welcomeExit===panel)welcomeExit=null;});
 }
-function render(state,result){
+function render(state,result,{reveal=true}={}){
  const discovery=$('discovery'),content=$('pocket-content'),account=$('checked-account'),proof=$('result-proof');
  const quietRefresh=state==='loading'?!!result.refreshing:discovery.dataset.refreshing==='true';
- const finishing=discovery.dataset.state==='loading'&&['done','error'].includes(state)&&!quietRefresh;
+ const finishing=reveal&&discovery.dataset.state==='loading'&&['done','error'].includes(state)&&!quietRefresh;
  if(state==='loading'&&welcomeExit){welcomeExit.remove();welcomeExit=null;}
  if(finishing)leaveWelcome(content);
  discovery.dataset.state=state;
@@ -146,24 +146,69 @@ function searchBusy(busy){
  $('scan-button').setAttribute('aria-label',busy?'Checking your NEAR':complete?'Already checked this account':'Find my NEAR');
  $('scan-form').setAttribute('aria-busy',String(busy));
 }
+function clearFieldError(){
+ $('form-error').hidden=true;$('account').removeAttribute('aria-invalid');
+}
+function fieldError(error){
+ if(!error){clearFieldError();return;}
+ const invalid=['INVALID','UNKNOWN_ACCOUNT'].includes(error.code);
+ const message=error.code==='INVALID'?error.message:error.code==='UNKNOWN_ACCOUNT'?'Account not found on NEAR mainnet. Check the spelling.':'Couldn’t verify the account. Please try again.';
+ if($('form-error').textContent!==message)$('form-error').textContent=message;
+ $('form-error').hidden=false;
+ if(invalid)$('account').setAttribute('aria-invalid','true');else $('account').removeAttribute('aria-invalid');
+}
+function checkField(account){
+ // Blur and submit share a pending check; typing cancels it. Never guess an address.
+ if(validation?.account===account&&!['UNAVAILABLE','AbortError'].includes(validation.error?.code||validation.error?.name))return validation;
+ validation?.controller.abort();
+ const check={account,controller:new AbortController(),error:null};validation=check;
+ check.promise=(async()=>{
+  if(!validAccount(account))return {code:'INVALID',message:account?'Enter a valid NEAR account, such as you.near.':'Enter your NEAR account.'};
+  try{await rpc({request_type:'view_account',account_id:account,finality:'final'},{signal:check.controller.signal});return null;}
+  catch(error){return error;}
+ })().then(error=>{check.error=error;return error;});
+ return check;
+}
+async function validateOnBlur(){
+ const account=normalizeAccount($('account').value);
+ if(alreadyShowing(account)){clearFieldError();return;}
+ const check=checkField(account),error=await check.promise;
+ if(validation===check&&normalizeAccount($('account').value)===account&&document.activeElement!==$('account')&&error?.name!=='AbortError')fieldError(error);
+}
 async function scan(value,isExample=false,{force=false}={}){
- const account=normalizeAccount(value);$('form-error').hidden=true;
- if(!validAccount(account)){$('form-error').textContent='Enter a NEAR account such as you.near or an implicit account ID.';$('form-error').hidden=false;$('account').setAttribute('aria-invalid','true');$('account').focus();return;}
- $('account').removeAttribute('aria-invalid');$('account').value=account;
+ const account=normalizeAccount(value);clearFieldError();$('account').value=account;
  // Repeated searches keep the currently displayed snapshot, including its block.
  // Explicit refreshes and every wallet-driven scan bypass this guard.
  if(!force&&alreadyShowing(account)){searchBusy(false);return current;}
- if(request?.account===account&&$('discovery').dataset.state==='loading')return;
+ if(request?.account===account)return;
+ const previous=current?{result:current,example}:request?.previous;
  const refreshing=current?.account===account&&$('discovery').dataset.state==='done';
- request?.abort();const controller=new AbortController();controller.account=account;request=controller;example=isExample;current=null;
- searchBusy(true);render('loading',{account,refreshing});
- try{const result=await scanProtocols(account,{signal:controller.signal});if(request!==controller)return;current=result;render('done',result);}
- catch(error){if(error.name!=='AbortError'&&request===controller)render('error',error);}
- finally{if(request===controller){request=null;searchBusy(false);}}
+ request?.abort();const controller=new AbortController();controller.account=account;controller.previous=previous;request=controller;
+ searchBusy(true);
+ try{
+  if(!force){
+   const check=checkField(account),error=await check.promise;
+   if(request!==controller||check!==validation||error?.name==='AbortError')return;
+   if(error){if(normalizeAccount($('account').value)===account)fieldError(error);return;}
+  }
+  example=isExample;current=null;render('loading',{account,refreshing});
+  const result=await scanProtocols(account,{signal:controller.signal});if(request!==controller)return;current=result;render('done',result);
+ }catch(error){
+  if(error.name!=='AbortError'&&request===controller){
+   if(['INVALID','UNKNOWN_ACCOUNT'].includes(error.code)){
+    current=previous?.result||null;example=previous?.example||false;
+    render(current?'done':'idle',current,{reveal:false});
+    if(normalizeAccount($('account').value)===account)fieldError(error);
+   }else render('error',error);
+  }
+ }finally{if(request===controller){request=null;searchBusy(false);}}
 }
-$('scan-form').addEventListener('submit',e=>{e.preventDefault();scan($('account').value);});
+$('scan-form').addEventListener('submit',e=>{e.preventDefault();$('account').blur();scan($('account').value);});
 $('try-example').addEventListener('click',()=>scan('ru.near',true));
-$('account').addEventListener('input',()=>searchBusy($('discovery').dataset.state==='loading'));
+$('account').addEventListener('blur',validateOnBlur);
+$('account').addEventListener('input',()=>{
+ validation?.controller.abort();validation=null;clearFieldError();searchBusy(!!request);
+});
 $('refresh-balance').onclick=()=>{if(current)scan(current.account,example,{force:true});};
 $('withdraw-dialog').addEventListener('close',()=>{if(current)journey(resultJourney(current));});
 $('withdraw-dialog').querySelector('.close-dialog').onclick=()=>$('withdraw-dialog').close();
