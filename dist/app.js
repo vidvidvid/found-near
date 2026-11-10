@@ -1,5 +1,12 @@
 import {scanProtocols,normalizeAccount,validAccount,formatNear,exactNear,PROTOCOLS} from './rpc.js';
 const $=id=>document.getElementById(id);let request=null,current=null,example=false;
+function journey(state){$('discovery').dataset.journey=state;}
+function resultJourney(result){
+ if(result.results.some(item=>item.state==='found'))return 'found';
+ if(result.results.some(item=>item.state==='error'||item.state==='unavailable'))return 'error';
+ if(result.results.some(item=>item.state==='pending'||item.state==='unsupported'))return 'pending';
+ return 'empty';
+}
 function element(tag,text,cls){const e=document.createElement(tag);e.textContent=text;if(cls)e.className=cls;return e;}
 function linkIcon(){const span=document.createElement('span');span.className='icon-wrap';span.innerHTML='<svg class="external-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6m0-6-9 9M10 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></svg>';return span;}
 function nearIcon(){const img=document.createElement('img');img.src='./near.svg';img.alt='';img.className='near-icon';return img;}
@@ -13,6 +20,7 @@ function openWithdrawal(result){
  $('withdraw-link').href=protocol.appUrl;
  $('withdraw-link').replaceChildren(`Open ${protocol.name} to withdraw`,linkIcon());
  $('withdraw-domain').textContent=protocol.appHost+' · Network fees may apply';
+ journey('guide');
  $('withdraw-dialog').showModal();
 }
 function amountElement(amount){
@@ -44,6 +52,7 @@ function protocolResult(result){
 }
 function render(state,result){
  $('discovery').dataset.state=state;
+ journey(state==='loading'?'searching':state==='done'?resultJourney(result):'error');
  const content=$('pocket-content');content.replaceChildren();
  const statuses={loading:'Checking mainnet…',done:'Pockets checked',error:'Couldn’t check'};
  $('status').textContent=statuses[state];
@@ -77,6 +86,7 @@ async function scan(value,isExample=false){
 }
 $('scan-form').addEventListener('submit',e=>{e.preventDefault();scan($('account').value);});
 $('try-example').addEventListener('click',()=>scan('ru.near',true));
+$('withdraw-dialog').addEventListener('close',()=>{if(current)journey(resultJourney(current));});
 $('withdraw-dialog').querySelector('.close-dialog').onclick=()=>$('withdraw-dialog').close();
 $('withdraw-dialog').addEventListener('click',e=>{if(e.target===$('withdraw-dialog')){const r=e.target.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)e.target.close();}});
 $('copy-account').onclick=async()=>{try{await navigator.clipboard.writeText(current.account);$('copy-account').textContent='Copied ✓';}catch{$('copy-account').textContent='Select to copy';}};

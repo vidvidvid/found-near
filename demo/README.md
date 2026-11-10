@@ -1,6 +1,6 @@
-# FOUND demo draft
+# FOUND narrated demo
 
-43 seconds, 1280×720, 30 fps, H.264 MP4. Designed to work without sound. No voice-over, music, or third-party audio licensing needed.
+44 seconds, 1280×720, 30 fps, H.264 MP4 with AAC narration. Faye preset, generated with Seed Audio 1.0 through Higgsfield. Also understandable without sound; English captions are available.
 
 Open `index.html` through a local static server to preview. Export: `output/found-demo.mp4`. Poster: `output/poster.png`. Contact sheet: `output/storyboard.jpg`.
 
@@ -13,10 +13,10 @@ Open `index.html` through a local static server to preview. Export: `output/foun
 | 10–17 s | See what’s ready. | Real LiNEAR result, account and block visible |
 | 17–24 s | Use the official app. | Actual withdrawal instructions; owner approval required |
 | 24–30 s | One account. One check. | Real Meta Pool result; LiNEAR + Meta Pool coverage |
-| 30–36 s | 538 accounts. NEAR waiting. | Dated LiNEAR waiting-room snapshot |
-| 36–43 s | Find the NEAR you left behind. | Night shop and public demo URL |
+| 30–37 s | 538 accounts. NEAR waiting. | Dated LiNEAR waiting-room snapshot |
+| 37–44 s | Find the NEAR you left behind. | Night shop and public demo URL |
 
-Visual direction: original dark navy/violet/amber scene, DM Sans, restrained crossfades, tiny drifting lights. Characters float, blink, and nod; there are no speech bubbles, confetti, fake balance counters, or recovery claims.
+Visual direction: original dark navy/violet/amber scene, DM Sans, restrained crossfades, tiny drifting lights. The lantern and wallet advance together: a small search sweep, a discovery hop, then a walk toward the official-app handoff. Positions persist through the middle scenes; there are no speech bubbles, confetti, fake balance counters, or recovery claims.
 
 ## Evidence and editorial treatment
 
@@ -57,6 +57,10 @@ Prompts:
 
 **Background plate:** Use case: precise-object-edit. Remove only the small cyan lantern spirit and green wallet character sitting on the shop counter, including cap, cards and hands. Fill their positions naturally with the empty wooden countertop and shadowed shop. Preserve the dark left half, composition, counter, purple archway, amber lantern, ivy, coin chest, pixel art and stepped pixel clusters. Keep image dimensions/aspect ratio. No new characters, objects, text or logos.
 
-## Revision — animated landing page and narration preparation
+## Narration and character progression
 
-The landing page now uses the same character identities and understated CSS animation, disabled with reduced-motion preferences. The demo account input no longer has the additional editorial outer frame. `narration.txt` and `narration-direction.txt` prepare the voice-over; audio generation awaits a voice selection. The current MP4 remains silent.
+`assets/narration-source.flac` is the lossless generated source. `narration-timing.json` records the exact voice, job ID, parameters, and seven phrase cuts. `narrate.py` extends inter-scene silence and normalizes to -18 LUFS / -2 dBTP; speech is not sped up. `render.py` calls it automatically. Pass `--silent` to render a separate silent version. `output/captions.vtt` provides English captions.
+
+Audio wording was checked with a local faster-whisper transcription, including the 538 figure. This is an automated check, not a claim of human listening review. No music or additional sound effects are mixed in.
+
+On the landing page, character motion follows the real scan state: search while reading RPC, a small hop only for a ready balance, and a guided step when withdrawal instructions open. Empty, pending, and error states do not celebrate a find. Reduced-motion preferences disable all movement. The progression ends at the official app handoff, never a pretend completed withdrawal.

@@ -1,0 +1,69 @@
+{
+  "voice": "Faye",
+  "voice_id": "d198dc0b-c4e5-5198-aa1d-ecf5ca0927c4",
+  "voice_type": "preset",
+  "provider": "Higgsfield / Seed Audio 1.0",
+  "job_id": "761b46e0-c738-4c69-a8d9-d89c9b33477a",
+  "speech_rate": -5,
+  "pitch_rate": 1,
+  "duration": 44,
+  "phrases": [
+    {
+      "source": [
+        0,
+        5.1
+      ],
+      "at": 0,
+      "text": "Unstaked your NEAR? It might still be waiting for you."
+    },
+    {
+      "source": [
+        5.3,
+        10.3
+      ],
+      "at": 5,
+      "text": "Paste your NEAR account. No wallet connection needed."
+    },
+    {
+      "source": [
+        10.4,
+        15.5
+      ],
+      "at": 10.45,
+      "text": "FOUND checks what\u2019s ready to withdraw, straight from the chain."
+    },
+    {
+      "source": [
+        15.5,
+        21.65
+      ],
+      "at": 17.15,
+      "text": "Then open the official app. Only you approve the withdrawal."
+    },
+    {
+      "source": [
+        21.8,
+        25.84
+      ],
+      "at": 24.2,
+      "text": "One simple check covers LiNEAR and Meta Pool."
+    },
+    {
+      "source": [
+        25.84,
+        32.5
+      ],
+      "at": 30.2,
+      "text": "Our LiNEAR snapshot found 538 accounts with NEAR waiting."
+    },
+    {
+      "source": [
+        32.55,
+        37.631375
+      ],
+      "at": 37.4,
+      "text": "FOUND. Find the NEAR you left behind."
+    }
+  ],
+  "verification": "Locally transcribed with faster-whisper base.en; wording and key number 538 match. Pause boundaries checked with ffmpeg silencedetect. No manual listening claim."
+}
