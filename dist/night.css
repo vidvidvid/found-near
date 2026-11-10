@@ -288,3 +288,11 @@ dialog{background:linear-gradient(145deg,#261c2e,#18111f);border-color:#745343;c
 .waiting-stats{grid-template-columns:repeat(4,minmax(0,1fr));width:100%;gap:24px}.waiting-summary{margin-bottom:22px}@media(max-width:720px){.waiting-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 20px}}
 
 .waiting-stat{align-items:center;text-align:center}.waiting-stat .stat-value{justify-content:center}
+
+/* Quiet metadata beside the actual result and public ledger rows. */
+.share-result{border:0;padding:0;background:none;color:inherit;font:inherit;text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+.share-result:hover{color:var(--gold,#ecc77e)}
+.share-result:focus-visible{outline:2px solid #ecc77e;outline-offset:5px;border-radius:2px}
+.lockup-badge{display:inline-block;margin-left:8px;padding:2px 6px;border:1px solid #9c819955;border-radius:5px;color:#cdb8ce;font-size:10px;line-height:1.4;vertical-align:middle;text-decoration:none}
+#leaderboard-error{color:#e2c2b2}
+#leaderboard[aria-busy="true"]{opacity:.7;transition:opacity .15s}

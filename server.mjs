@@ -4,6 +4,9 @@ import {createGzip} from 'node:zlib';
 import {stat} from 'node:fs/promises';
 import {resolve,sep,extname} from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {createLeaderboardApi} from './leaderboard-api.mjs';
+import {createScanApi} from './scan-api.mjs';
+const leaderboardApi=createLeaderboardApi(),scanApi=createScanApi();
 import {createRecoveryStore,createRecoveryApi} from './recoveries.mjs';
 const recoveryStore=process.env.RECOVERY_DB?createRecoveryStore(process.env.RECOVERY_DB):null;
 const recoveryApi=createRecoveryApi({store:recoveryStore});
@@ -14,7 +17,7 @@ export const server=createServer(async(req,res)=>{
  res.setHeader('X-Content-Type-Options','nosniff');
  res.setHeader('Referrer-Policy','strict-origin-when-cross-origin');
  let apiPath;try{apiPath=new URL(req.url,'http://localhost').pathname;}catch{res.writeHead(400);res.end();return;}
- try{if(await recoveryApi(req,res,apiPath))return;}catch{res.writeHead(503,{'Content-Type':'application/json','Cache-Control':'no-store'});res.end(JSON.stringify({error:'Recovery tracking unavailable'}));return;}
+ try{if(await leaderboardApi(req,res,new URL(req.url,'http://localhost'))||await scanApi(req,res,new URL(req.url,'http://localhost'))||await recoveryApi(req,res,apiPath))return;}catch{res.writeHead(503,{'Content-Type':'application/json','Cache-Control':'no-store'});res.end(JSON.stringify({error:'Service temporarily unavailable'}));return;}
  if(!['GET','HEAD'].includes(req.method)){res.writeHead(405,{Allow:'GET, HEAD'});res.end();return;}
  try{
   const path=decodeURIComponent(new URL(req.url,'http://localhost').pathname);
