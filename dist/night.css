@@ -248,7 +248,7 @@ dialog{background:linear-gradient(145deg,#261c2e,#18111f);border-color:#745343;c
 /* Extra coverage fits the same quiet footprint; only the results list scrolls. */
 #pocket-content{height:302px;min-height:302px;overflow-y:auto;overflow-x:hidden;display:block;scrollbar-width:thin;scrollbar-color:#72566c transparent;padding-right:6px;overscroll-behavior:contain}
 #pocket-content .protocol-result{margin:0 0 10px;height:138px}
-.protocol-result-heading h3{min-width:0;overflow-wrap:anywhere;line-height:1.35;max-width:64%}
+.protocol-result-heading h3{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.35;max-width:64%}
 .protocol-result-heading .result-state{flex-shrink:0;font-size:9px}
 .pocket .results-summary{font-size:11px;color:#dac39c;margin:0 0 10px}
 .pocket .result-coverage{font-size:10px;line-height:1.5;color:#b6a1c0;margin:13px 0 2px}
