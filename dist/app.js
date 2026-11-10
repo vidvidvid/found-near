@@ -1,6 +1,7 @@
 import {createWalletUi} from './wallet-ui.js';
 import {scanProtocols,normalizeAccount,validAccount,formatNear,exactNear,PROTOCOLS} from './rpc.js';
 const $=id=>document.getElementById(id);let request=null,current=null,example=false,walletUi;
+let welcomeExit=null;
 function journey(state){$('discovery').dataset.journey=state;}
 function resultJourney(result){
  if(result.results.some(item=>item.state==='found'))return 'found';
@@ -68,9 +69,27 @@ function protocolResult(result){
  }
  return section;
 }
+function leaveWelcome(content){
+ const panel=content.querySelector('.pocket-welcome');
+ if(!panel||typeof panel.animate!=='function'||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ // Keep the actual illustration alive above the incoming result. Freeze its exact
+ // current pose so changing state cannot restart an animation halfway through.
+ for(const node of panel.querySelectorAll('.welcome-wallet,.welcome-coin,.friend-sprite,.welcome-spark')){
+  const style=getComputedStyle(node);
+  const pose={transform:style.transform,translate:style.translate,backgroundPosition:style.backgroundPosition,boxShadow:style.boxShadow};
+  node.style.animation='none';node.style.transition='none';Object.assign(node.style,pose);
+ }
+ panel.classList.add('welcome-leaving');panel.inert=true;panel.setAttribute('aria-hidden','true');
+ panel.querySelector('#welcome-title')?.removeAttribute('id');
+ $('pocket').append(panel);welcomeExit=panel;
+ const fade=panel.animate([{opacity:1},{opacity:0}],{duration:560,easing:'cubic-bezier(.4,0,.2,1)',fill:'forwards'});
+ fade.finished.catch(()=>{}).finally(()=>{panel.remove();if(welcomeExit===panel)welcomeExit=null;});
+}
 function render(state,result){
  const discovery=$('discovery'),content=$('pocket-content'),account=$('checked-account'),proof=$('result-proof');
- const finishing=discovery.dataset.state==='loading'&&state==='done';
+ const finishing=discovery.dataset.state==='loading'&&['done','error'].includes(state);
+ if(state==='loading'&&welcomeExit){welcomeExit.remove();welcomeExit=null;}
+ if(finishing)leaveWelcome(content);
  discovery.dataset.state=state;
  discovery.classList.toggle('just-found',finishing);
  if(state==='loading'){
@@ -80,7 +99,7 @@ function render(state,result){
   $('scan-summary').hidden=true;
   const welcome=content.querySelector('.pocket-welcome');
   if(welcome){
-   const label=welcome.querySelector('.welcome-description');
+   const label=welcome.querySelector('.welcome-coverage');
    const name=result.account.length>28?result.account.slice(0,12)+'…'+result.account.slice(-10):result.account;
    label.textContent='Checking '+name+'…';label.title=result.account;
    const button=welcome.querySelector('button');button.textContent='Checking…';button.disabled=true;

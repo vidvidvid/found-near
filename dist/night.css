@@ -19,28 +19,19 @@
 body{overflow-x:clip}
 main{overflow-x:clip}
 
-/* Search, notice, guide: reactions follow real RPC results, never elapsed time. */
-.pixel-friend{transition:translate .8s ease,filter .5s ease}
-.lantern-friend:after{content:"";position:absolute;inset:18%;border-radius:50%;background:#8be0d5;filter:blur(18px);opacity:0;z-index:-1;transition:opacity .5s}
-.discovery[data-journey=searching] .lantern-friend{animation:lantern-search 3.4s ease-in-out infinite}
-.discovery[data-journey=searching] .wallet-friend{animation:wallet-watch 3.4s ease-in-out infinite}
+/* Character motion keeps its phase; state changes only ease the outer position. */
+.pixel-friend{transition:translate .9s cubic-bezier(.22,1,.36,1),filter .6s ease}
+.lantern-friend:after{content:"";position:absolute;inset:18%;border-radius:50%;background:#8be0d5;filter:blur(18px);opacity:0;z-index:-1;transition:opacity .6s ease}
+.discovery[data-journey=searching] .lantern-friend{translate:-5px -3px}
+.discovery[data-journey=searching] .wallet-friend{translate:2px 0}
 .discovery[data-journey=searching] .lantern-friend:after{opacity:.15}
-.discovery[data-journey=found] .lantern-friend{translate:12px -3px;animation:lantern-notice 1.15s ease-out both}
-.discovery[data-journey=found] .wallet-friend{translate:8px 0;animation:wallet-notice 1.3s .15s ease-out both}
+.discovery[data-journey=found] .lantern-friend{translate:8px -3px}
+.discovery[data-journey=found] .wallet-friend{translate:5px 0}
 .discovery[data-journey=found] .lantern-friend:after{opacity:.24}
 .discovery[data-journey=found] .status{background:#20382f;color:#acd6b8}
-.discovery[data-journey=guide] .lantern-friend{translate:42px -8px;animation:guide-float 2.8s ease-in-out infinite}
-.discovery[data-journey=guide] .wallet-friend{translate:30px 0;animation:wallet-follow .9s ease-out both}
+.discovery[data-journey=guide] .lantern-friend{translate:24px -6px}
+.discovery[data-journey=guide] .wallet-friend{translate:16px 0}
 .discovery[data-journey=guide] .lantern-friend:after{opacity:.22}
-.discovery[data-journey=pending] .lantern-friend,
-.discovery[data-journey=empty] .lantern-friend{animation:spirit-float 7s ease-in-out infinite}
-.discovery[data-journey=error] .pixel-friend{animation:none}
-@keyframes lantern-search{0%,100%{transform:translate(0,0) rotate(-3deg)}30%{transform:translate(-16px,-5px) rotate(-7deg)}70%{transform:translate(15px,-3px) rotate(5deg)}}
-@keyframes wallet-watch{0%,100%{transform:rotate(0)}30%{transform:rotate(-2deg)}70%{transform:rotate(2deg)}}
-@keyframes lantern-notice{0%{transform:translateY(0)}35%{transform:translateY(-15px) rotate(5deg)}65%{transform:translateY(2px) rotate(-2deg)}100%{transform:translateY(0)}}
-@keyframes wallet-notice{0%,100%{transform:translateY(0)}45%{transform:translateY(-7px) rotate(-3deg)}70%{transform:translateY(1px)}}
-@keyframes guide-float{0%,100%{transform:translateY(0) rotate(3deg)}50%{transform:translateY(-4px) rotate(1deg)}}
-@keyframes wallet-follow{0%,100%{transform:rotate(0)}25%{transform:translateY(-4px) rotate(-3deg)}55%{transform:translateY(0) rotate(2deg)}80%{transform:translateY(-2px) rotate(-1deg)}}
 @media(prefers-reduced-motion:reduce){.pixel-friend{transition:none;translate:none!important}.lantern-friend:after{transition:none}}
 
 /* The currency symbol shares the label's cap height and baseline. */
@@ -212,25 +203,26 @@ dialog{background:linear-gradient(145deg,#261c2e,#18111f);border-color:#745343;c
 
 @media(max-width:360px){h1{font-size:40px}.brand{font-size:32px}.brand-o:after{top:19px;left:7px;width:4px;height:4px}}
 
-/* A search wakes the illustration without replacing the card with placeholders. */
+/* Continuous idle motion, with a smooth lift and glow when a search begins. */
 .pocket .welcome-description{min-height:43px}
-#pocket-content{transition:opacity .22s ease}
-.discovery[data-state=loading]:not([data-view=idle]) #pocket-content{opacity:.48}
+#pocket-content{transition:opacity .4s ease}
+.discovery[data-state=loading]:not([data-view=idle]) #pocket-content{opacity:.65}
 .discovery[data-state=loading] .proof{overflow:hidden;text-overflow:ellipsis;display:block;color:#d7bd93}
 .welcome-example{min-width:158px}
 .welcome-example:disabled{cursor:wait;filter:none}
-.discovery[data-state=loading] .welcome-wallet{animation:wallet-search 1.8s ease-in-out infinite}
-.discovery[data-state=loading] .welcome-coin{animation:coin-search 2.4s ease-in-out infinite;box-shadow:0 3px 0 #916337,0 0 26px #f6bd5c55}
-.discovery[data-state=loading] .welcome-art:before{animation:search-glow 2.4s ease-in-out infinite}
-.discovery[data-state=loading] .welcome-spark{animation:search-spark 1.6s ease-in-out infinite}
-.discovery[data-state=loading] .spark-right{animation-delay:.55s}
-.discovery.just-found .protocol-result{animation:result-arrive .32s ease-out both}
-.discovery.just-found .protocol-result+.protocol-result{animation-delay:.055s}
-.discovery.just-found .pocket{animation:found-glow .85s ease-out}
-@keyframes wallet-search{0%,100%{transform:rotate(-6deg) translateY(0)}35%{transform:rotate(1deg) translateY(-5px)}70%{transform:rotate(-8deg) translateY(-1px)}}
-@keyframes coin-search{0%,100%{transform:translate(0,0) rotate(8deg)}40%{transform:translate(-8px,-17px) rotate(-12deg)}75%{transform:translate(4px,-7px) rotate(12deg)}}
-@keyframes search-glow{0%,100%{opacity:.5;transform:scale(.92)}50%{opacity:1;transform:scale(1.13)}}
-@keyframes search-spark{0%,100%{opacity:.3;transform:translateY(3px) rotate(45deg) scale(.7)}50%{opacity:1;transform:translateY(-7px) rotate(45deg) scale(1.2)}}
-@keyframes result-arrive{from{opacity:.65;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-@keyframes found-glow{0%{box-shadow:0 0 28px #eac27d38,0 16px 50px #05020a60}100%{box-shadow:0 16px 50px #05020a60,0 1px 0 #edb57117 inset}}
-@media(prefers-reduced-motion:reduce){#pocket-content{transition:none}.discovery .welcome-art:before,.discovery .welcome-spark,.discovery.just-found .protocol-result,.discovery.just-found .pocket{animation:none!important}}
+.welcome-wallet{translate:0 0;transition:translate .8s cubic-bezier(.22,1,.36,1)}
+.welcome-coin{translate:0 0;transition:translate .9s cubic-bezier(.22,1,.36,1),box-shadow .8s ease}
+.welcome-art:before{opacity:.55;transition:opacity .8s ease}
+.welcome-spark{opacity:.45;translate:0 0;transition:opacity .8s ease,translate .9s ease}
+.discovery[data-state=loading] .welcome-wallet{translate:0 -5px}
+.discovery[data-state=loading] .welcome-coin{translate:-7px -13px;box-shadow:0 3px 0 #916337,0 0 30px #f6bd5c55}
+.discovery[data-state=loading] .welcome-art:before{opacity:1}
+.discovery[data-state=loading] .welcome-spark{opacity:1;translate:0 -5px}
+/* The outgoing welcome remains above the real result during a single crossfade. */
+.welcome-leaving{inset:0;padding:22px;z-index:3;border-radius:inherit;background:radial-gradient(ellipse at 50% 35%,#78522b24,transparent 68%),linear-gradient(145deg,#241b2b,#15121e 70%);pointer-events:none;will-change:opacity}
+.discovery.just-found .pocket-top,.discovery.just-found .checked-account,.discovery.just-found #pocket-content,.discovery.just-found #result-proof{animation:result-arrive .56s cubic-bezier(.4,0,.2,1) both}
+@keyframes result-arrive{from{opacity:.25}to{opacity:1}}
+#scan-button:active{transform:none}
+#scan-button:disabled{background:linear-gradient(#f3cf90,#e5b976);filter:brightness(.97)}
+@media(max-width:620px){.welcome-leaving{padding:19px}}
+@media(prefers-reduced-motion:reduce){#pocket-content,.welcome-wallet,.welcome-coin,.welcome-art:before,.welcome-spark{transition:none!important}.discovery.just-found .pocket-top,.discovery.just-found .checked-account,.discovery.just-found #pocket-content,.discovery.just-found #result-proof{animation:none!important}.discovery[data-state=loading] .welcome-wallet,.discovery[data-state=loading] .welcome-coin,.discovery[data-state=loading] .welcome-spark{translate:none}}
