@@ -2,7 +2,7 @@
 
 ## Submission details
 
-- Track: **Open Innovation**.
+- Recommended tracks: **Open Innovation** (primary); **Unstoppable DeFi** (secondary, weaker fit). Final selection remains the team’s decision.
 - Pitch: **Find the NEAR you left behind.**
 - Live demo: https://found-production-e549.up.railway.app/
 - Repository: https://github.com/vidvidvid/found-near
@@ -13,7 +13,7 @@
 
 Unstaked does not always mean withdrawn. NEAR can finish unlocking inside a staking protocol while still requiring a separate owner-signed withdrawal.
 
-FOUND finds those unfinished LiNEAR and Meta Pool withdrawals without requiring a wallet connection to scan. It reads both protocols at the same finalized block, applies protocol-specific maturity and liquidity checks, and lets the owner request a withdrawal directly in FOUND. The connected wallet approves each transaction; the protocol sends funds to that account. FOUND never takes custody or charges a finder’s fee. Official protocol apps remain available as an alternative.
+FOUND finds unfinished withdrawals in LiNEAR, Meta Pool, rNEAR and supported indexed validator pools without requiring a wallet connection to scan. It reads every checked source at the same finalized block, applies protocol-specific maturity and liquidity checks, and lets the owner request a withdrawal directly in FOUND. The connected wallet approves each transaction; the protocol sends funds to that account. FOUND never takes custody or charges a finder’s fee. Official protocol apps remain available as an alternative.
 
 Its public waiting room is reproducible evidence rather than a curated screenshot: one command reads all 47,882 LiNEAR accounts at block 223800610 and verifies the 538 matured balances above 0.01 NEAR. The snapshot does not label owners as forgetful or funds as abandoned.
 
@@ -29,15 +29,19 @@ npm run census -- --block 223800610 --check
 - The test suite covers financial-state transitions, exact withdrawal preflights, pagination, malformed responses, failures, and server safety.
 - The census command independently reproduces the checked-in leaderboard byte-for-byte without modifying it.
 - `ru.near` provided a live LiNEAR example during development.
+- `deportivo.near` provided a live rNEAR example, with a separate Lonk validator withdrawal.
+- `within4d45.near` provided Shitzu and Meteor validator-pool examples; its custom Aurora pool remains explicitly unsupported.
 - `lb3.near` provided a live Meta Pool example during development.
 - Balances are live and may change; no result is hardcoded in the checker.
 - Methodology and protocol sources are documented in [RESEARCH.md](RESEARCH.md).
 
 ## Demo video draft
 
-A 43-second, sound-off demo is prepared in [demo/output/found-demo.mp4](demo/output/found-demo.mp4). Preview it with [demo/index.html](demo/index.html) served locally. The [edit notes](demo/README.md) include timing, capture provenance, asset prompts and rebuild instructions.
+A 44-second, narrated demo is prepared in [demo/output/found-demo.mp4](demo/output/found-demo.mp4). Preview it with [demo/index.html](demo/index.html) served locally. The [edit notes](demo/README.md) include timing, capture provenance, asset prompts and rebuild instructions.
 
-The cut leads with the user task: paste an account, discover a real balance, then show the official withdrawal instructions. Meta Pool coverage and the reproducible LiNEAR census follow as evidence. The existing pixel-art characters are subtly animated. Public examples are labelled; no completed withdrawal is implied.
+The cut leads with the user task: paste an account, discover a real balance, then show connecting a wallet and approving directly in FOUND. Meta Pool coverage and the reproducible LiNEAR census follow as evidence. The existing pixel-art characters are subtly animated. Public examples are labelled; no completed withdrawal is implied.
+
+This recorded demo shows the earlier two-protocol UI; rNEAR and validator coverage are verified in the live app and the expansion evidence. Refresh the coverage scene before final publication.
 
 This is a local draft, not a published demo URL. Review it before uploading and add the final public video/post links above.
 
@@ -48,7 +52,7 @@ Replace `[VIDEO_URL]` with the uploaded video or the post’s attached video bef
 ```text
 Unstaked doesn’t always mean withdrawn.
 
-FOUND finds matured LiNEAR + Meta Pool withdrawals—no wallet connection needed to scan. Its waiting room is reproducible from 47,882 onchain accounts. Connect your wallet and approve the withdrawal in FOUND.
+FOUND finds unfinished staking withdrawals across NEAR—no wallet connection needed to scan. Its waiting room is reproducible from 47,882 onchain accounts. Connect your wallet and approve the withdrawal in FOUND.
 
 Built at NEAR HACKATHON.
 @NEARProtocol #NEARHackathon

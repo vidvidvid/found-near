@@ -1,0 +1,409 @@
+{
+  "checkedAt": "2026-11-10T21:49:42.992Z",
+  "block": 223974598,
+  "blockHash": "AN3Dhk5ddtQXdVFw392AsmXF24RG5eGk9oPkZ55FT2T1",
+  "factoryProof": {
+    "legacyFactory": "FjtxkkaKDKCW1F6HgsuYvnQ9GMxrzhnkQwCm52G9gYuA",
+    "legacyPool": "J1arLz48fgXcGyCPVckFwLnewNH6j1uw79thsvwqGYTY",
+    "legacyEmbedsExactPool": true,
+    "modernFactory": "76CXWPjeQeaKDb2qPcygg7fkDEPh1YmQFkiGeTCfaSYn",
+    "modernPool": "AjD4YJaXgpiRdiArqnzyDi7Bkr1gJms9Z2w7Ev5esTKB",
+    "modernReturnsExactPool": true
+  },
+  "storageCost": "10000000000000000000",
+  "protocolVersion": 88,
+  "rnearMetadata": {
+    "version": "1.0.2",
+    "link": "https://github.com/rhea-finance/rnear-contract/tree/c04e9008bfbf7a44d99c8f66179deb715a7357f9",
+    "standards": [
+      {
+        "standard": "nep330",
+        "version": "1.3.0"
+      }
+    ],
+    "build_info": {
+      "build_environment": "sourcescan/cargo-near:0.16.0-rust-1.86.0@sha256:3220302ebb7036c1942e772810f21edd9381edf9a339983da43487c77fbad488",
+      "build_command": [
+        "cargo",
+        "near",
+        "build",
+        "non-reproducible-wasm",
+        "--locked"
+      ],
+      "contract_path": "contracts/lst",
+      "source_code_snapshot": "git+https://github.com/rhea-finance/rnear-contract.git?rev=c04e9008bfbf7a44d99c8f66179deb715a7357f9",
+      "output_wasm_path": "/home/near/code/target/near/lst/lst.wasm"
+    }
+  },
+  "accounts": [
+    {
+      "result": {
+        "account": "deportivo.near",
+        "block": "GiPuXzpJq9UjjAj3yJyyRTcRX26UYHNYvEScz1vPWRpi",
+        "height": 223974600,
+        "checkedAt": 1794347383392,
+        "results": [
+          {
+            "account": "deportivo.near",
+            "protocol": "linear",
+            "amount": "0",
+            "block": "GiPuXzpJq9UjjAj3yJyyRTcRX26UYHNYvEScz1vPWRpi",
+            "height": 223974600,
+            "checkedAt": 1794347383244,
+            "state": "empty"
+          },
+          {
+            "account": "deportivo.near",
+            "protocol": "metapool",
+            "amount": "0",
+            "block": "GiPuXzpJq9UjjAj3yJyyRTcRX26UYHNYvEScz1vPWRpi",
+            "height": 223974600,
+            "checkedAt": 1794347383250,
+            "state": "empty"
+          },
+          {
+            "account": "deportivo.near",
+            "protocol": "rnear",
+            "amount": "10651535901265475072115647348",
+            "block": "GiPuXzpJq9UjjAj3yJyyRTcRX26UYHNYvEScz1vPWRpi",
+            "height": 223974600,
+            "checkedAt": 1794347383261,
+            "codeHash": "EPLT4C61pkVYf5Km6dC4X9x5PMo6rfBwuEwo7vgKpmuv",
+            "state": "found"
+          },
+          {
+            "account": "deportivo.near",
+            "protocol": "pool:everstake.poolv1.near",
+            "codeHash": "J1arLz48fgXcGyCPVckFwLnewNH6j1uw79thsvwqGYTY",
+            "block": "GiPuXzpJq9UjjAj3yJyyRTcRX26UYHNYvEScz1vPWRpi",
+            "height": 223974600,
+            "checkedAt": 1794347383263,
+            "amount": "0",
+            "state": "empty"
+          },
+          {
+            "account": "deportivo.near",
+            "protocol": "pool:lonk_validator.poolv1.near",
+            "codeHash": "J1arLz48fgXcGyCPVckFwLnewNH6j1uw79thsvwqGYTY",
+            "block": "GiPuXzpJq9UjjAj3yJyyRTcRX26UYHNYvEScz1vPWRpi",
+            "height": 223974600,
+            "checkedAt": 1794347383278,
+            "amount": "813990621000000000000000002",
+            "state": "found"
+          }
+        ],
+        "pools": {
+          "state": "complete",
+          "discovered": 2,
+          "checked": 2,
+          "limit": 24
+        }
+      },
+      "independent": [
+        {
+          "contract": "lst.rhealab.near",
+          "provider": "https://rpc.intea.rs",
+          "block": "GiPuXzpJq9UjjAj3yJyyRTcRX26UYHNYvEScz1vPWRpi",
+          "amount": "10651535901265475072115647348",
+          "can_withdraw": true
+        },
+        {
+          "contract": "lonk_validator.poolv1.near",
+          "provider": "https://rpc.intea.rs",
+          "block": "GiPuXzpJq9UjjAj3yJyyRTcRX26UYHNYvEScz1vPWRpi",
+          "amount": "813990621000000000000000002",
+          "can_withdraw": true
+        }
+      ]
+    },
+    {
+      "result": {
+        "account": "within4d45.near",
+        "block": "2LBuLAReMJaEA4VuN6gj4rEnoXpdr8fq9MCTSjnp1VBZ",
+        "height": 223974605,
+        "checkedAt": 1794347386174,
+        "results": [
+          {
+            "account": "within4d45.near",
+            "protocol": "linear",
+            "amount": "401497286241847209517214832",
+            "block": "2LBuLAReMJaEA4VuN6gj4rEnoXpdr8fq9MCTSjnp1VBZ",
+            "height": 223974605,
+            "checkedAt": 1794347385971,
+            "state": "found"
+          },
+          {
+            "account": "within4d45.near",
+            "protocol": "metapool",
+            "amount": "0",
+            "block": "2LBuLAReMJaEA4VuN6gj4rEnoXpdr8fq9MCTSjnp1VBZ",
+            "height": 223974605,
+            "checkedAt": 1794347385999,
+            "state": "empty"
+          },
+          {
+            "account": "within4d45.near",
+            "protocol": "rnear",
+            "amount": "0",
+            "block": "2LBuLAReMJaEA4VuN6gj4rEnoXpdr8fq9MCTSjnp1VBZ",
+            "height": 223974605,
+            "checkedAt": 1794347385965,
+            "state": "empty"
+          },
+          {
+            "account": "within4d45.near",
+            "protocol": "pool:aurora.pool.near",
+            "codeHash": "5vf2Jkqpk11H7szLnY4XdPA6maJi1ND8xe346xtbtX8e",
+            "block": "2LBuLAReMJaEA4VuN6gj4rEnoXpdr8fq9MCTSjnp1VBZ",
+            "height": 223974605,
+            "checkedAt": 1794347385976,
+            "state": "unsupported",
+            "reason": "implementation"
+          },
+          {
+            "account": "within4d45.near",
+            "protocol": "pool:fialka.poolv1.near",
+            "codeHash": "J1arLz48fgXcGyCPVckFwLnewNH6j1uw79thsvwqGYTY",
+            "block": "2LBuLAReMJaEA4VuN6gj4rEnoXpdr8fq9MCTSjnp1VBZ",
+            "height": 223974605,
+            "checkedAt": 1794347385948,
+            "amount": "0",
+            "state": "empty"
+          },
+          {
+            "account": "within4d45.near",
+            "protocol": "pool:sicmundus.poolv1.near",
+            "codeHash": "J1arLz48fgXcGyCPVckFwLnewNH6j1uw79thsvwqGYTY",
+            "block": "2LBuLAReMJaEA4VuN6gj4rEnoXpdr8fq9MCTSjnp1VBZ",
+            "height": 223974605,
+            "checkedAt": 1794347385950,
+            "amount": "0",
+            "state": "empty"
+          },
+          {
+            "account": "within4d45.near",
+            "protocol": "pool:readylayerone_staking.poolv1.near",
+            "codeHash": "J1arLz48fgXcGyCPVckFwLnewNH6j1uw79thsvwqGYTY",
+            "block": "2LBuLAReMJaEA4VuN6gj4rEnoXpdr8fq9MCTSjnp1VBZ",
+            "height": 223974605,
+            "checkedAt": 1794347386014,
+            "amount": "0",
+            "state": "empty"
+          },
+          {
+            "account": "within4d45.near",
+            "protocol": "pool:shitzu.pool.near",
+            "codeHash": "AjD4YJaXgpiRdiArqnzyDi7Bkr1gJms9Z2w7Ev5esTKB",
+            "block": "2LBuLAReMJaEA4VuN6gj4rEnoXpdr8fq9MCTSjnp1VBZ",
+            "height": 223974605,
+            "checkedAt": 1794347386042,
+            "amount": "55479433000000000000000002",
+            "state": "found"
+          },
+          {
+            "account": "within4d45.near",
+            "protocol": "pool:meteor.poolv1.near",
+            "codeHash": "J1arLz48fgXcGyCPVckFwLnewNH6j1uw79thsvwqGYTY",
+            "block": "2LBuLAReMJaEA4VuN6gj4rEnoXpdr8fq9MCTSjnp1VBZ",
+            "height": 223974605,
+            "checkedAt": 1794347386037,
+            "amount": "5788036000000000000000003",
+            "state": "found"
+          }
+        ],
+        "pools": {
+          "state": "complete",
+          "discovered": 6,
+          "checked": 6,
+          "limit": 24
+        }
+      },
+      "independent": [
+        {
+          "contract": "shitzu.pool.near",
+          "provider": "https://rpc.intea.rs",
+          "block": "2LBuLAReMJaEA4VuN6gj4rEnoXpdr8fq9MCTSjnp1VBZ",
+          "amount": "55479433000000000000000002",
+          "can_withdraw": true
+        },
+        {
+          "contract": "meteor.poolv1.near",
+          "provider": "https://rpc.intea.rs",
+          "block": "2LBuLAReMJaEA4VuN6gj4rEnoXpdr8fq9MCTSjnp1VBZ",
+          "amount": "5788036000000000000000003",
+          "can_withdraw": true
+        }
+      ]
+    },
+    {
+      "result": {
+        "account": "ru.near",
+        "block": "4jPNesDT95AkoQqGY8SV2jTG6GeLxjcbFd4YSPhaAmDV",
+        "height": 223974609,
+        "checkedAt": 1794347388496,
+        "results": [
+          {
+            "account": "ru.near",
+            "protocol": "linear",
+            "amount": "500307262171597331335415343",
+            "block": "4jPNesDT95AkoQqGY8SV2jTG6GeLxjcbFd4YSPhaAmDV",
+            "height": 223974609,
+            "checkedAt": 1794347388430,
+            "state": "found"
+          },
+          {
+            "account": "ru.near",
+            "protocol": "metapool",
+            "amount": "0",
+            "block": "4jPNesDT95AkoQqGY8SV2jTG6GeLxjcbFd4YSPhaAmDV",
+            "height": 223974609,
+            "checkedAt": 1794347388431,
+            "state": "empty"
+          },
+          {
+            "account": "ru.near",
+            "protocol": "rnear",
+            "amount": "0",
+            "block": "4jPNesDT95AkoQqGY8SV2jTG6GeLxjcbFd4YSPhaAmDV",
+            "height": 223974609,
+            "checkedAt": 1794347388430,
+            "state": "empty"
+          },
+          {
+            "account": "ru.near",
+            "protocol": "pool:erm.poolv1.near",
+            "codeHash": "J1arLz48fgXcGyCPVckFwLnewNH6j1uw79thsvwqGYTY",
+            "block": "4jPNesDT95AkoQqGY8SV2jTG6GeLxjcbFd4YSPhaAmDV",
+            "height": 223974609,
+            "checkedAt": 1794347388432,
+            "amount": "0",
+            "state": "empty"
+          }
+        ],
+        "pools": {
+          "state": "complete",
+          "discovered": 1,
+          "checked": 1,
+          "limit": 24
+        }
+      },
+      "independent": []
+    },
+    {
+      "result": {
+        "account": "lb3.near",
+        "block": "4jPNesDT95AkoQqGY8SV2jTG6GeLxjcbFd4YSPhaAmDV",
+        "height": 223974609,
+        "checkedAt": 1794347388822,
+        "results": [
+          {
+            "account": "lb3.near",
+            "protocol": "linear",
+            "amount": "0",
+            "block": "4jPNesDT95AkoQqGY8SV2jTG6GeLxjcbFd4YSPhaAmDV",
+            "height": 223974609,
+            "checkedAt": 1794347388643,
+            "state": "empty"
+          },
+          {
+            "account": "lb3.near",
+            "protocol": "metapool",
+            "amount": "17502401050000000000000000000",
+            "block": "4jPNesDT95AkoQqGY8SV2jTG6GeLxjcbFd4YSPhaAmDV",
+            "height": 223974609,
+            "checkedAt": 1794347388647,
+            "state": "found"
+          },
+          {
+            "account": "lb3.near",
+            "protocol": "rnear",
+            "amount": "0",
+            "block": "4jPNesDT95AkoQqGY8SV2jTG6GeLxjcbFd4YSPhaAmDV",
+            "height": 223974609,
+            "checkedAt": 1794347388619,
+            "state": "empty"
+          }
+        ],
+        "pools": {
+          "state": "complete",
+          "discovered": 0,
+          "checked": 0,
+          "limit": 24
+        }
+      },
+      "independent": []
+    },
+    {
+      "result": {
+        "account": "root.near",
+        "block": "B4dC6rpjpCBuBR3qpLt7pqUP8xhf7BtjMLJfKqcHwwns",
+        "height": 223974610,
+        "checkedAt": 1794347389284,
+        "results": [
+          {
+            "account": "root.near",
+            "protocol": "linear",
+            "amount": "0",
+            "block": "B4dC6rpjpCBuBR3qpLt7pqUP8xhf7BtjMLJfKqcHwwns",
+            "height": 223974610,
+            "checkedAt": 1794347389175,
+            "state": "empty"
+          },
+          {
+            "account": "root.near",
+            "protocol": "metapool",
+            "amount": "0",
+            "block": "B4dC6rpjpCBuBR3qpLt7pqUP8xhf7BtjMLJfKqcHwwns",
+            "height": 223974610,
+            "checkedAt": 1794347389162,
+            "state": "empty"
+          },
+          {
+            "account": "root.near",
+            "protocol": "rnear",
+            "amount": "0",
+            "block": "B4dC6rpjpCBuBR3qpLt7pqUP8xhf7BtjMLJfKqcHwwns",
+            "height": 223974610,
+            "checkedAt": 1794347389139,
+            "state": "empty"
+          },
+          {
+            "account": "root.near",
+            "protocol": "pool:ashert.poolv1.near",
+            "codeHash": "J1arLz48fgXcGyCPVckFwLnewNH6j1uw79thsvwqGYTY",
+            "block": "B4dC6rpjpCBuBR3qpLt7pqUP8xhf7BtjMLJfKqcHwwns",
+            "height": 223974610,
+            "checkedAt": 1794347389170,
+            "amount": "0",
+            "state": "empty"
+          },
+          {
+            "account": "root.near",
+            "protocol": "pool:shitzu.pool.near",
+            "codeHash": "AjD4YJaXgpiRdiArqnzyDi7Bkr1gJms9Z2w7Ev5esTKB",
+            "block": "B4dC6rpjpCBuBR3qpLt7pqUP8xhf7BtjMLJfKqcHwwns",
+            "height": 223974610,
+            "checkedAt": 1794347389157,
+            "amount": "1",
+            "state": "found"
+          }
+        ],
+        "pools": {
+          "state": "complete",
+          "discovered": 2,
+          "checked": 2,
+          "limit": 24
+        }
+      },
+      "independent": [
+        {
+          "contract": "shitzu.pool.near",
+          "provider": "https://rpc.intea.rs",
+          "block": "B4dC6rpjpCBuBR3qpLt7pqUP8xhf7BtjMLJfKqcHwwns",
+          "amount": "1",
+          "can_withdraw": true
+        }
+      ]
+    }
+  ]
+}

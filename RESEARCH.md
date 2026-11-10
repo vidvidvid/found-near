@@ -69,3 +69,7 @@ These are read-only snapshot checks, not transaction simulations or guarantees. 
 ## Coverage expansion investigation
 
 [10 November 2026 findings](research/coverage-2026-11-10/README.md) document additional validator-pool withdrawals, rNEAR delayed withdrawals, Rhea/Ref internal wNEAR and available storage deposits. Includes pinned mainnet evidence and an explicitly incomplete rNEAR census. These are researched candidates, not current FOUND coverage.
+
+## Implemented coverage expansion
+
+[rNEAR and validator-pool verification](research/coverage-expansion/README.md): implementation scope, exact deployed-code provenance, independent RPC checks, tests and remaining limits.

@@ -244,3 +244,32 @@ dialog{background:linear-gradient(145deg,#261c2e,#18111f);border-color:#745343;c
 
 /* Field validation stays in the reserved feedback row, without moving the result. */
 .input-row:has(input[aria-invalid=true]){border-color:#d79682}
+
+/* Extra coverage fits the same quiet footprint; only the results list scrolls. */
+#pocket-content{height:302px;min-height:302px;overflow-y:auto;overflow-x:hidden;display:block;scrollbar-width:thin;scrollbar-color:#72566c transparent;padding-right:6px;overscroll-behavior:contain}
+#pocket-content .protocol-result{margin:0 0 10px;height:138px}
+.protocol-result-heading h3{min-width:0;overflow-wrap:anywhere;line-height:1.35;max-width:64%}
+.protocol-result-heading .result-state{flex-shrink:0;font-size:9px}
+.pocket .results-summary{font-size:11px;color:#dac39c;margin:0 0 10px}
+.pocket .result-coverage{font-size:10px;line-height:1.5;color:#b6a1c0;margin:13px 0 2px}
+.checked-sources{border-top:1px solid #59435b75;margin-top:12px;padding:12px 0 2px;color:#c8b9d1;font-size:11px}
+.checked-sources summary{cursor:pointer;min-height:25px;line-height:1.6;list-style-position:inside}
+.checked-sources ul{padding:0;margin:8px 0 0;list-style:none}
+.checked-sources li{display:flex;justify-content:space-between;gap:14px;padding:8px 0;border-top:1px solid #49354d55;color:#b7a8c1;font-size:10px}
+.checked-sources li span:first-child{overflow-wrap:anywhere;min-width:0}
+.checked-sources li span:last-child{white-space:nowrap}
+.all-clear{min-height:187px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:12px;padding:12px}
+.all-clear>.near-icon{height:28px;width:28px;opacity:.7;filter:invert(84%) sepia(29%) saturate(661%) hue-rotate(337deg)}
+.pocket .all-clear h3{font-size:22px;font-weight:500;margin:0;color:#eee0d3;letter-spacing:-.5px}
+.pocket .all-clear p{font-size:12px;color:#b9a7c3;line-height:1.6;max-width:245px;margin:0}
+.discovery-notice{padding:12px 14px;border:1px solid #805c4b99;background:#3d29254d;border-radius:9px;margin:10px 0}
+.pocket .discovery-notice p{font-size:11px;color:#e2baa1;line-height:1.6;margin:0 0 8px}
+.coverage-retry{padding:4px 0;background:transparent;color:#eed09a;text-decoration:underline;text-underline-offset:4px;font-size:11px}
+.pocket .welcome-coverage{max-width:265px;line-height:1.8}
+@media(max-width:620px){#pocket-content{padding-right:4px}.protocol-result-heading h3{font-size:12px}.protocol-result-heading .result-state{font-size:9px}}
+
+#pocket-content{scrollbar-gutter:stable}
+#pocket-content::-webkit-scrollbar{width:5px}
+#pocket-content::-webkit-scrollbar-track{background:#281d2d;border-radius:8px}
+#pocket-content::-webkit-scrollbar-thumb{background:#8d6b80;border-radius:8px}
+#pocket-content:focus-visible{outline:1px solid #d2ab75;outline-offset:4px;border-radius:8px}

@@ -1,4 +1,4 @@
-import {PROTOCOLS,validAccount} from './rpc.js';
+import {validAccount} from './rpc.js';
 import {NETWORK,prepareWithdrawal,checkWithdrawal,validPending,validHash} from './withdrawal.js';
 const SESSION_PREFIX='found:wallet:',PENDING_KEY='found:pending-withdrawal:v1';
 const $=id=>document.getElementById(id);
@@ -104,7 +104,7 @@ export function createWalletUi(hooks){
    const {fresh,transaction}=await prepareWithdrawal(result,{getAccounts:options=>signingWallet.getAccounts(options)});
    if(wallet!==signingWallet||revision!==connectionRevision)throw Error('Your wallet connection changed. Please try again.');
    if(hooks.current()?.account===result.account)hooks.accept(fresh);
-   const item={network:NETWORK,account:result.account,protocol:result.protocol,amount:result.amount,hash:null,createdAt:Date.now()};
+   const item={network:NETWORK,account:result.account,protocol:result.protocol,codeHash:result.codeHash,amount:result.amount,hash:null,createdAt:Date.now()};
    // Store the intent before opening the wallet so reloads cannot silently resubmit it.
    savePending(item);work(true,'Approve in wallet…');
    notice('Approve the withdrawal in your wallet. Network fees are shown there.');

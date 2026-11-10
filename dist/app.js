@@ -1,11 +1,12 @@
 import {createWalletUi} from './wallet-ui.js';
-import {scanProtocols,rpc,normalizeAccount,validAccount,formatNear,exactNear,PROTOCOLS} from './rpc.js';
+import {scanProtocols,rpc,normalizeAccount,validAccount,formatNear,exactNear,PROTOCOLS,protocolInfo} from './rpc.js';
 const $=id=>document.getElementById(id);let request=null,current=null,example=false,walletUi;
 let welcomeExit=null,validation=null;
 function journey(state){$('discovery').dataset.journey=state;}
+const smallBalance=row=>row.state==='found'&&BigInt(row.amount)<10n**19n;
 function resultJourney(result){
- if(result.results.some(item=>item.state==='found'))return 'found';
- if(result.results.some(item=>item.state==='error'||item.state==='unavailable'))return 'error';
+ if(result.results.some(item=>item.state==='found'&&!smallBalance(item)))return 'found';
+ if(incompleteScan(result))return 'error';
  if(result.results.some(item=>item.state==='pending'||item.state==='unsupported'))return 'pending';
  return 'empty';
 }
@@ -13,14 +14,14 @@ function element(tag,text,cls){const e=document.createElement(tag);e.textContent
 function linkIcon(){const span=document.createElement('span');span.className='icon-wrap';span.innerHTML='<svg class="external-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6m0-6-9 9M10 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></svg>';return span;}
 function nearIcon(){const img=document.createElement('img');img.src='./near.svg';img.alt='';img.className='near-icon';return img;}
 function openWithdrawal(result){
- const protocol=PROTOCOLS[result.protocol];
+ const protocol=protocolInfo(result.protocol);
  $('withdraw-account').textContent=result.account;
  $('copy-account').textContent='Copy';
  $('withdraw-description').textContent=`Withdraw from ${protocol.name} here on FOUND. The protocol sends NEAR straight to your wallet.`;
  const steps=['Connect the wallet that controls this account.','Choose Withdraw NEAR on the result card.','Approve in your wallet. FOUND checks the receipt and refreshes your balance.'];
  $('withdraw-steps').replaceChildren(...steps.map(step=>element('li',step)));
  $('withdraw-link').href=protocol.appUrl;
- $('withdraw-link').replaceChildren(`Use the official ${protocol.name} app instead`,linkIcon());
+ $('withdraw-link').replaceChildren(protocol.kind==='pool'?'Open NEAR Staking':`Use the official ${protocol.name} app instead`,linkIcon());
  $('withdraw-domain').textContent=protocol.appHost+' · Network fees may apply';
  journey('guide');
  $('withdraw-dialog').showModal();
@@ -44,18 +45,19 @@ function welcomePanel(){
  const title=element('h2','See what’s waiting.');title.id='welcome-title';
  const description=element('p','Find NEAR you unstaked but haven’t withdrawn.','welcome-description');
  const button=element('button','Try a real account','welcome-example');button.type='button';button.onclick=()=>scan('ru.near',true);
- panel.append(art,title,description,button,element('p','Checks LiNEAR + Meta Pool','welcome-coverage'));
+ panel.append(art,title,description,button,element('p','LiNEAR · Meta Pool · rNEAR + validator pools','welcome-coverage'));
  return panel;
 }
 function protocolResult(result){
- const protocol=PROTOCOLS[result.protocol],section=element('section','','protocol-result');
+ const protocol=protocolInfo(result.protocol),section=element('section','','protocol-result');
  section.dataset.result=result.state;
  const heading=element('div','','protocol-result-heading');
- const labels={idle:'Not checked',loading:'Checking…',found:'Ready to withdraw',pending:'Still unlocking',unsupported:'Lockup account',unavailable:'Availability unknown',empty:'All clear',error:'Couldn’t check'};
- heading.append(element('h3',protocol.name),element('span',labels[result.state],'result-state'));
+ const labels={idle:'Not checked',loading:'Checking…',found:'Ready to withdraw',pending:'Still unlocking',unsupported:result.reason==='implementation'?'Not supported yet':'Lockup account',unavailable:'Availability unknown',empty:'All clear',error:'Couldn’t check'};
+ const title=element('h3',protocol.name);title.title=protocol.contract;
+ heading.append(title,element('span',labels[result.state],'result-state'));
  section.append(heading);
  const known=result.amount!==undefined;
- section.append(known?amountElement(result.amount):element('div',result.state==='error'?'Unknown':'—','balance-placeholder'));
+ section.append(known?amountElement(result.amount):element('div',['error','unsupported'].includes(result.state)?'Unknown':'—','balance-placeholder'));
  if(result.state==='found'){
   const actions=element('div','','withdraw-actions'),link=element('button',walletUi.actionLabel(result),'withdraw-button');
   link.type='button';link.disabled=walletUi.disabled();link.onclick=()=>walletUi.withdraw(result);
@@ -64,10 +66,43 @@ function protocolResult(result){
  }else if(result.state==='unavailable'||result.state==='error'){
   const button=element('button','Check again','retry-button');button.type='button';button.onclick=()=>scan(result.account,example,{force:true});section.append(button);
  }else{
-  const captions={idle:'Your balance will appear here.',loading:'Reading directly from NEAR…',pending:'Still unlocking. Check back after the waiting period.',unsupported:'Use this account’s lockup contract to withdraw.',empty:'No unfinished withdrawals here.'};
+  const captions={idle:'Your balance will appear here.',loading:'Reading directly from NEAR…',pending:'Still unlocking. Check back after the waiting period.',unsupported:result.reason==='implementation'?'This contract version isn’t supported by FOUND yet.':'Use this account’s lockup contract to withdraw.',empty:'No unfinished withdrawals here.'};
   section.append(element('p',captions[result.state]||'','result-caption'));
  }
  return section;
+}
+function incompleteScan(result){return result.pools?.state&&result.pools.state!=='complete'||result.results.some(item=>['error','unavailable','unsupported'].includes(item.state));}
+function resultPanels(result){
+ const fragment=document.createDocumentFragment();
+ const tiny=result.results.filter(smallBalance);
+ const active=result.results.filter(row=>row.state!=='empty'&&!smallBalance(row));
+ const empty=result.results.filter(row=>row.state==='empty');
+ const rank={found:0,pending:1,unavailable:2,error:3,unsupported:4};
+ active.sort((a,b)=>(rank[a.state]??5)-(rank[b.state]??5));
+ if(active.length){
+  const ready=active.filter(row=>row.state==='found').length;
+  if(ready)fragment.append(element('p',`${ready} ${ready===1?'withdrawal':'withdrawals'} ready`,'results-summary'));
+  fragment.append(...active.map(protocolResult));
+ }else{
+  const clear=element('div','','all-clear');clear.append(nearIcon(),element('h3',incompleteScan(result)?'A few places still to check.':tiny.length?'Only tiny balances here.':'Nothing waiting here.'),element('p',tiny.length?'Below 0.00001 NEAR each. Fees may exceed their value.':incompleteScan(result)?'The completed checks found no unfinished withdrawals.':'No unfinished withdrawals in the places checked.'));fragment.append(clear);
+ }
+ if(result.pools?.state!=='complete'){
+  const note=element('div','','discovery-notice');
+  note.append(element('p',result.pools?.state==='partial'?`Checked ${result.pools.checked} of ${result.pools.discovered} indexed validator pools. Coverage is incomplete.`:'Validator pools couldn’t be discovered. Their balances are unknown.'));
+  const retry=element('button','Try again','coverage-retry');retry.type='button';retry.onclick=()=>scan(result.account,example,{force:true});note.append(retry);fragment.append(note);
+ }
+ if(tiny.length){
+  const details=element('details','','checked-sources');details.dataset.group='tiny';details.append(element('summary',`${tiny.length} tiny ${tiny.length===1?'balance':'balances'} below 0.00001 NEAR`),element('p','Fees may exceed these balances.','result-coverage'),...tiny.map(protocolResult));fragment.append(details);
+ }
+ if(empty.length){
+  const details=element('details','','checked-sources');details.dataset.group='empty';details.append(element('summary',`${empty.length} ${empty.length===1?'place':'places'} with nothing waiting`));
+  const list=element('ul','');
+  for(const row of empty){const item=element('li','');item.append(element('span',protocolInfo(row.protocol).name),element('span','0 NEAR'));list.append(item);}
+  details.append(list);fragment.append(details);
+ }
+ const coverage=result.pools?.state==='complete'?`3 protocols · ${result.pools.checked} indexed validator ${result.pools.checked===1?'pool':'pools'}`:'3 protocols + partial pool coverage';
+ fragment.append(element('p',coverage,'result-coverage'));
+ return fragment;
 }
 function leaveWelcome(content){
  const panel=content.querySelector('.pocket-welcome');
@@ -117,20 +152,23 @@ function render(state,result,{reveal=true}={}){
  journey(state==='idle'?'idle':state==='loading'?'searching':state==='done'?resultJourney(result):'error');
  $('pocket').setAttribute('aria-busy',String(state==='loading'));
  $('pocket').setAttribute('aria-labelledby',state==='idle'?'welcome-title':'pocket-title');
- const incomplete=state==='done'&&result.results.some(item=>item.state==='error'||item.state==='unavailable');
- $('status').textContent=incomplete?'Needs a recheck':{idle:'Mainnet',loading:'Checking…',done:'Checked',error:'Try again'}[state];
+ const incomplete=state==='done'&&incompleteScan(result);
+ $('status').textContent=incomplete?(result.pools?.state==='complete'&&result.results.every(r=>!['error','unavailable'].includes(r.state))?'Limited coverage':'Needs a recheck'):{idle:'Mainnet',loading:'Checking…',done:'Checked',error:'Try again'}[state];
  $('status').classList.toggle('incomplete',incomplete);
  account.textContent=state==='idle'?'Enter your account to see what’s waiting.':state==='error'?(result.code==='UNKNOWN_ACCOUNT'||/does not exist/.test(result.message)?'Account not found. Check the spelling.':'Couldn’t reach NEAR. Please try again.'):result.account+(example?' · public example':'');
  account.title=state==='error'?result.message:account.textContent;
  const summary=$('scan-summary');summary.replaceChildren();summary.hidden=!['done','error'].includes(state);
  if(!summary.hidden){const jump=element('a',state==='error'?'View details':'View results');jump.href='#pocket';summary.append(state==='error'?'Couldn’t check. ':incomplete?'Check incomplete. ':'Check complete. ',jump);}
  account.classList.toggle('check-error',state==='error');
- // Both services keep their place throughout a lookup, including partial failures.
+ // Positive balances take priority; empty sources stay available in a compact disclosure.
  const rows=state==='done'?result.results:Object.keys(PROTOCOLS).map(protocol=>({protocol,state,account:result?.account||$('account').value}));
- content.replaceChildren(...(state==='idle'?[welcomePanel()]:rows.map(protocolResult)));
+ const scroll=quietRefresh||state==='done'&&!finishing?content.scrollTop:0;
+ const openGroups=[...content.querySelectorAll('details[open]')].map(el=>el.dataset.group);
+ content.replaceChildren(...(state==='idle'?[welcomePanel()]:state==='done'?[resultPanels(result)]:rows.map(protocolResult)));if(!finishing)for(const group of openGroups){const node=content.querySelector(`details[data-group="${group}"]`);if(node)node.open=true;}
+ content.scrollTop=scroll;content.tabIndex=state==='done'?0:-1;
  proof.replaceChildren();
  if(state!=='done'){
-  proof.textContent=state==='loading'?'Checking both services at the same block…':state==='error'?'Balances unknown. Nothing has moved.':'LiNEAR and Meta Pool only.';
+  proof.textContent=state==='loading'?'Checking services at the same block…':state==='error'?'Balances unknown. Nothing has moved.':'LiNEAR, Meta Pool, rNEAR and indexed validator pools.';
   return;
  }
  const link=element('a','View account');
@@ -138,7 +176,7 @@ function render(state,result,{reveal=true}={}){
  const block=element('a','Block '+result.height.toLocaleString('en-US'));block.append(linkIcon());block.href='https://nearblocks.io/blocks/'+result.height;block.target='_blank';block.rel='noopener noreferrer';proof.append(link,block);
 }
 function alreadyShowing(account){
- return current?.account===account&&$('discovery').dataset.state==='done'&&current.results.every(result=>!['error','unavailable'].includes(result.state));
+ return current?.account===account&&$('discovery').dataset.state==='done'&&(!current.pools||current.pools.state==='complete')&&current.results.every(r=>!['error','unavailable'].includes(r.state));
 }
 function searchBusy(busy){
  const complete=!busy&&alreadyShowing(normalizeAccount($('account').value));
