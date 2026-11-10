@@ -226,3 +226,18 @@ dialog{background:linear-gradient(145deg,#261c2e,#18111f);border-color:#745343;c
 #scan-button:disabled{background:linear-gradient(#f3cf90,#e5b976);filter:brightness(.97)}
 @media(max-width:620px){.welcome-leaving{padding:19px}}
 @media(prefers-reduced-motion:reduce){#pocket-content,.welcome-wallet,.welcome-coin,.welcome-art:before,.welcome-spark{transition:none!important}.discovery.just-found .pocket-top,.discovery.just-found .checked-account,.discovery.just-found #pocket-content,.discovery.just-found #result-proof{animation:none!important}.discovery[data-state=loading] .welcome-wallet,.discovery[data-state=loading] .welcome-coin,.discovery[data-state=loading] .welcome-spark{translate:none}}
+
+/* A displayed account stays checked; a separate refresh updates it quietly. */
+.checked-row{display:flex;align-items:flex-start;gap:10px;min-height:36px}
+.checked-row .checked-account{flex:1;min-width:0}
+#refresh-balance{flex:none;background:none;border:0;border-bottom:1px solid #705746;padding:0 0 2px;color:#d9bd91;font-size:10px;line-height:1.4;white-space:nowrap;transition:color .18s}
+#refresh-balance[hidden]{display:none}#refresh-balance:hover{color:#f1d7aa}#refresh-balance:disabled{cursor:wait;color:#a99aab}
+.scan-complete,.scan-check{visibility:hidden;opacity:0}
+.scan-check{grid-area:1/2;width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#scan-button[data-complete=true]{cursor:default;filter:none}
+#scan-button[data-complete=true] .scan-ready,#scan-button[data-complete=true] .search-icon{visibility:hidden;opacity:0}
+#scan-button[data-complete=true] .scan-complete,#scan-button[data-complete=true] .scan-check{visibility:visible;opacity:1}
+.discovery[data-state=loading][data-refreshing=true] #pocket-content{opacity:1}
+.discovery[data-state=loading][data-refreshing=true] .proof{display:flex;color:#ac9ab7;overflow:visible}
+.discovery[data-view=idle] #refresh-balance{visibility:hidden}
+@media(max-width:620px){#refresh-balance{font-size:9px}.checked-row{gap:8px}}

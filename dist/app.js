@@ -62,7 +62,7 @@ function protocolResult(result){
   const help=element('button','Help','withdraw-help');help.type='button';help.setAttribute('aria-label',`How to withdraw from ${protocol.name}`);help.onclick=()=>openWithdrawal(result);
   actions.append(link,help);section.append(actions);
  }else if(result.state==='unavailable'||result.state==='error'){
-  const button=element('button','Check again','retry-button');button.type='button';button.onclick=()=>scan(result.account,example);section.append(button);
+  const button=element('button','Check again','retry-button');button.type='button';button.onclick=()=>scan(result.account,example,{force:true});section.append(button);
  }else{
   const captions={idle:'Your balance will appear here.',loading:'Reading directly from NEAR…',pending:'Still unlocking. Check back after the waiting period.',unsupported:'Use this account’s lockup contract to withdraw.',empty:'No unfinished withdrawals here.'};
   section.append(element('p',captions[result.state]||'','result-caption'));
@@ -87,15 +87,19 @@ function leaveWelcome(content){
 }
 function render(state,result){
  const discovery=$('discovery'),content=$('pocket-content'),account=$('checked-account'),proof=$('result-proof');
- const finishing=discovery.dataset.state==='loading'&&['done','error'].includes(state);
+ const quietRefresh=state==='loading'?!!result.refreshing:discovery.dataset.refreshing==='true';
+ const finishing=discovery.dataset.state==='loading'&&['done','error'].includes(state)&&!quietRefresh;
  if(state==='loading'&&welcomeExit){welcomeExit.remove();welcomeExit=null;}
  if(finishing)leaveWelcome(content);
  discovery.dataset.state=state;
+ discovery.dataset.refreshing=String(state==='loading'&&quietRefresh);
+ $('refresh-balance').hidden=state!=='done'&&!(state==='loading'&&quietRefresh);
+ $('refresh-balance').disabled=state==='loading';
  discovery.classList.toggle('just-found',finishing);
  if(state==='loading'){
   // Keep the existing illustration or explicitly labelled previous result in place.
   // Disabling the old card prevents actions against stale balances during the scan.
-  journey('searching');$('pocket').setAttribute('aria-busy','true');content.inert=true;
+  if(!quietRefresh)journey('searching');$('pocket').setAttribute('aria-busy','true');content.inert=true;
   $('scan-summary').hidden=true;
   const welcome=content.querySelector('.pocket-welcome');
   if(welcome){
@@ -104,8 +108,8 @@ function render(state,result){
    label.textContent='Checking '+name+'…';label.title=result.account;
    const button=welcome.querySelector('button');button.textContent='Checking…';button.disabled=true;
   }else{
-   $('status').textContent='Checking…';$('status').classList.remove('incomplete');
-   proof.textContent='Checking '+result.account+'…';proof.title=result.account;
+   $('status').textContent=quietRefresh?'Refreshing…':'Checking…';$('status').classList.remove('incomplete');
+   if(!quietRefresh){proof.textContent='Checking '+result.account+'…';proof.title=result.account;}
   }
   return;
  }
@@ -133,27 +137,39 @@ function render(state,result){
  link.href='https://nearblocks.io/address/'+encodeURIComponent(result.account);link.append(linkIcon());link.target='_blank';link.rel='noopener noreferrer';
  const block=element('a','Block '+result.height.toLocaleString('en-US'));block.append(linkIcon());block.href='https://nearblocks.io/blocks/'+result.height;block.target='_blank';block.rel='noopener noreferrer';proof.append(link,block);
 }
+function alreadyShowing(account){
+ return current?.account===account&&$('discovery').dataset.state==='done'&&current.results.every(result=>!['error','unavailable'].includes(result.state));
+}
 function searchBusy(busy){
- $('scan-button').disabled=busy;$('try-example').disabled=busy;
- $('scan-button').setAttribute('aria-label',busy?'Checking your NEAR':'Find my NEAR');
+ const complete=!busy&&alreadyShowing(normalizeAccount($('account').value));
+ $('scan-button').disabled=busy||complete;$('scan-button').dataset.complete=String(complete);$('try-example').disabled=busy;
+ $('scan-button').setAttribute('aria-label',busy?'Checking your NEAR':complete?'Already checked this account':'Find my NEAR');
  $('scan-form').setAttribute('aria-busy',String(busy));
 }
-async function scan(value,isExample=false){
+async function scan(value,isExample=false,{force=false}={}){
  const account=normalizeAccount(value);$('form-error').hidden=true;
  if(!validAccount(account)){$('form-error').textContent='Enter a NEAR account such as you.near or an implicit account ID.';$('form-error').hidden=false;$('account').setAttribute('aria-invalid','true');$('account').focus();return;}
- $('account').removeAttribute('aria-invalid');$('account').value=account;request?.abort();const controller=new AbortController();request=controller;example=isExample;current=null;
- searchBusy(true);render('loading',{account});
+ $('account').removeAttribute('aria-invalid');$('account').value=account;
+ // Repeated searches keep the currently displayed snapshot, including its block.
+ // Explicit refreshes and every wallet-driven scan bypass this guard.
+ if(!force&&alreadyShowing(account)){searchBusy(false);return current;}
+ if(request?.account===account&&$('discovery').dataset.state==='loading')return;
+ const refreshing=current?.account===account&&$('discovery').dataset.state==='done';
+ request?.abort();const controller=new AbortController();controller.account=account;request=controller;example=isExample;current=null;
+ searchBusy(true);render('loading',{account,refreshing});
  try{const result=await scanProtocols(account,{signal:controller.signal});if(request!==controller)return;current=result;render('done',result);}
  catch(error){if(error.name!=='AbortError'&&request===controller)render('error',error);}
- finally{if(request===controller){searchBusy(false);}}
+ finally{if(request===controller){request=null;searchBusy(false);}}
 }
 $('scan-form').addEventListener('submit',e=>{e.preventDefault();scan($('account').value);});
 $('try-example').addEventListener('click',()=>scan('ru.near',true));
+$('account').addEventListener('input',()=>searchBusy($('discovery').dataset.state==='loading'));
+$('refresh-balance').onclick=()=>{if(current)scan(current.account,example,{force:true});};
 $('withdraw-dialog').addEventListener('close',()=>{if(current)journey(resultJourney(current));});
 $('withdraw-dialog').querySelector('.close-dialog').onclick=()=>$('withdraw-dialog').close();
 $('withdraw-dialog').addEventListener('click',e=>{if(e.target===$('withdraw-dialog')){const r=e.target.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)e.target.close();}});
 $('copy-account').onclick=async()=>{try{await navigator.clipboard.writeText(current.account);$('copy-account').textContent='Copied ✓';}catch{$('copy-account').textContent='Select to copy';}};
-$('recheck').onclick=()=>{$('withdraw-dialog').close();if(current)scan(current.account,example);};
+$('recheck').onclick=()=>{$('withdraw-dialog').close();if(current)scan(current.account,example,{force:true});};
 const PAGE_SIZE=10;
 let leaderboardPage=0;
 async function loadLeaderboard(){
@@ -177,6 +193,6 @@ async function loadLeaderboard(){
  $('next-page').onclick=()=>{if(leaderboardPage<pageCount-1){leaderboardPage++;renderRows();}};renderRows();
  }catch{$('leaderboard').replaceChildren();$('pagination').hidden=true;const row=element('tr',''),cell=element('td','The snapshot couldn’t load. The live account checker above still works.');cell.colSpan=3;row.append(cell);$('leaderboard').append(row);}
 }
-walletUi=createWalletUi({current:()=>current,isExample:()=>example,scan,refresh:()=>{if(current&&$('discovery').dataset.state==='done')render('done',current);},accept:result=>{current=result;render('done',result);}});
+walletUi=createWalletUi({current:()=>current,isExample:()=>example,scan:(account,isExample=false)=>scan(account,isExample,{force:true}),refresh:()=>{if(current&&$('discovery').dataset.state==='done')render('done',current);},accept:result=>{current=result;render('done',result);}});
 render('idle');
 loadLeaderboard();
