@@ -26,6 +26,7 @@ function openWithdrawal(result){
 function amountElement(amount){
  const display=formatNear(amount,4),heading=element('h2',display+' ','amount');
  if(display.length>10)heading.classList.add('amount-long');
+ if(display.length>16)heading.classList.add('amount-huge');
  heading.title=exactNear(amount)+' NEAR';
  const unit=element('small','','amount-unit');
  unit.append(nearIcon(),element('span','NEAR'));
@@ -34,57 +35,62 @@ function amountElement(amount){
 }
 function protocolResult(result){
  const protocol=PROTOCOLS[result.protocol],section=element('section','','protocol-result');
+ section.dataset.result=result.state;
  const heading=element('div','','protocol-result-heading');
- heading.append(element('h3',protocol.name),element('span',result.state==='found'?'Ready to withdraw':result.state==='pending'?'Still unlocking':result.state==='unsupported'?'Lockup account':'Needs a recheck','result-state'));
- section.append(heading,amountElement(result.amount));
- const captions={
-  found:'Unstaked. Available. Still yours.',
-  pending:`Your NEAR is still unlocking in ${protocol.name}. Check again after the waiting period.`,
-  unavailable:'Your balance is there, but availability couldn’t be confirmed. Recheck before withdrawing.',
-  unsupported:'This lockup account has matured NEAR in Meta Pool. Withdraw through its lockup contract, not a regular wallet session.'
- };
- section.append(element('p',captions[result.state],'result-caption'));
+ const labels={idle:'Not checked',loading:'Checking…',found:'Ready to withdraw',pending:'Still unlocking',unsupported:'Lockup account',unavailable:'Availability unknown',empty:'All clear',error:'Couldn’t check'};
+ heading.append(element('h3',protocol.name),element('span',labels[result.state],'result-state'));
+ section.append(heading);
+ const known=result.amount!==undefined;
+ section.append(known?amountElement(result.amount):element('div',result.state==='error'?'Unknown':'—','balance-placeholder'));
  if(result.state==='found'){
-  const button=element('button',example?'See how the owner can withdraw':'Bring it home','withdraw-button');
+  const button=element('button',`Withdraw with ${protocol.name}`,'withdraw-button');
   button.append(linkIcon());button.type='button';button.onclick=()=>openWithdrawal(result);section.append(button);
- }else if(result.state==='unavailable'){
-  const button=element('button','Check availability again ↻','withdraw-button');button.type='button';button.onclick=()=>scan(result.account,example);section.append(button);
+ }else if(result.state==='unavailable'||result.state==='error'){
+  const button=element('button','Check again','retry-button');button.type='button';button.onclick=()=>scan(result.account,example);section.append(button);
+ }else{
+  const captions={idle:'Your balance will appear here.',loading:'Reading directly from NEAR…',pending:'Still unlocking. Check back after the waiting period.',unsupported:'Use this account’s lockup contract to withdraw.',empty:'No unfinished withdrawals here.'};
+  section.append(element('p',captions[result.state]||'','result-caption'));
  }
  return section;
 }
 function render(state,result){
- $('discovery').dataset.state=state;
- journey(state==='loading'?'searching':state==='done'?resultJourney(result):'error');
- const content=$('pocket-content');content.replaceChildren();
- const statuses={loading:'Checking mainnet…',done:'Pockets checked',error:'Couldn’t check'};
- $('status').textContent=statuses[state];
- if(state==='loading'){
-  content.append(element('h2','Looking in your pockets…'),element('p','Reading finalized LiNEAR and Meta Pool state.'));
-  const bars=element('div','','empty-line');for(let i=0;i<3;i++)bars.append(element('span',''));content.append(bars);return;
+ const discovery=$('discovery'),content=$('pocket-content'),account=$('checked-account'),proof=$('result-proof');
+ discovery.dataset.state=state;
+ journey(state==='idle'?'idle':state==='loading'?'searching':state==='done'?resultJourney(result):'error');
+ $('pocket').setAttribute('aria-busy',String(state==='loading'));
+ const incomplete=state==='done'&&result.results.some(item=>item.state==='error'||item.state==='unavailable');
+ $('status').textContent=incomplete?'Needs a recheck':{idle:'Mainnet',loading:'Checking…',done:'Checked',error:'Try again'}[state];
+ $('status').classList.toggle('incomplete',incomplete);
+ account.textContent=state==='idle'?'Enter your account to see what’s waiting.':state==='error'?(result.code==='UNKNOWN_ACCOUNT'||/does not exist/.test(result.message)?'Account not found. Check the spelling.':'Couldn’t reach NEAR. Please try again.'):result.account+(example?' · public example':'');
+ account.title=state==='error'?result.message:account.textContent;
+ const summary=$('scan-summary');summary.replaceChildren();summary.hidden=!['done','error'].includes(state);
+ if(!summary.hidden){const jump=element('a',state==='error'?'View details':'View results');jump.href='#pocket';summary.append(state==='error'?'Couldn’t check. ':incomplete?'Check incomplete. ':'Check complete. ',jump);}
+ account.classList.toggle('check-error',state==='error');
+ // Both services keep their place throughout a lookup, including partial failures.
+ const rows=state==='done'?result.results:Object.keys(PROTOCOLS).map(protocol=>({protocol,state,account:result?.account||$('account').value}));
+ content.replaceChildren(...rows.map(protocolResult));
+ proof.replaceChildren();
+ if(state!=='done'){
+  proof.textContent=state==='loading'?'Checking both services at the same block…':state==='error'?'Balances unknown. Nothing has moved.':'LiNEAR and Meta Pool only.';
+  return;
  }
- if(state==='error'){content.append(element('h2','Let’s try that again.'),element('p',result.message));return;}
- content.append(element('p',result.account+(example?' · public example':''),'account-name'));
- const positive=result.results.filter(item=>item.amount&&BigInt(item.amount)>0n);
- const empty=result.results.filter(item=>item.state==='empty');
- const failed=result.results.filter(item=>item.state==='error');
- if(positive.length===0&&failed.length===0)content.append(element('h2','All clear in these pockets.'),element('p','No NEAR waiting in LiNEAR or Meta Pool. Other protocols haven’t been checked.'));
- else{
-  content.append(...positive.map(protocolResult));
-  if(empty.length)content.append(element('p',empty.map(item=>PROTOCOLS[item.protocol].name).join(' · ')+': no NEAR waiting.','other-pockets'));
-  failed.forEach(item=>content.append(element('p',`${PROTOCOLS[item.protocol].name}: couldn’t check. Balance unknown, not zero. ${item.message}`,'protocol-error')));
- }
- const proof=element('div','','proof'),link=element('a','View account');
+ const link=element('a','View account');
  link.href='https://nearblocks.io/address/'+encodeURIComponent(result.account);link.append(linkIcon());link.target='_blank';link.rel='noopener noreferrer';
- const block=element('a','Block '+result.height.toLocaleString('en-US'));block.append(linkIcon());block.href='https://nearblocks.io/blocks/'+result.height;block.target='_blank';block.rel='noopener noreferrer';proof.append(link,block);content.append(proof);
+ const block=element('a','Block '+result.height.toLocaleString('en-US'));block.append(linkIcon());block.href='https://nearblocks.io/blocks/'+result.height;block.target='_blank';block.rel='noopener noreferrer';proof.append(link,block);
+}
+function searchBusy(busy){
+ $('scan-button').disabled=busy;$('try-example').disabled=busy;
+ $('scan-button').setAttribute('aria-label',busy?'Checking your NEAR':'Find my NEAR');
+ $('scan-form').setAttribute('aria-busy',String(busy));
 }
 async function scan(value,isExample=false){
  const account=normalizeAccount(value);$('form-error').hidden=true;
  if(!validAccount(account)){$('form-error').textContent='Enter a NEAR account such as you.near or an implicit account ID.';$('form-error').hidden=false;$('account').setAttribute('aria-invalid','true');$('account').focus();return;}
  $('account').removeAttribute('aria-invalid');$('account').value=account;request?.abort();const controller=new AbortController();request=controller;example=isExample;current=null;
- $('scan-button').disabled=true;$('try-example').disabled=true;$('scan-button').textContent='Checking…';render('loading');
+ searchBusy(true);render('loading',{account});
  try{const result=await scanProtocols(account,{signal:controller.signal});if(request!==controller)return;current=result;render('done',result);}
  catch(error){if(error.name!=='AbortError'&&request===controller)render('error',error);}
- finally{if(request===controller){$('scan-button').disabled=false;$('try-example').disabled=false;$('scan-button').textContent='Find my NEAR ';$('scan-button').append(linkIcon());}}
+ finally{if(request===controller){searchBusy(false);}}
 }
 $('scan-form').addEventListener('submit',e=>{e.preventDefault();scan($('account').value);});
 $('try-example').addEventListener('click',()=>scan('ru.near',true));
@@ -116,4 +122,5 @@ async function loadLeaderboard(){
  $('next-page').onclick=()=>{if(leaderboardPage<pageCount-1){leaderboardPage++;renderRows();}};renderRows();
  }catch{$('leaderboard').replaceChildren();$('pagination').hidden=true;const row=element('tr',''),cell=element('td','The snapshot couldn’t load. The live account checker above still works.');cell.colSpan=3;row.append(cell);$('leaderboard').append(row);}
 }
+render('idle');
 loadLeaderboard();
