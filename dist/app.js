@@ -1,6 +1,6 @@
 import {recoveryTotals} from './tracking.js';
 import {createWalletUi} from './wallet-ui.js';
-import {scanProtocols,rpc,normalizeAccount,validAccount,formatNear,exactNear,PROTOCOLS,protocolInfo} from './rpc.js';
+import {scanProtocols,rpc,normalizeAccount,validAccount,formatNear,compactNear,exactNear,PROTOCOLS,protocolInfo} from './rpc.js';
 const $=id=>document.getElementById(id);let request=null,current=null,example=false,walletUi;
 let welcomeExit=null,validation=null;
 function journey(state){$('discovery').dataset.journey=state;}
@@ -258,15 +258,40 @@ const PAGE_SIZE=10;
 let leaderboardPage=0;
 async function loadLeaderboard(){
  try{const response=await fetch('./leaderboard.json');if(!response.ok)throw Error();const data=await response.json();
+ if(!Array.isArray(data.accounts)||!data.accounts.length)throw Error('Empty snapshot');
+ if(data.version===2){
+  if(!data.complete||data.counts?.accountsWithWaiting!==data.accounts.length)throw Error('Incomplete snapshot');
+  const date=new Date(data.asOf).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'});
+  $('leaderboard-count').textContent=data.accounts.length.toLocaleString('en-US');
+  $('leaderboard-count-label').textContent='accounts with NEAR waiting';
+  const listedTotal=data.accounts.reduce((sum,a)=>sum+BigInt(a.unstaked_balance),0n);
+  if(data.totalListedYocto!==listedTotal.toString())throw Error('Snapshot total mismatch');
+  $('leaderboard-total').textContent=compactNear(listedTotal);$('leaderboard-total').title=exactNear(listedTotal)+' NEAR';
+  $('leaderboard-scope').textContent=`3 protocols + ${data.counts.validatorPools} validator pools · each account counted once`;
+  $('snapshot-date').textContent=date+' · snapshot';
+  $('leaderboard-caption').textContent=`Matured NEAR withdrawal balances across supported staking sources, ${date} snapshot`;
+  $('snapshot-note').textContent='At least one matured balance above 0.01 NEAR per account. This isn’t a lost-money list; owners may be waiting intentionally. Click an account to check what is available now.';
+  $('census-details').hidden=false;
+  $('census-coverage-detail').textContent=`${data.counts.validatorPools} recognized validator pools from the poolv1.near and pool.near factories. ${data.counts.unsupportedPools} other contract versions and ${data.counts.closedPools} closed accounts are excluded. Pools outside these factories are not part of this census.`;
+  const source=$('snapshot-source');source.href='https://nearblocks.io/blocks/'+data.block;source.firstChild.textContent=`${data.counts.accountsChecked.toLocaleString('en-US')} unique accounts checked · block ${data.block} `;
+ }
  const pageCount=Math.ceil(data.accounts.length/PAGE_SIZE);
  const renderRows=()=>{const body=$('leaderboard');body.replaceChildren();const start=leaderboardPage*PAGE_SIZE;
  data.accounts.slice(start,start+PAGE_SIZE).forEach((a,i)=>{
  const row=element('tr',''),rank=element('td',String(start+i+1).padStart(2,'0'),'rank'),name=element('td','');
  const short=a.account_id.length>32?a.account_id.slice(0,10)+'…'+a.account_id.slice(-8):a.account_id;
  const button=element('button',short,'account-link');button.title=a.account_id;button.setAttribute('aria-label','Check '+a.account_id+' live');button.onclick=()=>{scan(a.account_id,true);document.querySelector('.hero').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});};
- name.append(button);const amount=element('td',formatNear(a.unstaked_balance,4),'align-right');amount.title=exactNear(a.unstaked_balance)+' NEAR';row.append(rank,name,amount);body.append(row);
+ name.append(button);
+ if(a.sources){
+  const labels=[],known={'linear-protocol.near':'LiNEAR','meta-pool.near':'Meta Pool','lst.rhealab.near':'rNEAR'};let pools=0;
+  for(const source of a.sources){if(known[source.contract])labels.push(known[source.contract]);else pools++;}
+  if(pools)labels.push(`${pools} validator ${pools===1?'pool':'pools'}`);
+  const note=element('span',labels.join(' · '),'leaderboard-sources');note.title=a.sources.map(s=>s.contract).join(', ');name.append(note);
+ }
+ const amount=element('td',compactNear(a.unstaked_balance),'align-right');amount.title=exactNear(a.unstaked_balance)+' NEAR';row.append(rank,name,amount);body.append(row);
  });
- $('page-range').textContent=`${start+1}–${Math.min(start+PAGE_SIZE,data.accounts.length)} of ${data.accounts.length} accounts`;
+ const last=Math.min(start+PAGE_SIZE,data.accounts.length),number=n=>n.toLocaleString('en-US');
+ $('page-range').textContent=`${number(start+1)}${last>start+1?'–'+number(last):''} of ${number(data.accounts.length)} accounts`;
  $('previous-page').disabled=leaderboardPage===0;$('next-page').disabled=leaderboardPage===pageCount-1;
  $('page-numbers').replaceChildren();
  const pages=[...new Set([0,leaderboardPage-1,leaderboardPage,leaderboardPage+1,pageCount-1])].filter(p=>p>=0&&p<pageCount).sort((a,b)=>a-b);
@@ -281,6 +306,6 @@ walletUi=createWalletUi({current:()=>current,isExample:()=>example,scan:(account
 render('idle');
 loadLeaderboard();
 
-function refreshRecoveryTotals(){return recoveryTotals().then(data=>{const node=$('recovery-totals');if(!node||!data)return;node.textContent=`${formatNear(data.totalYocto)} NEAR brought home · ${data.accounts} ${data.accounts===1?'account':'accounts'} helped`;node.hidden=false;});}
+function refreshRecoveryTotals(){return recoveryTotals().then(data=>{const node=$('recovery-totals');if(!node||!data)return;node.replaceChildren(`${formatNear(data.totalYocto)} `,nearIcon(),` NEAR brought home · ${data.accounts} ${data.accounts===1?'account':'accounts'} helped`);node.hidden=false;});}
 void refreshRecoveryTotals();
 window.addEventListener('found:recovery-recorded',refreshRecoveryTotals);

@@ -31,6 +31,12 @@ export function formatNear(yocto,decimals=4){
  const fraction=(n%unit).toString().padStart(24,'0').slice(0,decimals).replace(/0+$/,'');
  return whole+(fraction?`.${fraction}`:'');
 }
+export function compactNear(yocto){
+ const n=BigInt(yocto),unit=n>=10n**30n?10n**30n:n>=10n**27n?10n**27n:0n;
+ if(!unit)return formatNear(yocto,4);
+ const hundredths=n*100n/unit,whole=hundredths/100n,fraction=(hundredths%100n).toString().padStart(2,'0').replace(/0+$/,'');
+ return whole.toString()+(fraction?'.'+fraction:'')+(unit===10n**30n?'M':'K');
+}
 export function exactNear(yocto){const n=BigInt(yocto);return `${n/10n**24n}.${(n%10n**24n).toString().padStart(24,'0')}`.replace(/\.?0+$/,'')||'0';}
 export class QueryError extends Error{constructor(message,code){super(message);this.code=code;}}
 export async function rpc(params,{signal,fetcher=fetch,endpoints=ENDPOINTS}={}){

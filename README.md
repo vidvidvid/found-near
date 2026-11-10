@@ -44,7 +44,7 @@ Independent verification findings are in [VERIFICATION.md](VERIFICATION.md).
 
 Coverage is LiNEAR, Meta Pool, rNEAR and supported indexed validator pools. FastNEAR discovery may lag or omit relationships; at most 24 discovered pools are checked. Custom pool code, tokens, bridges and other protocols are not covered. No estimate of missing funds elsewhere,
 no claims that the owner forgot, and no account-age claim. All accounts and balances are public.
-The public leaderboard contains LiNEAR only and says so wherever it appears.
+The public leaderboard combines the three staking protocols and recognized pools from two standard factories. It counts each account once and explicitly excludes unrecognized implementations.
 A view preflight is a snapshot, not a guarantee a future transaction succeeds.
 Scanning needs no wallet. Withdrawing requires the controlling wallet and its approval; FOUND does not hold keys, custody funds, request an access key, or charge a fee. Network gas is paid by the account. Lockup accounts still require their lockup contract.
 
@@ -70,13 +70,17 @@ New-coverage evidence, code provenance, limitations and live reproduction steps 
 
 ## Public leaderboard
 
-The Waiting room lists all 538 matured LiNEAR balances above 0.01 NEAR, ordered by amount from the verified
-9 November 2026 snapshot at block 223800610. It includes the largest account and
-discloses its concentration. This snapshot is not automatically refreshed and
-is not labelled lost or abandoned money. It uses ten accounts per page, numbered navigation, and Previous/Next controls. Clicking an account performs a live
-scan of all supported protocols and indexed validator pools, with the relevant withdrawal preflights. Sources are public on-chain account state.
+The Waiting room contains **30,681 unique account IDs** with at least one matured balance above 0.01 NEAR at block **223975859**, 2026-11-10T22:01:36.060Z. The census read 305,908 distinct account IDs across LiNEAR, Meta Pool, rNEAR and **858 recognized validator pools**. Accounts shared across protocols or pools appear once. Each row shows its qualifying sources; ten rows appear per page.
 
-Run `npm run census -- --block 223800610 --check` to independently regenerate and verify the complete snapshot without changing it. The generator reads every LiNEAR account at one pinned block and rejects incomplete pages or mixed block heights. See [RESEARCH.md](RESEARCH.md) for the source methodology, inclusion rule, Meta Pool validation, and write/update commands.
+The pool inventory includes all 862 entries in the poolv1.near and pool.near factories: 858 recognized implementations, 4 unsupported versions, and 0 deleted accounts. Pools outside these factories are outside the census. Ledger IDs include contract and lockup accounts and are not a count of people or confirmed currently existing wallets.
+
+This is a dated snapshot of matured balances, not proof of abandonment or guaranteed immediate withdrawal. Pool liquidity and current account state are checked when the user scans live. The displayed **10.55M total listed NEAR** sums the table’s balances exactly (10,558,075.187594404327945091284701 NEAR). Protocol reserves can overlap user claims, so this is a gross listed total, not unique lost assets or confirmed recoveries. K/M values are truncated for display; full exact amounts remain on hover and in account results.
+
+- Fast offline consistency check: `npm run census:verify`.
+- Independent chain reread: `npm run census:expanded -- --block 223975859 --check`. Uses a new cache by default; regular RPCs may eventually prune this block, requiring an archival provider through CENSUS_RPC and CENSUS_STATE_RPC.
+- Original LiNEAR-only snapshot: `npm run census -- --block 223800610 --check` now compares the preserved file in research/census/linear-2026-11-09.json.
+
+See [the census evidence](research/census-2026-11-10/README.md) for the exact inclusion rule, source counts, decoding safeguards and reproduction commands.
 
 ## Visual direction
 
@@ -89,7 +93,7 @@ disable all character motion and ambient fireflies. Balance checks remain read-o
 
 The app issues an anonymous request ID before opening the wallet. After the client confirms a withdrawal, the server independently verifies the exact transaction, every receipt, its timestamp (within 30 minutes of the request), and the execution-time code hash for rNEAR and validator pools. A failed, incomplete, mismatched or replayed receipt cannot inflate the totals. Amounts use exact integers; each transaction and each account is counted once. Totals report requested withdrawal amounts before gas and exclude any additional automatic Meta Pool dust sweep.
 
-The database contains the public account, protocol, requested amount, transaction hash, block and timestamps. It contains no wallet keys, cookies, browsing events or IP-address column. Unconfirmed requests expire after 30 days. The public endpoint exposes only aggregate counts and amounts, not individual records. Hosting/RPC providers may maintain their own access logs.
+The database contains the public account, protocol, requested amount, transaction hash, block and timestamps. It contains no wallet keys, cookies, browsing events or IP-address column. Unconfirmed requests older than 30 days are pruned at startup, daily, and when new withdrawal requests arrive. The public endpoint exposes only aggregate counts and amounts, not individual records. Hosting/RPC providers may maintain their own access logs.
 
 Attribution is **app-reported and receipt-verified**, not a cryptographic guarantee that FOUND was the only UI involved. Tracking is best effort: an outage never blocks withdrawal, and a missed request or a closed browser can leave a successful withdrawal uncounted. The browser queues receipt submissions for retry. Zero is shown until real confirmed withdrawals occur; test fixtures never seed production totals.
 

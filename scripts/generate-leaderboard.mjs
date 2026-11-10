@@ -6,7 +6,7 @@ import {CONTRACT,rpc,isU128,validAccount} from '../dist/rpc.js';
 const DEFAULT_BLOCK=223800610;
 const PAGE_SIZE=1000;
 const MINIMUM_BALANCE=10n**22n;
-const OUTPUT=fileURLToPath(new URL('../dist/leaderboard.json',import.meta.url));
+const OUTPUT=fileURLToPath(new URL('../research/census/linear-2026-11-09.json',import.meta.url));
 const SCOPE='LiNEAR only; matured balances, not proven abandoned funds';
 
 export function buildSnapshot(accounts,block,asOf){

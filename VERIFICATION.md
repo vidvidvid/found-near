@@ -1,5 +1,7 @@
 # Independent verification — 10 November 2026
 
+This records the earlier two-protocol review. Later verified work is documented in [coverage expansion](research/coverage-expansion/README.md), the [combined census](research/census-2026-11-10/README.md), and [recovery tracking](verification/recovery-tracking.md).
+
 Reviewed the implementation introduced in commit `7255178`, then corrected the gaps below. This is a source review and read-only verification, not a smart-contract security audit or a successful owner withdrawal.
 
 ## Results

@@ -1,0 +1,27 @@
+{
+  "block": 223975859,
+  "hash": "Fh9a2RkBMC3ZPcadGorbh49VHBaGmfNrJbZJiGbQsCgE",
+  "asOf": "2026-11-10T22:01:36.060Z",
+  "complete": true,
+  "errors": [],
+  "unsupported": [
+    {
+      "contract": "aurora.pool.near",
+      "codeHash": "5vf2Jkqpk11H7szLnY4XdPA6maJi1ND8xe346xtbtX8e"
+    },
+    {
+      "contract": "fenya.pool.near",
+      "codeHash": "GGfKUF9TuAFN4AzbecPonNGuRTuVqx8UPXmViogN8pRm"
+    },
+    {
+      "contract": "metapool01.pool.near",
+      "codeHash": "GGfKUF9TuAFN4AzbecPonNGuRTuVqx8UPXmViogN8pRm"
+    },
+    {
+      "contract": "metatarz.pool.near",
+      "codeHash": "GGfKUF9TuAFN4AzbecPonNGuRTuVqx8UPXmViogN8pRm"
+    }
+  ],
+  "closed": [],
+  "discoveredPools": 862
+}

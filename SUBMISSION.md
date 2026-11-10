@@ -15,7 +15,7 @@ Unstaked does not always mean withdrawn. NEAR can finish unlocking inside a stak
 
 FOUND finds unfinished withdrawals in LiNEAR, Meta Pool, rNEAR and supported indexed validator pools without requiring a wallet connection to scan. It reads every checked source at the same finalized block, applies protocol-specific maturity and liquidity checks, and lets the owner request a withdrawal directly in FOUND. The connected wallet approves each transaction; the protocol sends funds to that account. FOUND never takes custody or charges a finder’s fee. Official protocol apps remain available as an alternative.
 
-Its public waiting room is reproducible evidence rather than a curated screenshot: one command reads all 47,882 LiNEAR accounts at block 223800610 and verifies the 538 matured balances above 0.01 NEAR. The snapshot does not label owners as forgetful or funds as abandoned.
+Its public waiting room contains 30,681 unique account IDs with matured balances above 0.01 NEAR, deduplicated across three staking protocols and 858 recognized validator pools at block 223975859. A fast offline command verifies the archived evidence; a separate script can reread the chain. The snapshot does not label owners as forgetful or funds as abandoned.
 
 FOUND is deliberately small, useful ecosystem infrastructure: make an easy-to-miss final step visible, then let owners bring their money home safely.
 
@@ -23,11 +23,13 @@ FOUND is deliberately small, useful ecosystem infrastructure: make an easy-to-mi
 
 ```sh
 npm test
-npm run census -- --block 223800610 --check
+npm run census:verify
+# Optional independent chain reread:
+npm run census:expanded -- --block 223975859 --check
 ```
 
 - The test suite covers financial-state transitions, exact withdrawal preflights, pagination, malformed responses, failures, and server safety.
-- The census command independently reproduces the checked-in leaderboard byte-for-byte without modifying it.
+- The offline census command validates archived records and reproduces the leaderboard byte-for-byte. The separate expanded command independently rereads on-chain state at the same block.
 - `ru.near` provided a live LiNEAR example during development.
 - `deportivo.near` provided a live rNEAR example, with a separate Lonk validator withdrawal.
 - `within4d45.near` provided Shitzu and Meteor validator-pool examples; its custom Aurora pool remains explicitly unsupported.
@@ -41,7 +43,7 @@ A 44-second, narrated demo is prepared in [demo/output/found-demo.mp4](demo/outp
 
 The cut leads with the user task: paste an account, discover a real balance, then show connecting a wallet and approving directly in FOUND. Meta Pool coverage and the reproducible LiNEAR census follow as evidence. The existing pixel-art characters are subtly animated. Public examples are labelled; no completed withdrawal is implied.
 
-This recorded demo shows the earlier two-protocol UI; rNEAR and validator coverage are verified in the live app and the expansion evidence. Refresh the coverage scene before final publication.
+This recorded demo shows the earlier two-protocol UI and the original 538-account LiNEAR snapshot. The expanded coverage and combined census are verified in the live app and archived evidence. Refresh that recorded coverage/count scene before final publication.
 
 This is a local draft, not a published demo URL. Review it before uploading and add the final public video/post links above.
 
@@ -52,7 +54,7 @@ Replace `[VIDEO_URL]` with the uploaded video or the post’s attached video bef
 ```text
 Unstaked doesn’t always mean withdrawn.
 
-FOUND finds unfinished staking withdrawals across NEAR—no wallet connection needed to scan. Its waiting room is reproducible from 47,882 onchain accounts. Connect your wallet and approve the withdrawal in FOUND.
+FOUND finds unfinished staking withdrawals across NEAR—no wallet connection needed to scan. Its waiting room counts 30,681 accounts with matured balances across supported staking protocols and pools. Connect your wallet and approve the withdrawal in FOUND.
 
 Built at NEAR HACKATHON.
 @NEARProtocol #NEARHackathon

@@ -39,7 +39,7 @@ Verified examples include:
 - `ru.near` and `lb3.near`: regression checks for existing LiNEAR and Meta Pool behavior.
 - `root.near`: a 1-yoctoNEAR validator remainder is treated as a tiny balance in the UI, not a prominent recovery opportunity. Tiny balances stay inspectable and actionable, with a fee qualification.
 
-These are current availability examples, not evidence of abandonment or age. The rNEAR census remains incomplete and is not included in the leaderboard. The 538-account leaderboard remains the dated LiNEAR-only snapshot.
+These are current availability examples, not evidence of abandonment or age. The later [expanded census](../census-2026-11-10/README.md) completed rNEAR enumeration and the standard factory-pool inventory. The public leaderboard now contains 30,681 deduplicated accounts across three protocols and 858 recognized pools; the old 538-account LiNEAR snapshot is preserved separately.
 
 ## Verification coverage
 

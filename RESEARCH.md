@@ -1,6 +1,10 @@
 # FOUND research
 
-## LiNEAR withdrawal census
+## Expanded staking census
+
+The current leaderboard counts 30,681 unique account IDs across LiNEAR, Meta Pool, rNEAR and 858 recognized validator pools at block 223975859. [Full evidence and methodology](research/census-2026-11-10/README.md). Use `npm run census:verify` for the archived consistency check or `npm run census:expanded -- --check` for a fresh RPC reread.
+
+## Original LiNEAR withdrawal census (archived)
 
 The leaderboard is derived entirely from public NEAR mainnet contract state. No account labels, private data, third-party balance database, or inferred abandonment are used.
 
@@ -25,7 +29,7 @@ From the repository root, run:
 npm run census -- --block 223800610 --check
 ```
 
-This repeats the full mainnet census and compares the serialized result with `dist/leaderboard.json` without writing a file. A byte-for-byte match was verified on 9 November 2026.
+This repeats the full mainnet census and compares the serialized result with `research/census/linear-2026-11-09.json` without writing a file. A byte-for-byte match was verified on 9 November 2026.
 
 To write the regenerated snapshot instead, run:
 
@@ -33,7 +37,7 @@ To write the regenerated snapshot instead, run:
 npm run census -- --block 223800610
 ```
 
-To refresh the leaderboard, choose a finalized block and pass its height explicitly. All accounts and the timestamp then come from that one block. The generator writes atomically and leaves the existing snapshot untouched if a page or provider fails.
+To refresh only this historical LiNEAR dataset, choose a finalized block and an explicit --output destination. Use census:expanded for the current combined leaderboard. All accounts and the timestamp then come from that one block. The generator writes atomically and leaves the existing snapshot untouched if a page or provider fails.
 
 Optional `--output PATH` selects another JSON destination, and `--help` prints command usage.
 
@@ -68,7 +72,7 @@ These are read-only snapshot checks, not transaction simulations or guarantees. 
 
 ## Coverage expansion investigation
 
-[10 November 2026 findings](research/coverage-2026-11-10/README.md) document additional validator-pool withdrawals, rNEAR delayed withdrawals, Rhea/Ref internal wNEAR and available storage deposits. Includes pinned mainnet evidence and an explicitly incomplete rNEAR census. These are researched candidates, not current FOUND coverage.
+[10 November 2026 findings](research/coverage-2026-11-10/README.md) document additional validator-pool withdrawals, rNEAR delayed withdrawals, Rhea/Ref internal wNEAR and available storage deposits. Includes pinned mainnet evidence and an explicitly incomplete rNEAR census. This historical investigation predates the implemented rNEAR and validator-pool adapters described below; token/storage candidates remain outside current coverage.
 
 ## Implemented coverage expansion
 

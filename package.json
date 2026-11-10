@@ -6,6 +6,8 @@
     "dev": "python3 -m http.server 8084 --bind 127.0.0.1 --directory dist",
     "test": "node --test tests/*.test.js",
     "census": "node scripts/generate-leaderboard.mjs",
+    "census:expanded": "node scripts/scan-staking-census.mjs",
+    "census:verify": "node scripts/verify-census-archive.mjs",
     "start": "node server.mjs",
     "build": "node scripts/build-wallet.mjs"
   },
