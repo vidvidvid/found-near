@@ -1,0 +1,28 @@
+{
+  "url": "https://found-production-e549.up.railway.app/",
+  "capturedAt": "2026-11-10T19:10:49.356764+00:00",
+  "captureMethod": "Live browser iframe at 600 x 1080 CSS pixels, rendered at scale 2, cropped to measured DOM bounds. Source UI and values unchanged.",
+  "captureFrame": "demo/capture-frame.html",
+  "linear": {
+    "account": "ru.near",
+    "block": 223957418,
+    "display": "500.3072 NEAR",
+    "capture": "03-linear-hd.jpg"
+  },
+  "metapool": {
+    "account": "lb3.near",
+    "block": 223957726,
+    "display": "17,502.401 NEAR",
+    "capture": "05-metapool-hd.jpg"
+  },
+  "leaderboard": {
+    "source": "9 November 2026 snapshot",
+    "rowsShown": [
+      1,
+      2,
+      3
+    ],
+    "capture": "06-waiting-hd.jpg"
+  },
+  "withdrawalSent": false
+}

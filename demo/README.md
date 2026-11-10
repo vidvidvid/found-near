@@ -1,6 +1,6 @@
 # FOUND narrated demo
 
-44 seconds, 1280×720, 30 fps, H.264 MP4 with AAC narration. Faye preset, generated with Seed Audio 1.0 through Higgsfield. Also understandable without sound; English captions are available.
+44 seconds, 1920×1080, 30 fps, H.264 MP4 with AAC narration. Faye preset, generated with Seed Audio 1.0 through Higgsfield. Also understandable without sound; English captions are available.
 
 Open `index.html` through a local static server to preview. Export: `output/found-demo.mp4`. Poster: `output/poster.png`. Contact sheet: `output/storyboard.jpg`.
 
@@ -20,10 +20,10 @@ Visual direction: original dark navy/violet/amber scene, DM Sans, restrained cro
 
 ## Evidence and editorial treatment
 
-The UI shots are actual browser captures of the Railway deployment on 10 November 2026. They are cropped, resized and edited together, not a continuous screen recording. No UI values were redrawn or substituted. `captures/provenance.json` preserves the two accounts, observed blocks, source URL and capture time. The pixel-art characters are decorative animation outside the captured UI.
+The UI shots are actual browser captures of the Railway deployment on 10 November 2026. They are cropped, resized and edited together, not a continuous screen recording. No UI values were redrawn or substituted. `captures/provenance-hd.json` preserves the two accounts, observed blocks, source URL and capture time. The pixel-art characters are decorative animation outside the captured UI.
 
-- ru.near: LiNEAR, 500.3072 NEAR displayed, block 223950238.
-- lb3.near: Meta Pool, 17,502.401 NEAR displayed, block 223950463.
+- ru.near: LiNEAR, 500.3072 NEAR displayed, block 223957418.
+- lb3.near: Meta Pool, 17,502.401 NEAR displayed, block 223957726.
 - Neither example belongs to us. Neither is presented as recovered funds.
 - The handoff scene displays FOUND’s actual instructions and official app destination; it does not show a completed withdrawal.
 - The 538 figure is the 9 Nov 2026 LiNEAR snapshot above 0.01 NEAR, not a current all-protocol count or proof of abandonment.
@@ -64,3 +64,9 @@ Prompts:
 Audio wording was checked with a local faster-whisper transcription, including the 538 figure. This is an automated check, not a claim of human listening review. No music or additional sound effects are mixed in.
 
 On the landing page, character motion follows the real scan state: search while reading RPC, a small hop only for a ready balance, and a guided step when withdrawal instructions open. Empty, pending, and error states do not celebrate a find. Reduced-motion preferences disable all movement. The progression ends at the official app handoff, never a pretend completed withdrawal.
+
+## UI clarity pass
+
+The export renders text and graphics natively at 1080p. All five UI shots were recaptured from the live site using `capture-frame.html` (600×1080 CSS viewport, 2× browser rendering) and cropped to measured element bounds. This gives readable type without enlarging the old compressed desktop shots. The leaderboard excerpt includes its complete heading and first three complete rows, rather than shrinking the whole desktop table. Original captures remain archived.
+
+The renderer adds no stroke or frame around UI shots. Rounded masks follow the existing component corners. Input and leaderboard crops have breathing room and soft edge masks; the input's focus halo is absent and its tap cue is centered on the button. Each of the seven scenes was visually checked for clipping, overlap, duplicate borders, and readable labels.
