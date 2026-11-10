@@ -2,7 +2,7 @@
 
 44 seconds, 1920×1080, 30 fps, H.264 MP4 with AAC narration. Faye preset, generated with Seed Audio 1.0 through Higgsfield. Also understandable without sound; English captions are available.
 
-Open `index.html` through a local static server to preview. Export: `output/found-demo.mp4`. Poster: `output/poster.png`. Contact sheet: `output/storyboard.jpg`.
+Run `python3 demo/serve.py` and open http://127.0.0.1:8086/ to preview. The local server supports byte-range requests, so the video timeline can seek before playback. Export: `output/found-demo.mp4`. Poster: `output/poster.png`. Contact sheet: `output/storyboard.jpg`.
 
 ## Story
 
