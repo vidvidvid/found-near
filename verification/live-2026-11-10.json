@@ -1,0 +1,169 @@
+{
+  "at": "2026-11-10T17:42:42.537Z",
+  "scans": [
+    {
+      "account": "ru.near",
+      "block": "Hz86Zo392dXa4EDuN7kCoeRE3V2QBNLXEJEpuXziK35t",
+      "height": 223949021,
+      "checkedAt": 1794332562892,
+      "results": [
+        {
+          "account": "ru.near",
+          "protocol": "linear",
+          "amount": "500307262171597331335415343",
+          "block": "Hz86Zo392dXa4EDuN7kCoeRE3V2QBNLXEJEpuXziK35t",
+          "height": 223949021,
+          "checkedAt": 1794332562765,
+          "state": "found"
+        },
+        {
+          "account": "ru.near",
+          "protocol": "metapool",
+          "amount": "0",
+          "block": "Hz86Zo392dXa4EDuN7kCoeRE3V2QBNLXEJEpuXziK35t",
+          "height": 223949021,
+          "checkedAt": 1794332562840,
+          "state": "empty"
+        }
+      ]
+    },
+    {
+      "account": "lb3.near",
+      "block": "CSJMydUoCFVpm8bo5fzexaqsRVLZskAXJsHrAnXP59sg",
+      "height": 223949022,
+      "checkedAt": 1794332563113,
+      "results": [
+        {
+          "account": "lb3.near",
+          "protocol": "linear",
+          "amount": "0",
+          "block": "CSJMydUoCFVpm8bo5fzexaqsRVLZskAXJsHrAnXP59sg",
+          "height": 223949022,
+          "checkedAt": 1794332563016,
+          "state": "empty"
+        },
+        {
+          "account": "lb3.near",
+          "protocol": "metapool",
+          "amount": "17502401050000000000000000000",
+          "block": "CSJMydUoCFVpm8bo5fzexaqsRVLZskAXJsHrAnXP59sg",
+          "height": 223949022,
+          "checkedAt": 1794332563034,
+          "state": "found"
+        }
+      ]
+    },
+    {
+      "account": "treasury.linear-protocol.near",
+      "block": "CSJMydUoCFVpm8bo5fzexaqsRVLZskAXJsHrAnXP59sg",
+      "height": 223949022,
+      "checkedAt": 1794332563316,
+      "results": [
+        {
+          "account": "treasury.linear-protocol.near",
+          "protocol": "linear",
+          "amount": "0",
+          "block": "CSJMydUoCFVpm8bo5fzexaqsRVLZskAXJsHrAnXP59sg",
+          "height": 223949022,
+          "checkedAt": 1794332563285,
+          "state": "empty"
+        },
+        {
+          "account": "treasury.linear-protocol.near",
+          "protocol": "metapool",
+          "amount": "0",
+          "block": "CSJMydUoCFVpm8bo5fzexaqsRVLZskAXJsHrAnXP59sg",
+          "height": 223949022,
+          "checkedAt": 1794332563316,
+          "state": "empty"
+        }
+      ]
+    },
+    {
+      "account": "41a5bf8e8abcd00bd7b9081e944c51c5407bdb7cff80eb64b8ad6543a34dea3e",
+      "block": "7U6d1kRaUCS4ken3iwdx5YEKn4ynM9fE9dekW3pDh8b9",
+      "height": 223949023,
+      "checkedAt": 1794332563541,
+      "results": [
+        {
+          "account": "41a5bf8e8abcd00bd7b9081e944c51c5407bdb7cff80eb64b8ad6543a34dea3e",
+          "protocol": "linear",
+          "amount": "0",
+          "block": "7U6d1kRaUCS4ken3iwdx5YEKn4ynM9fE9dekW3pDh8b9",
+          "height": 223949023,
+          "checkedAt": 1794332563474,
+          "state": "empty"
+        },
+        {
+          "account": "41a5bf8e8abcd00bd7b9081e944c51c5407bdb7cff80eb64b8ad6543a34dea3e",
+          "protocol": "metapool",
+          "amount": "10600582502829999999999999999",
+          "block": "7U6d1kRaUCS4ken3iwdx5YEKn4ynM9fE9dekW3pDh8b9",
+          "height": 223949023,
+          "checkedAt": 1794332563463,
+          "state": "found"
+        }
+      ]
+    }
+  ],
+  "metapoolAccount": {
+    "amount": "295801026757229243586443652444",
+    "block_hash": "Hz86Zo392dXa4EDuN7kCoeRE3V2QBNLXEJEpuXziK35t",
+    "block_height": 223949021,
+    "code_hash": "J6pS9R23vzbwxGB8eMq4qrn8UhciEYHsVbR9UJPyLNxh",
+    "locked": "0",
+    "storage_paid_at": 0,
+    "storage_usage": 8753818
+  },
+  "get_contract_info": {
+    "dataVersion": 1,
+    "name": "Metapool",
+    "version": "2.0.0",
+    "source": "github.com/Meta-Pool/liquid-staking-contract",
+    "standards": [
+      "NEP-141",
+      "NEP-145",
+      "SP"
+    ],
+    "webAppUrl": "https://metapool.app",
+    "developersAccountId": "developers.near",
+    "auditorAccountId": "auditors.near"
+  },
+  "get_contract_state": {
+    "env_epoch_height": "4956",
+    "contract_account_balance": "295585568040395306857743638199",
+    "total_available": "75887280913323008810220744707",
+    "total_for_staking": "21607713890161603695570843204495",
+    "total_actually_staked": "21394579561804821610792273988512",
+    "epoch_stake_orders": "150",
+    "epoch_unstake_orders": "1514598303739999999999999999",
+    "total_unstaked_and_waiting": "214648926660522084778569276817",
+    "total_stake_shares": "14266300072277381140926320765004",
+    "st_near_price": "1514598303743115231036022",
+    "total_unstake_claims": "221212885430812298047522889727",
+    "retrieved_for_unstake_claims": "219698287127072298047522889728",
+    "reserve_for_unstake_claims": "219698287127072298047522889728",
+    "total_meta": "34699998471904623347245037706425",
+    "accumulated_staked_rewards": "7173907989823448449101196501019",
+    "nslp_liquidity": "75887280913323008810220744707",
+    "nslp_target": "80000000000000000000000000000",
+    "nslp_stnear_balance": "0",
+    "nslp_share_price": "1384567430345040732772699",
+    "nslp_total_shares": "54809378907903055721180234964",
+    "nslp_current_discount_basis_points": 55,
+    "nslp_min_discount_basis_points": 30,
+    "nslp_max_discount_basis_points": 500,
+    "accounts_count": "21019",
+    "staking_pools_count": 586,
+    "min_deposit_amount": "1000000000000000000000000",
+    "est_meta_rewards_stakers": "12327260372872180607693498499953",
+    "est_meta_rewards_lp": "3520918912077489651490788196466",
+    "est_meta_rewards_lu": "3204248556414584060448040893157",
+    "max_meta_rewards_stakers": "1000000000000000000000000000000",
+    "max_meta_rewards_lp": "3500000000000000000000000000000",
+    "max_meta_rewards_lu": "3200000000000000000000000000000",
+    "unstaked_for_rebalance": "214648926660522084778569276621"
+  },
+  "get_account_available_balance": "0",
+  "snapshotSha256": "6c90c76d52e12cc86863f9a4da4608b9ed70d23f8ba1c3859d932ae6a4a371a7"
+}

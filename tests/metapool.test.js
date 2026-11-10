@@ -2,13 +2,13 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {scanMetaPoolAccount,scanProtocols} from '../dist/rpc.js';
 
-function fixture({amount='5000000000000000000000000',mature=true,reserve=amount,balance=amount,malformed=false}={}){
+function fixture({amount='5000000000000000000000000',mature=true,reserve=amount,balance=amount,malformed=false,available='0',claims=amount,totalAvailable=available}={}){
  const requests=[];
  const fetcher=async(_url,options)=>{
   const {params:p}=JSON.parse(options.body);requests.push(p);
   if(p.request_type==='view_account')return {ok:true,json:async()=>({result:{block_hash:'final',block_height:999}})};
   const args=JSON.parse(atob(p.args_base64));
-  let data=p.method_name==='get_account'?{account_id:args.account_id,unstaked_balance:amount,staked_balance:'0',can_withdraw:mature}:{retrieved_for_unstake_claims:reserve,contract_account_balance:balance};
+  let data=p.method_name==='get_account_available_balance'?available:p.method_name==='get_account'?{account_id:args.account_id,unstaked_balance:amount,staked_balance:'0',can_withdraw:mature}:{retrieved_for_unstake_claims:reserve,contract_account_balance:balance,total_unstake_claims:claims,total_available:totalAvailable};
   if(malformed&&p.method_name==='get_contract_state')data={};
   return {ok:true,json:async()=>({result:{block_hash:'snapshot',block_height:123,result:[...new TextEncoder().encode(JSON.stringify(data))]}})};
  };
@@ -62,3 +62,17 @@ test('combined scan pins both protocols to the account block and isolates protoc
  assert.equal(requests.filter(q=>q.request_type==='view_account').length,1);
  assert.ok(requests.filter(q=>q.request_type==='call_function').every(q=>q.block_id===999));
 });
+
+ test('Meta Pool checks the inclusive dust sweep boundary and accounting invariants',async()=>{
+  const amount='5000000000000000000000000',dust=10n**21n;
+  assert.equal((await scanMetaPoolAccount('lb3.near',fixture({amount,available:String(dust)}))).state,'unavailable');
+  assert.equal((await scanMetaPoolAccount('lb3.near',fixture({amount,available:String(dust),balance:String(BigInt(amount)+dust)}))).state,'found');
+  assert.equal((await scanMetaPoolAccount('lb3.near',fixture({amount,available:String(dust+1n)}))).state,'found');
+  for(const options of [{claims:'0'},{available:'1',totalAvailable:'0',balance:String(BigInt(amount)+1n)},{available:1},{amount:5000000000000000000000000}]){
+   if(typeof options.amount==='number')await assert.rejects(scanMetaPoolAccount('lb3.near',fixture(options)));
+   else assert.equal((await scanMetaPoolAccount('lb3.near',fixture(options))).state,'unavailable');
+  }
+ });
+ test('a provider ignoring a pinned block cannot produce a ready result',async()=>{
+  await assert.rejects(scanMetaPoolAccount('lb3.near',{...fixture(),block:999}));
+ });

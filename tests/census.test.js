@@ -23,12 +23,12 @@ test('census reads every account at one block and rejects incomplete pages',asyn
  const blocks=[];
  const options={
   block:123,
-  blockQuery:async()=>({header:{timestamp:'1794246879959368700'}}),
+  blockQuery:async()=>({header:{height:123,hash:'snapshot',timestamp:'1794246879959368700'}}),
   query:async params=>{
    blocks.push(params.block_id);
    const args=JSON.parse(Buffer.from(params.args_base64,'base64').toString());
    const data=params.method_name==='get_number_of_accounts'?accounts.length:accounts.slice(args.from_index,args.from_index+args.limit);
-   return {block_height:123,result:[...new TextEncoder().encode(JSON.stringify(data))]};
+   return {block_height:123,block_hash:'snapshot',result:[...new TextEncoder().encode(JSON.stringify(data))]};
   }
  };
  const {snapshot,total}=await generateSnapshot(options);
@@ -39,3 +39,19 @@ test('census reads every account at one block and rejects incomplete pages',asyn
  options.query=async()=>({block_height:124,result:[]});
  await assert.rejects(generateSnapshot(options),/instead of 123/);
 });
+
+ test('census rejects duplicate and malformed records instead of inflating totals',()=>{
+  const a=account('alice.near',10n**24n);
+  assert.throws(()=>buildSnapshot([a,a],123,'2026-11-09'),/Duplicate/);
+  for(const patch of [{can_withdraw:'false'},{unstaked_balance:1},{staked_balance:'-1'},{unstaked_balance:String(2n**128n)},{account_id:'bad..near'}])assert.throws(()=>buildSnapshot([{...a,...patch}],123,'2026-11-09'),/Invalid/);
+ });
+ test('census rejects a mismatched header, repeated page and incomplete page',async()=>{
+  const header={height:123,hash:'snapshot',timestamp:'1794246879959368700'};
+  const result=data=>({block_height:123,block_hash:'snapshot',result:[...new TextEncoder().encode(JSON.stringify(data))]});
+  const options={block:123,blockQuery:async()=>({header}),query:async p=>result(p.method_name==='get_number_of_accounts'?2:[account('a.near',1)])};
+  await assert.rejects(generateSnapshot(options),/Incomplete/);
+  await assert.rejects(generateSnapshot({...options,blockQuery:async()=>({header:{...header,height:124}})}),/header/);
+  await assert.rejects(generateSnapshot({...options,query:async p=>result(p.method_name==='get_number_of_accounts'?2:[account('a.near',1),account('a.near',1)])}),/Duplicate/);
+ });
+
+test('census includes Ethereum-style NEAR implicit accounts',()=>{assert.equal(buildSnapshot([account('0x9fbbf4b8330dedc4dbcbca778c8a21bbd25cffbc',10n**24n)],123,'2026-11-09').accounts.length,1);});

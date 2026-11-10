@@ -14,6 +14,8 @@ The Open Innovation submission description, demo script, X post draft, and recov
 `npm test` verifies the financial-state and census logic using deterministic RPC fixtures.
 No dependencies or build step are required.
 
+Independent verification findings are in [VERIFICATION.md](VERIFICATION.md).
+
 ## What it does
 
 - Accepts a named or implicit NEAR account and confirms the account exists.
@@ -22,7 +24,7 @@ No dependencies or build step are required.
   checks `is_paused` and `can_account_withdraw` with the exact amount at that block.
 - Reads `meta-pool.near.get_account`. For a positive mature balance on a regular account,
   checks `get_contract_state` for enough reserved withdrawal funds and contract balance
-  for the exact amount at that block.
+  including the contract’s possible dust sweep, at that block.
 - Identifies Meta Pool lockup accounts separately instead of sending them through a
   regular wallet withdrawal flow.
 - Routes owners to the official LiNEAR account page or Meta Pool dashboard for wallet

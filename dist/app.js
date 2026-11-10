@@ -68,7 +68,7 @@ function render(state,result){
 }
 async function scan(value,isExample=false){
  const account=normalizeAccount(value);$('form-error').hidden=true;
- if(!validAccount(account)){$('form-error').textContent='Enter a NEAR account such as you.near (not an Ethereum address).';$('form-error').hidden=false;$('account').setAttribute('aria-invalid','true');$('account').focus();return;}
+ if(!validAccount(account)){$('form-error').textContent='Enter a NEAR account such as you.near or an implicit account ID.';$('form-error').hidden=false;$('account').setAttribute('aria-invalid','true');$('account').focus();return;}
  $('account').removeAttribute('aria-invalid');$('account').value=account;request?.abort();const controller=new AbortController();request=controller;example=isExample;current=null;
  $('scan-button').disabled=true;$('try-example').disabled=true;$('scan-button').textContent='Checking…';render('loading');
  try{const result=await scanProtocols(account,{signal:controller.signal});if(request!==controller)return;current=result;render('done',result);}

@@ -5,7 +5,7 @@ export const PROTOCOLS={
 export const CONTRACT=PROTOCOLS.linear.contract;
 export const ENDPOINTS=['https://free.rpc.fastnear.com','https://rpc.mainnet.near.org'];
 export function normalizeAccount(value){return value.trim().toLowerCase();}
-export function validAccount(value){return !/^0x[0-9a-f]{40}$/.test(value)&&value.length>=2&&value.length<=64&&/^[a-z0-9]+(?:[._-][a-z0-9]+)*$/.test(value);}
+export function validAccount(value){return value.length>=2&&value.length<=64&&/^[a-z0-9]+(?:[._-][a-z0-9]+)*$/.test(value);}
 export function formatNear(yocto,decimals=4){
  const n=BigInt(yocto),unit=10n**24n;
  const whole=(n/unit).toLocaleString('en-US');
@@ -30,7 +30,10 @@ export async function rpc(params,{signal,fetcher=fetch,endpoints=ENDPOINTS}={}){
     const json=await response.json();
     if(json.error)throw new QueryError(JSON.stringify(json.error),json.error.cause?.name||json.error.data?.name);
     if(!json.result||json.result.error)throw new QueryError(json.result?.error||'Missing RPC result','CONTRACT_ERROR');
-    return json.result;
+    const result=json.result;
+    if(!Number.isSafeInteger(result.block_height)||typeof result.block_hash!=='string'||!result.block_hash)throw new Error('Missing RPC block identity');
+    if(params.block_id!==undefined&&(typeof params.block_id==='number'?result.block_height!==params.block_id:result.block_hash!==params.block_id))throw new Error('RPC returned a different block');
+    return result;
    }finally{clearTimeout(timer);}
   }));
  }catch(error){
@@ -48,9 +51,10 @@ function caller(contract,options){
   return {data:text?JSON.parse(text):null,block:r.block_hash,height:r.block_height};
  };
 }
-function validateAccount(account){if(!validAccount(account))throw new QueryError('Enter a NEAR account, like you.near, or a 64-character implicit account.','INVALID');}
+function validateAccount(account){if(!validAccount(account))throw new QueryError('Enter a NEAR account, like you.near, or a NEAR implicit account.','INVALID');}
+export function isU128(value){return typeof value==='string'&&/^\d+$/.test(value)&&BigInt(value)<2n**128n;}
 function validateDetails(data,account,protocol){
- if(!data||data.account_id!==account||!/^\d+$/.test(data.unstaked_balance)||typeof data.can_withdraw!=='boolean')throw new QueryError(`${protocol} returned an unexpected response. Please try again.`,'UNAVAILABLE');
+ if(!data||data.account_id!==account||!isU128(data.unstaked_balance)||typeof data.can_withdraw!=='boolean')throw new QueryError(`${protocol} returned an unexpected response. Please try again.`,'UNAVAILABLE');
 }
 export async function scanAccount(account,options={}){
  validateAccount(account);
@@ -81,9 +85,11 @@ export async function scanMetaPoolAccount(account,options={}){
  if(!d.can_withdraw)return {...result,state:'pending'};
  if(/\.lockup\.near$/.test(account))return {...result,state:'unsupported'};
  try{
-  const state=await call('get_contract_state',{},details.block),data=state.data;
-  if(!data||!/^\d+$/.test(data.retrieved_for_unstake_claims)||!/^\d+$/.test(data.contract_account_balance))throw new QueryError('Meta Pool returned an unexpected response. Please try again.','UNAVAILABLE');
-  const ready=BigInt(data.retrieved_for_unstake_claims)>=amount&&BigInt(data.contract_account_balance)>=amount;
+  const [state,availableResult]=await Promise.all([call('get_contract_state',{},details.block),call('get_account_available_balance',{account_id:account},details.block)]),data=state.data;
+  if(!data||!['retrieved_for_unstake_claims','contract_account_balance','total_unstake_claims','total_available'].every(key=>isU128(data[key]))||!isU128(availableResult.data))throw new QueryError('Meta Pool returned an unexpected response. Please try again.','UNAVAILABLE');
+  // take_from_available includes an existing balance within 0.001 NEAR (inclusive).
+  const available=BigInt(availableResult.data),payout=amount+(available<=10n**21n?available:0n);
+  const ready=BigInt(data.retrieved_for_unstake_claims)>=amount&&BigInt(data.total_unstake_claims)>=amount&&BigInt(data.total_available)+amount>=payout&&BigInt(data.contract_account_balance)>=payout;
   return {...result,state:ready?'found':'unavailable'};
  }catch(error){if(error.name==='AbortError')throw error;return {...result,state:'unavailable'};}
 }

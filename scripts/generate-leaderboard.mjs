@@ -1,7 +1,7 @@
 import {readFile,mkdir,writeFile,rename,rm} from 'node:fs/promises';
 import {dirname,resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {CONTRACT,rpc} from '../dist/rpc.js';
+import {CONTRACT,rpc,isU128,validAccount} from '../dist/rpc.js';
 
 const DEFAULT_BLOCK=223800610;
 const PAGE_SIZE=1000;
@@ -10,6 +10,12 @@ const OUTPUT=fileURLToPath(new URL('../dist/leaderboard.json',import.meta.url));
 const SCOPE='LiNEAR only; matured balances, not proven abandoned funds';
 
 export function buildSnapshot(accounts,block,asOf){
+ const seen=new Set();
+ for(const account of accounts){
+  if(!account||typeof account.account_id!=='string'||!validAccount(account.account_id)||!isU128(account.unstaked_balance)||!isU128(account.staked_balance)||typeof account.can_withdraw!=='boolean')throw new Error('Invalid census account record.');
+  if(seen.has(account.account_id))throw new Error(`Duplicate census account: ${account.account_id}`);
+  seen.add(account.account_id);
+ }
  const qualified=accounts.filter(account=>account.can_withdraw&&BigInt(account.unstaked_balance)>MINIMUM_BALANCE);
  qualified.sort((a,b)=>{
   const left=BigInt(a.unstaked_balance),right=BigInt(b.unstaked_balance);
@@ -49,10 +55,11 @@ async function fetchBlock(block,endpoints){
 
 export async function generateSnapshot({block=DEFAULT_BLOCK,endpoints=['https://archival-rpc.mainnet.fastnear.com','https://archival-rpc.mainnet.near.org'],query=rpc,blockQuery=fetchBlock}={}){
  const header=await retry(()=>blockQuery(block,endpoints));
+ if(header.header.height!==block||typeof header.header.hash!=='string'||!header.header.hash)throw new Error('Snapshot header does not match requested block.');
  const asOf=new Date(Number(BigInt(header.header.timestamp)/1000000n)).toISOString().slice(0,10);
  const call=async(method,args)=>{
   const result=await retry(()=>query({request_type:'call_function',account_id:CONTRACT,method_name:method,args_base64:Buffer.from(JSON.stringify(args)).toString('base64'),block_id:block},{endpoints}));
-  if(result.block_height!==block)throw new Error(`RPC returned block ${result.block_height} instead of ${block}.`);
+  if(result.block_height!==block||result.block_hash!==header.header.hash)throw new Error(`RPC returned block ${result.block_height} instead of ${block}.`);
   const bytes=new Uint8Array(result.result);
   return JSON.parse(new TextDecoder().decode(bytes));
  };
