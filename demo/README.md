@@ -20,10 +20,10 @@ Visual direction: original dark navy/violet/amber scene, DM Sans, restrained cro
 
 ## Evidence and editorial treatment
 
-The UI shots are actual browser captures of the Railway deployment on 10 November 2026. They are cropped, resized and edited together, not a continuous screen recording. No UI values were redrawn or substituted. `captures/provenance-hd.json` preserves the two accounts, observed blocks, source URL and capture time. The pixel-art characters are decorative animation outside the captured UI.
+The UI shots are actual browser captures of FOUND on 10 November 2026. The latest result cards use the local checkout with live mainnet reads; the same UI revision is deployed to Railway. They are cropped, resized and edited together, not a continuous screen recording. No UI values were redrawn or substituted. `captures/provenance-hd.json` preserves the two accounts, observed blocks, source URL and capture time. The pixel-art characters are decorative animation outside the captured UI.
 
-- ru.near: LiNEAR, 500.3072 NEAR displayed, block 223957418.
-- lb3.near: Meta Pool, 17,502.401 NEAR displayed, block 223957726.
+- ru.near: LiNEAR, 500.3072 NEAR displayed, block 223963212.
+- lb3.near: Meta Pool, 17,502.401 NEAR displayed, block 223963271.
 - Neither example belongs to us. Neither is presented as recovered funds.
 - The handoff scene displays FOUND’s actual instructions and official app destination; it does not show a completed withdrawal.
 - The 538 figure is the 9 Nov 2026 LiNEAR snapshot above 0.01 NEAR, not a current all-protocol count or proof of abandonment.
@@ -69,6 +69,8 @@ On the landing page, character motion follows the real scan state: search while 
 
 The export renders text and graphics natively at 1080p. All five UI shots were recaptured from the live site using `capture-frame.html` (600×1080 CSS viewport, 2× browser rendering) and cropped to measured element bounds. This gives readable type without enlarging the old compressed desktop shots. The leaderboard excerpt includes its complete heading and first three complete rows, rather than shrinking the whole desktop table. Original captures remain archived.
 
-The renderer adds no stroke or frame around UI shots. Rounded masks follow the existing component corners. Input and leaderboard crops have breathing room and soft edge masks; the input's focus halo is absent and its tap cue is centered on the button. Each of the seven scenes was visually checked for clipping, overlap, duplicate borders, and readable labels.
+The renderer adds no stroke or frame around UI shots. Rounded masks follow the existing component corners. The leaderboard excerpt sits on an unbordered matte with a consistent 24-unit inset on all sides. The input crop has a soft edge mask; the input's focus halo is absent and its tap cue is centered on the button. Each of the seven scenes was visually checked for clipping, overlap, duplicate borders, and readable labels.
 
 The closing frame uses the same NEAR mark as the app (`dist/near.svg`), rasterized in the existing cream foreground color as `assets/near-mark.png`. The mark’s geometry is unchanged.
+
+Currency symbols in the result cards now share the unit label’s cap height and baseline. The live app and recorded UI use the same markup and styles.

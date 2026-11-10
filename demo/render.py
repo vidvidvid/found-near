@@ -102,12 +102,18 @@ def header(im,label=None):
  text(im,(64,34),'found.',37,INK,700)
  if label:text(im,(VW-64-draw(im).textlength(label,font=font(16)),48),label,16,MUTED)
 def footer(im,s):text(im,(64,677),s,15,MUTED)
-def panel(im,name,xy,width,t,radius=0,feather=False):
+def panel(im,name,xy,width,t,radius=0,feather=False,inset=0):
  # Exact browser crop. Its own border is the only border; no editorial frame.
- src=shots[name];size=(px(width),round(src.height*px(width)/src.width))
- p=src.resize(size,Image.Resampling.LANCZOS).convert('RGB')
+ src=shots[name];content_width=px(width-2*inset)
+ content=src.resize((content_width,round(src.height*content_width/src.width)),Image.Resampling.LANCZOS).convert('RGB')
+ size=(px(width),content.height+2*px(inset))
+ p=Image.new('RGB',size,BG);p.paste(content,(px(inset),px(inset)))
  mask=Image.new('L',size,255)
- if radius:
+ if inset:
+  mask=Image.new('L',(size[0]*2,size[1]*2));md=ImageDraw.Draw(mask)
+  md.rounded_rectangle((0,0,size[0]*2-1,size[1]*2-1),radius=px(14)*2,fill=255)
+  mask=mask.resize(size,Image.Resampling.LANCZOS)
+ elif radius:
   # Match the existing UI radius at the source capture's two-pixel scale.
   mask=Image.new('L',(size[0]*2,size[1]*2));md=ImageDraw.Draw(mask)
   md.rounded_rectangle((0,0,size[0]*2-1,size[1]*2-1),radius=radius*size[0]/src.width*2,fill=255)
@@ -141,7 +147,7 @@ def scene(i,t):
   step(im,'02 / FIND',['See what’s','ready.'],'A live read. No wallet connection.')
   panel(im,'03-linear',(638,150),550,t,radius=24)
   characters(im,t,i)
-  footer(im,'Public example · LiNEAR · block 223,957,418 · recorded 10 Nov 2026')
+  footer(im,'Public example · LiNEAR · block 223,963,212 · recorded 10 Nov 2026')
  elif i==3:
   step(im,'03 / WITHDRAW',['Use the','official app.'],'Only the owner can approve.')
   panel(im,'04-handoff',(711,105),430,t,radius=44)
@@ -151,10 +157,10 @@ def scene(i,t):
   step(im,'TWO PROTOCOLS',['One account.','One check.'],'LiNEAR + Meta Pool')
   panel(im,'05-metapool',(638,150),550,t,radius=24)
   characters(im,t,i)
-  footer(im,'Public example · lb3.near · Meta Pool · block 223,957,726 · 10 Nov 2026')
+  footer(im,'Public example · lb3.near · Meta Pool · block 223,963,271 · 10 Nov 2026')
  elif i==5:
   step(im,'PUBLIC, REPRODUCIBLE DATA',['538 accounts.','NEAR waiting.'],'47,882 LiNEAR accounts checked.')
-  panel(im,'06-waiting',(613,170),608,t,feather=True)
+  panel(im,'06-waiting',(613,170),608,t,inset=24)
   text(im,(626,620),'Matured balances, not proven lost funds.',18,MUTED)
   characters(im,t,i)
   footer(im,'LiNEAR only · balances above 0.01 NEAR · snapshot 9 Nov 2026')

@@ -5,15 +5,19 @@
   "captureFrame": "demo/capture-frame.html",
   "linear": {
     "account": "ru.near",
-    "block": 223957418,
+    "block": 223963212,
     "display": "500.3072 NEAR",
-    "capture": "03-linear-hd.jpg"
+    "capture": "03-linear-hd.jpg",
+    "capturedAt": "2026-11-10T20:01:36.969043+00:00",
+    "captureUrl": "http://localhost:8087/"
   },
   "metapool": {
     "account": "lb3.near",
-    "block": 223957726,
+    "block": 223963271,
     "display": "17,502.401 NEAR",
-    "capture": "05-metapool-hd.jpg"
+    "capture": "05-metapool-hd.jpg",
+    "capturedAt": "2026-11-10T20:01:36.969184+00:00",
+    "captureUrl": "http://localhost:8087/"
   },
   "leaderboard": {
     "source": "9 November 2026 snapshot",
@@ -24,5 +28,10 @@
     ],
     "capture": "06-waiting-hd.jpg"
   },
-  "withdrawalSent": false
+  "withdrawalSent": false,
+  "resultCardCaptureNote": "Actual local FOUND UI with live mainnet reads; CSS and JS match the Railway deployment. No balances or labels redrawn.",
+  "resultCardUIHash": {
+    "dist/app.js": "2e556d7ff08d12c1480b1b2342ea7fd2531d21c3f6124728819b2bafdbd18cc2",
+    "dist/night.css": "937acdc6f1277127ceb6916fb4dbecd85a2f27a4ec4f5e258845f9558636a166"
+  }
 }

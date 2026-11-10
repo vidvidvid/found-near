@@ -27,7 +27,9 @@ function amountElement(amount){
  const display=formatNear(amount,4),heading=element('h2',display+' ','amount');
  if(display.length>10)heading.classList.add('amount-long');
  heading.title=exactNear(amount)+' NEAR';
- heading.append(nearIcon(),element('small','NEAR'));
+ const unit=element('small','','amount-unit');
+ unit.append(nearIcon(),element('span','NEAR'));
+ heading.append(unit);
  return heading;
 }
 function protocolResult(result){
