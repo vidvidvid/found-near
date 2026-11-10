@@ -70,7 +70,27 @@ function protocolResult(result){
 }
 function render(state,result){
  const discovery=$('discovery'),content=$('pocket-content'),account=$('checked-account'),proof=$('result-proof');
+ const finishing=discovery.dataset.state==='loading'&&state==='done';
  discovery.dataset.state=state;
+ discovery.classList.toggle('just-found',finishing);
+ if(state==='loading'){
+  // Keep the existing illustration or explicitly labelled previous result in place.
+  // Disabling the old card prevents actions against stale balances during the scan.
+  journey('searching');$('pocket').setAttribute('aria-busy','true');content.inert=true;
+  $('scan-summary').hidden=true;
+  const welcome=content.querySelector('.pocket-welcome');
+  if(welcome){
+   const label=welcome.querySelector('.welcome-description');
+   const name=result.account.length>28?result.account.slice(0,12)+'…'+result.account.slice(-10):result.account;
+   label.textContent='Checking '+name+'…';label.title=result.account;
+   const button=welcome.querySelector('button');button.textContent='Checking…';button.disabled=true;
+  }else{
+   $('status').textContent='Checking…';$('status').classList.remove('incomplete');
+   proof.textContent='Checking '+result.account+'…';proof.title=result.account;
+  }
+  return;
+ }
+ content.inert=false;discovery.dataset.view=state;proof.removeAttribute('title');
  journey(state==='idle'?'idle':state==='loading'?'searching':state==='done'?resultJourney(result):'error');
  $('pocket').setAttribute('aria-busy',String(state==='loading'));
  $('pocket').setAttribute('aria-labelledby',state==='idle'?'welcome-title':'pocket-title');

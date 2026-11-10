@@ -146,8 +146,8 @@ dialog{background:linear-gradient(145deg,#261c2e,#18111f);border-color:#745343;c
 
 /* Welcome is an invitation, not an empty balance sheet. Its footprint stays fixed. */
 #pocket-content{min-height:302px}
-.discovery[data-state=idle] .pocket-top,.discovery[data-state=idle] .checked-account,.discovery[data-state=idle] #result-proof{visibility:hidden}
-.discovery[data-state=idle] .pocket{background:radial-gradient(ellipse at 50% 35%,#78522b24,transparent 68%),linear-gradient(145deg,#241b2bf5,#15121efc 70%)}
+.discovery[data-view=idle] .pocket-top,.discovery[data-view=idle] .checked-account,.discovery[data-view=idle] #result-proof{visibility:hidden}
+.discovery[data-view=idle] .pocket{background:radial-gradient(ellipse at 50% 35%,#78522b24,transparent 68%),linear-gradient(145deg,#241b2bf5,#15121efc 70%)}
 .pocket-welcome{position:absolute;inset:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:15px}
 .welcome-art{position:relative;width:204px;height:137px;isolation:isolate}
 .welcome-art:before{content:'';position:absolute;inset:14px 8px -12px;background:radial-gradient(ellipse,#d7a65b38,transparent 65%);filter:blur(10px);z-index:-1}
@@ -211,3 +211,26 @@ dialog{background:linear-gradient(145deg,#261c2e,#18111f);border-color:#745343;c
 @media(max-width:360px){.art{width:calc(100% + 18px)}.night-scene{right:-42px}}
 
 @media(max-width:360px){h1{font-size:40px}.brand{font-size:32px}.brand-o:after{top:19px;left:7px;width:4px;height:4px}}
+
+/* A search wakes the illustration without replacing the card with placeholders. */
+.pocket .welcome-description{min-height:43px}
+#pocket-content{transition:opacity .22s ease}
+.discovery[data-state=loading]:not([data-view=idle]) #pocket-content{opacity:.48}
+.discovery[data-state=loading] .proof{overflow:hidden;text-overflow:ellipsis;display:block;color:#d7bd93}
+.welcome-example{min-width:158px}
+.welcome-example:disabled{cursor:wait;filter:none}
+.discovery[data-state=loading] .welcome-wallet{animation:wallet-search 1.8s ease-in-out infinite}
+.discovery[data-state=loading] .welcome-coin{animation:coin-search 2.4s ease-in-out infinite;box-shadow:0 3px 0 #916337,0 0 26px #f6bd5c55}
+.discovery[data-state=loading] .welcome-art:before{animation:search-glow 2.4s ease-in-out infinite}
+.discovery[data-state=loading] .welcome-spark{animation:search-spark 1.6s ease-in-out infinite}
+.discovery[data-state=loading] .spark-right{animation-delay:.55s}
+.discovery.just-found .protocol-result{animation:result-arrive .32s ease-out both}
+.discovery.just-found .protocol-result+.protocol-result{animation-delay:.055s}
+.discovery.just-found .pocket{animation:found-glow .85s ease-out}
+@keyframes wallet-search{0%,100%{transform:rotate(-6deg) translateY(0)}35%{transform:rotate(1deg) translateY(-5px)}70%{transform:rotate(-8deg) translateY(-1px)}}
+@keyframes coin-search{0%,100%{transform:translate(0,0) rotate(8deg)}40%{transform:translate(-8px,-17px) rotate(-12deg)}75%{transform:translate(4px,-7px) rotate(12deg)}}
+@keyframes search-glow{0%,100%{opacity:.5;transform:scale(.92)}50%{opacity:1;transform:scale(1.13)}}
+@keyframes search-spark{0%,100%{opacity:.3;transform:translateY(3px) rotate(45deg) scale(.7)}50%{opacity:1;transform:translateY(-7px) rotate(45deg) scale(1.2)}}
+@keyframes result-arrive{from{opacity:.65;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes found-glow{0%{box-shadow:0 0 28px #eac27d38,0 16px 50px #05020a60}100%{box-shadow:0 16px 50px #05020a60,0 1px 0 #edb57117 inset}}
+@media(prefers-reduced-motion:reduce){#pocket-content{transition:none}.discovery .welcome-art:before,.discovery .welcome-spark,.discovery.just-found .protocol-result,.discovery.just-found .pocket{animation:none!important}}
