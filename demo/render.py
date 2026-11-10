@@ -61,7 +61,7 @@ def glow(im,x,y,amount):
  d.ellipse((x-38,y-38,x+38,y+38),fill=(93,221,209,int(34*amount)))
  layer=layer.filter(ImageFilter.GaussianBlur(px(18)));im.paste(layer,(0,0),layer)
 def characters(im,t,chapter):
- # The pair advances along one path. Search -> discovery -> official-app handoff.
+ # The pair advances along one path. Search -> discovery -> wallet connection.
  if chapter in (0,6):
   q=ease(t/2)
   sprite(im,0,t,781+(9*q if chapter==6 else 0),518,151)
@@ -126,7 +126,8 @@ def panel(im,name,xy,width,t,radius=0,feather=False,inset=0):
 def step(im,num,ss,sub=None):
  text(im,(64,176),num,18,GOLD,600);lines(im,64,215,ss,50,59)
  if sub:text(im,(64,370),sub,22,MUTED)
-shots={s:Image.open(C/f'{s}-hd.jpg') for s in ['02-account','03-linear','04-handoff','05-metapool','06-waiting']}
+shots={s:Image.open(C/f'{s}-current.png') for s in ['02-account','03-linear','04-wallet','05-metapool']}
+shots['06-waiting']=Image.open(C/'06-waiting-hd.jpg')
 # Each shot uses genuine captured pixels. Crops/size changes are editorial framing.
 def scene(i,t):
  im=(plate if i in [0,6] else dim).copy();atmosphere(im,t);header(im,'NEAR MAINNET' if i in [0,6] else 'FOUND / PRODUCT DEMO')
@@ -145,19 +146,25 @@ def scene(i,t):
    q=(t-3.4)/.7;r=12+q*24;d=draw(im,'RGBA');d.ellipse((572-r,458-r,572+r,458+r),outline=(238,199,124,int(180*(1-q))),width=2)
  elif i==2:
   step(im,'02 / FIND',['See what’s','ready.'],'A live read. No wallet connection.')
-  panel(im,'03-linear',(638,150),550,t,radius=24)
+  panel(im,'03-linear',(718,125),440,t,radius=32)
   characters(im,t,i)
-  footer(im,'Public example · LiNEAR · block 223,963,212 · recorded 10 Nov 2026')
+  footer(im,'Public example · LiNEAR · block 223,972,009 · recorded 10 Nov 2026')
  elif i==3:
-  step(im,'03 / WITHDRAW',['Use the','official app.'],'Only the owner can approve.')
-  panel(im,'04-handoff',(711,105),430,t,radius=44)
+  step(im,'03 / WITHDRAW',['Withdraw with','your wallet.'],'Connect. Review. Approve.')
+  before=im.copy();after=im.copy()
+  panel(before,'03-linear',(718,125),440,2,radius=32)
+  panel(after,'04-wallet',(680,182),500,2,radius=48)
+  im=Image.blend(before,after,ease((t-1.15)/.45))
+  if .45<t<1.15:
+   q=(t-.45)/.7;r=10+q*20;d=draw(im,'RGBA')
+   d.ellipse((902-r,351-r,902+r,351+r),outline=(238,199,124,int(180*(1-q))),width=2)
   characters(im,t,i)
-  footer(im,'Withdrawal instructions shown · no withdrawal was sent')
+  footer(im,'Wallet selection shown · no withdrawal was sent')
  elif i==4:
   step(im,'TWO PROTOCOLS',['One account.','One check.'],'LiNEAR + Meta Pool')
-  panel(im,'05-metapool',(638,150),550,t,radius=24)
+  panel(im,'05-metapool',(718,125),440,t,radius=32)
   characters(im,t,i)
-  footer(im,'Public example · lb3.near · Meta Pool · block 223,963,271 · 10 Nov 2026')
+  footer(im,'Public example · lb3.near · Meta Pool · block 223,972,115 · 10 Nov 2026')
  elif i==5:
   step(im,'PUBLIC, REPRODUCIBLE DATA',['538 accounts.','NEAR waiting.'],'47,882 LiNEAR accounts checked.')
   panel(im,'06-waiting',(613,170),608,t,inset=24)

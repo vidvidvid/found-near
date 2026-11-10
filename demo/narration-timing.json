@@ -34,11 +34,12 @@
     },
     {
       "source": [
-        15.5,
-        21.65
+        0,
+        6.2
       ],
       "at": 17.15,
-      "text": "Then open the official app. Only you approve the withdrawal."
+      "text": "Then connect your wallet. Approve the withdrawal, right from FOUND.",
+      "source_file": "assets/withdrawal-source.flac"
     },
     {
       "source": [
@@ -65,5 +66,26 @@
       "text": "FOUND. Find the NEAR you left behind."
     }
   ],
-  "verification": "Locally transcribed with faster-whisper base.en; wording and key number 538 match. Pause boundaries checked with ffmpeg silencedetect. No manual listening claim."
+  "verification": "Locally transcribed with faster-whisper base.en; wording and key number 538 match. Pause boundaries checked with ffmpeg silencedetect. No manual listening claim.",
+  "withdrawal_update": {
+    "job_id": "404ca854-8810-4546-b528-d6e88c90c740",
+    "voice": "Faye",
+    "voice_id": "d198dc0b-c4e5-5198-aa1d-ecf5ca0927c4",
+    "voice_type": "preset",
+    "speech_rate": -5,
+    "pitch_rate": 1,
+    "generated_file": "assets/withdrawal-generated.wav",
+    "kept_source_ranges": [
+      [
+        0.25,
+        2.65
+      ],
+      [
+        5.05,
+        8.85
+      ]
+    ],
+    "editing": "Removed excess inter-sentence silence only. No speech speed or pitch change. All other narration remains unchanged.",
+    "verification": "faster-whisper base.en transcribed the edited sentence as: Then, connect your wallet, approve the withdrawal right from found. Punctuation and capitalization only differ."
+  }
 }

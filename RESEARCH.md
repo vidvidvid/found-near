@@ -65,3 +65,7 @@ For a positive balance, FOUND applies these rules in order:
 The reserve requirement comes from `in_memory_try_finish_unstaking`; the contract-balance check covers the internal accounting used for the subsequent transfer. It is not a simulation of the transfer receipt, actual runtime storage reserve, or future state. Missing fields, RPC errors, and insufficient liquidity produce an unavailable result with the balance preserved. Staking pause state is not used because Meta Pool’s delayed-unstake withdrawal method does not require unstaking or staking to be unpaused.
 
 These are read-only snapshot checks, not transaction simulations or guarantees. No withdrawal transaction was sent during validation. Live checks confirmed a mature balance for `lb3.near`, a pending balance for `41a5bf8e8abcd00bd7b9081e944c51c5407bdb7cff80eb64b8ad6543a34dea3e`, and zero for `ru.near`; future scans may differ.
+
+## Coverage expansion investigation
+
+[10 November 2026 findings](research/coverage-2026-11-10/README.md) document additional validator-pool withdrawals, rNEAR delayed withdrawals, Rhea/Ref internal wNEAR and available storage deposits. Includes pinned mainnet evidence and an explicitly incomplete rNEAR census. These are researched candidates, not current FOUND coverage.

@@ -1,0 +1,23 @@
+{
+  "url": "https://found-production-e549.up.railway.app/",
+  "capturedAt": "2026-11-10T21:28:13.015863+00:00",
+  "method": "Actual public app in a 600 x 1080 CSS iframe at 2x rendering. Screenshots cropped to measured element bounds; no UI values changed.",
+  "linear": {
+    "account": "ru.near",
+    "display": "500.3072 NEAR",
+    "block": 223972009,
+    "capture": "03-linear-current.png"
+  },
+  "metapool": {
+    "account": "lb3.near",
+    "display": "17502.401 NEAR",
+    "block": 223972115,
+    "capture": "05-metapool-current.png"
+  },
+  "input": "02-account-current.png",
+  "walletSelection": "04-wallet-current.png",
+  "leaderboard": "Retained 06-waiting-hd.jpg: same dated 9 Nov 2026 LiNEAR snapshot; see provenance-hd.json.",
+  "walletConnected": false,
+  "withdrawalSent": false,
+  "editing": "Scene 3 crossfades from the live result to the actual wallet selector. No approval or successful withdrawal is portrayed."
+}

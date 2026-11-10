@@ -1,0 +1,805 @@
+{
+  "createdAt": "2026-11-10T21:24:48.360Z",
+  "block": 223971985,
+  "blockHash": "FdG3yEbEyM2DHjX9VDJJeEGEtVd9vfDQVjkiZh4dKYSH",
+  "accounts": [
+    {
+      "account": "ru.near",
+      "pools": [
+        {
+          "pool_id": "erm.poolv1.near",
+          "last_update_block_height": 212136846
+        }
+      ]
+    },
+    {
+      "account": "meomeo.near",
+      "pools": [
+        {
+          "pool_id": "gfi-validator.poolv1.near",
+          "last_update_block_height": 144202340
+        },
+        {
+          "pool_id": "gfs-ventures.poolv1.near",
+          "last_update_block_height": null
+        }
+      ]
+    },
+    {
+      "account": "lb3.near",
+      "pools": []
+    },
+    {
+      "account": "pahol.near",
+      "pools": [
+        {
+          "pool_id": "continue.poolv1.near",
+          "last_update_block_height": null
+        },
+        {
+          "pool_id": "astro-stakers.poolv1.near",
+          "last_update_block_height": null
+        },
+        {
+          "pool_id": "chorusone.poolv1.near",
+          "last_update_block_height": null
+        }
+      ]
+    },
+    {
+      "account": "ekongmusk.near",
+      "pools": []
+    },
+    {
+      "account": "within4d45.near",
+      "pools": [
+        {
+          "pool_id": "aurora.pool.near",
+          "last_update_block_height": 222406268
+        },
+        {
+          "pool_id": "fialka.poolv1.near",
+          "last_update_block_height": 128802684
+        },
+        {
+          "pool_id": "sicmundus.poolv1.near",
+          "last_update_block_height": null
+        },
+        {
+          "pool_id": "readylayerone_staking.poolv1.near",
+          "last_update_block_height": null
+        },
+        {
+          "pool_id": "shitzu.pool.near",
+          "last_update_block_height": 222406231
+        },
+        {
+          "pool_id": "meteor.poolv1.near",
+          "last_update_block_height": 222406295
+        }
+      ]
+    },
+    {
+      "account": "a_liutiev.near",
+      "pools": []
+    },
+    {
+      "account": "root.near",
+      "pools": [
+        {
+          "pool_id": "ashert.poolv1.near",
+          "last_update_block_height": null
+        },
+        {
+          "pool_id": "shitzu.pool.near",
+          "last_update_block_height": 126165318
+        }
+      ]
+    },
+    {
+      "account": "mob.near",
+      "pools": [
+        {
+          "pool_id": "zavodil.poolv1.near",
+          "last_update_block_height": 114976469
+        },
+        {
+          "pool_id": "usn.pool.near",
+          "last_update_block_height": null
+        },
+        {
+          "pool_id": "usn-unofficial.pool.near",
+          "last_update_block_height": null
+        },
+        {
+          "pool_id": "epic.poolv1.near",
+          "last_update_block_height": null
+        },
+        {
+          "pool_id": "here.poolv1.near",
+          "last_update_block_height": 114976560
+        }
+      ]
+    },
+    {
+      "account": "9d9cdaf607efb441f361c951c5b7ed05a6a4b0d8b81339d1a78b4343217b97f7",
+      "pools": [
+        {
+          "pool_id": "allnodes.poolv1.near",
+          "last_update_block_height": null
+        },
+        {
+          "pool_id": "here.poolv1.near",
+          "last_update_block_height": 133603298
+        }
+      ]
+    }
+  ],
+  "pools": [
+    {
+      "account": "ru.near",
+      "pool": "erm.poolv1.near",
+      "data": {
+        "account_id": "ru.near",
+        "unstaked_balance": "0",
+        "staked_balance": "0",
+        "can_withdraw": true
+      }
+    },
+    {
+      "account": "meomeo.near",
+      "pool": "gfi-validator.poolv1.near",
+      "data": {
+        "account_id": "meomeo.near",
+        "unstaked_balance": "0",
+        "staked_balance": "48462764644793027",
+        "can_withdraw": true
+      }
+    },
+    {
+      "account": "meomeo.near",
+      "pool": "gfs-ventures.poolv1.near",
+      "data": {
+        "account_id": "meomeo.near",
+        "unstaked_balance": "0",
+        "staked_balance": "0",
+        "can_withdraw": true
+      }
+    },
+    {
+      "account": "pahol.near",
+      "pool": "continue.poolv1.near",
+      "data": {
+        "account_id": "pahol.near",
+        "unstaked_balance": "1",
+        "staked_balance": "1188521943015267754546276",
+        "can_withdraw": true
+      }
+    },
+    {
+      "account": "pahol.near",
+      "pool": "astro-stakers.poolv1.near",
+      "data": {
+        "account_id": "pahol.near",
+        "unstaked_balance": "0",
+        "staked_balance": "0",
+        "can_withdraw": true
+      }
+    },
+    {
+      "account": "pahol.near",
+      "pool": "chorusone.poolv1.near",
+      "data": {
+        "account_id": "pahol.near",
+        "unstaked_balance": "0",
+        "staked_balance": "0",
+        "can_withdraw": true
+      }
+    },
+    {
+      "account": "within4d45.near",
+      "pool": "aurora.pool.near",
+      "data": {
+        "account_id": "within4d45.near",
+        "unstaked_balance": "0",
+        "staked_balance": "573070572582363996",
+        "can_withdraw": true
+      }
+    },
+    {
+      "account": "within4d45.near",
+      "pool": "fialka.poolv1.near",
+      "data": {
+        "account_id": "within4d45.near",
+        "unstaked_balance": "0",
+        "staked_balance": "919441221237129007",
+        "can_withdraw": true
+      }
+    },
+    {
+      "account": "within4d45.near",
+      "pool": "sicmundus.poolv1.near",
+      "data": {
+        "account_id": "within4d45.near",
+        "unstaked_balance": "0",
+        "staked_balance": "0",
+        "can_withdraw": true
+      }
+    },
+    {
+      "account": "within4d45.near",
+      "pool": "readylayerone_staking.poolv1.near",
+      "data": {
+        "account_id": "within4d45.near",
+        "unstaked_balance": "0",
+        "staked_balance": "1248106854557096469",
+        "can_withdraw": true
+      }
+    },
+    {
+      "account": "within4d45.near",
+      "pool": "shitzu.pool.near",
+      "data": {
+        "account_id": "within4d45.near",
+        "unstaked_balance": "55479433000000000000000002",
+        "staked_balance": "12052150466920081",
+        "can_withdraw": true
+      }
+    },
+    {
+      "account": "within4d45.near",
+      "pool": "meteor.poolv1.near",
+      "data": {
+        "account_id": "within4d45.near",
+        "unstaked_balance": "5788036000000000000000003",
+        "staked_balance": "867559525512378264",
+        "can_withdraw": true
+      }
+    },
+    {
+      "account": "root.near",
+      "pool": "ashert.poolv1.near",
+      "data": {
+        "account_id": "root.near",
+        "unstaked_balance": "0",
+        "staked_balance": "0",
+        "can_withdraw": true
+      }
+    },
+    {
+      "account": "root.near",
+      "pool": "shitzu.pool.near",
+      "data": {
+        "account_id": "root.near",
+        "unstaked_balance": "1",
+        "staked_balance": "5656124671871476522534192249",
+        "can_withdraw": true
+      }
+    },
+    {
+      "account": "mob.near",
+      "pool": "zavodil.poolv1.near",
+      "data": {
+        "account_id": "mob.near",
+        "unstaked_balance": "0",
+        "staked_balance": "0",
+        "can_withdraw": true
+      }
+    },
+    {
+      "account": "mob.near",
+      "pool": "usn.pool.near",
+      "data": {
+        "account_id": "mob.near",
+        "unstaked_balance": "0",
+        "staked_balance": "0",
+        "can_withdraw": true
+      }
+    },
+    {
+      "account": "mob.near",
+      "pool": "usn-unofficial.pool.near",
+      "data": {
+        "account_id": "mob.near",
+        "unstaked_balance": "0",
+        "staked_balance": "0",
+        "can_withdraw": true
+      }
+    },
+    {
+      "account": "mob.near",
+      "pool": "epic.poolv1.near",
+      "data": {
+        "account_id": "mob.near",
+        "unstaked_balance": "1",
+        "staked_balance": "85514472403309520815521505",
+        "can_withdraw": true
+      }
+    },
+    {
+      "account": "mob.near",
+      "pool": "here.poolv1.near",
+      "data": {
+        "account_id": "mob.near",
+        "unstaked_balance": "1",
+        "staked_balance": "122316906424782289143025061",
+        "can_withdraw": true
+      }
+    },
+    {
+      "account": "9d9cdaf607efb441f361c951c5b7ed05a6a4b0d8b81339d1a78b4343217b97f7",
+      "pool": "allnodes.poolv1.near",
+      "data": {
+        "account_id": "9d9cdaf607efb441f361c951c5b7ed05a6a4b0d8b81339d1a78b4343217b97f7",
+        "unstaked_balance": "0",
+        "staked_balance": "0",
+        "can_withdraw": true
+      }
+    },
+    {
+      "account": "9d9cdaf607efb441f361c951c5b7ed05a6a4b0d8b81339d1a78b4343217b97f7",
+      "pool": "here.poolv1.near",
+      "data": {
+        "account_id": "9d9cdaf607efb441f361c951c5b7ed05a6a4b0d8b81339d1a78b4343217b97f7",
+        "unstaked_balance": "0",
+        "staked_balance": "0",
+        "can_withdraw": true
+      }
+    }
+  ],
+  "rnear": [
+    {
+      "account": "ru.near",
+      "contract": "lst.rhealab.near",
+      "data": {
+        "account_id": "ru.near",
+        "unstaked_balance": "0",
+        "staked_balance": "0",
+        "unstaked_available_epoch_height": 0,
+        "can_withdraw": true
+      }
+    },
+    {
+      "account": "meomeo.near",
+      "contract": "lst.rhealab.near",
+      "data": {
+        "account_id": "meomeo.near",
+        "unstaked_balance": "0",
+        "staked_balance": "0",
+        "unstaked_available_epoch_height": 0,
+        "can_withdraw": true
+      }
+    },
+    {
+      "account": "lb3.near",
+      "contract": "lst.rhealab.near",
+      "data": {
+        "account_id": "lb3.near",
+        "unstaked_balance": "0",
+        "staked_balance": "0",
+        "unstaked_available_epoch_height": 0,
+        "can_withdraw": true
+      }
+    },
+    {
+      "account": "pahol.near",
+      "contract": "lst.rhealab.near",
+      "data": {
+        "account_id": "pahol.near",
+        "unstaked_balance": "0",
+        "staked_balance": "106569639231131908608697181",
+        "unstaked_available_epoch_height": 0,
+        "can_withdraw": true
+      }
+    },
+    {
+      "account": "ekongmusk.near",
+      "contract": "lst.rhealab.near",
+      "data": {
+        "account_id": "ekongmusk.near",
+        "unstaked_balance": "0",
+        "staked_balance": "0",
+        "unstaked_available_epoch_height": 0,
+        "can_withdraw": true
+      }
+    },
+    {
+      "account": "within4d45.near",
+      "contract": "lst.rhealab.near",
+      "data": {
+        "account_id": "within4d45.near",
+        "unstaked_balance": "0",
+        "staked_balance": "0",
+        "unstaked_available_epoch_height": 0,
+        "can_withdraw": true
+      }
+    },
+    {
+      "account": "a_liutiev.near",
+      "contract": "lst.rhealab.near",
+      "data": {
+        "account_id": "a_liutiev.near",
+        "unstaked_balance": "0",
+        "staked_balance": "0",
+        "unstaked_available_epoch_height": 0,
+        "can_withdraw": true
+      }
+    },
+    {
+      "account": "root.near",
+      "contract": "lst.rhealab.near",
+      "data": {
+        "account_id": "root.near",
+        "unstaked_balance": "0",
+        "staked_balance": "0",
+        "unstaked_available_epoch_height": 0,
+        "can_withdraw": true
+      }
+    },
+    {
+      "account": "mob.near",
+      "contract": "lst.rhealab.near",
+      "data": {
+        "account_id": "mob.near",
+        "unstaked_balance": "0",
+        "staked_balance": "0",
+        "unstaked_available_epoch_height": 0,
+        "can_withdraw": true
+      }
+    },
+    {
+      "account": "9d9cdaf607efb441f361c951c5b7ed05a6a4b0d8b81339d1a78b4343217b97f7",
+      "contract": "lst.rhealab.near",
+      "data": {
+        "account_id": "9d9cdaf607efb441f361c951c5b7ed05a6a4b0d8b81339d1a78b4343217b97f7",
+        "unstaked_balance": "0",
+        "staked_balance": "0",
+        "unstaked_available_epoch_height": 0,
+        "can_withdraw": true
+      }
+    }
+  ],
+  "ref": [
+    {
+      "account": "ru.near",
+      "contract": "v2.ref-finance.near",
+      "data": {
+        "token.v2.ref-finance.near": "0",
+        "token.cheddar.near": "0",
+        "wrap.near": "0"
+      }
+    },
+    {
+      "account": "meomeo.near",
+      "contract": "v2.ref-finance.near",
+      "data": {
+        "f5cfbc74057c610c8ef151a439252680ac68c6dc.factory.bridge.near": "0",
+        "a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.factory.bridge.near": "0",
+        "dac17f958d2ee523a2206206994597c13d831ec7.factory.bridge.near": "0",
+        "token.v2.ref-finance.near": "74850248128558347",
+        "wrap.near": "0",
+        "token.paras.near": "0",
+        "meta-pool.near": "0"
+      }
+    },
+    {
+      "account": "lb3.near",
+      "contract": "v2.ref-finance.near",
+      "data": {
+        "wrap.near": "1000000000000000000000000000"
+      }
+    },
+    {
+      "account": "pahol.near",
+      "contract": "v2.ref-finance.near",
+      "data": {
+        "f5cfbc74057c610c8ef151a439252680ac68c6dc.factory.bridge.near": "0",
+        "token.burrow.near": "0",
+        "usdt.tether-token.near": "0",
+        "9aeb50f542050172359a0e1a25a9933bc8c01259.factory.bridge.near": "0",
+        "17208628f84f5d6ad33f0da3bbbeb27ffcb398eac501a31bd6ad2011e36133a1": "0",
+        "neat.nrc-20.near": "0",
+        "token.paras.near": "0",
+        "aaaaaa20d9e0e2461697782ef11675f668207961.factory.bridge.near": "0",
+        "d9c2d319cd7e6177336b0a9c93c21cb48d84fb54.factory.bridge.near": "0",
+        "dbio.near": "0",
+        "dac17f958d2ee523a2206206994597c13d831ec7.factory.bridge.near": "0",
+        "a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.factory.bridge.near": "0",
+        "3ea8ea4237344c9931214796d9417af1a1180770.factory.bridge.near": "0",
+        "wrap.near": "0",
+        "meta-token.near": "0",
+        "meta-pool.near": "0",
+        "token.v2.ref-finance.near": "0",
+        "v3.oin_finance.near": "0",
+        "linear-protocol.near": "0",
+        "aurora": "0",
+        "mpdao-token.near": "0",
+        "myriadcore.near": "0"
+      }
+    },
+    {
+      "account": "ekongmusk.near",
+      "contract": "v2.ref-finance.near",
+      "data": {
+        "token.v2.ref-finance.near": "248917891080166571",
+        "wrap.near": "2",
+        "meta-pool.near": "349751663309650487083224"
+      }
+    },
+    {
+      "account": "within4d45.near",
+      "contract": "v2.ref-finance.near",
+      "data": {
+        "f5cfbc74057c610c8ef151a439252680ac68c6dc.factory.bridge.near": "0",
+        "hijack-252.meme-cooking.near": "0",
+        "gear.enleap.near": "0",
+        "wrap.near": "0",
+        "nmoon.tkn.near": "0",
+        "token.0xshitzu.near": "0",
+        "redacted-172.meme-cooking.near": "0",
+        "gnuff-283.meme-cooking.near": "0",
+        "poppy-0.meme-cooking-test.near": "0",
+        "nearnvidia.near": "0"
+      }
+    },
+    {
+      "account": "a_liutiev.near",
+      "contract": "v2.ref-finance.near",
+      "data": {
+        "nearnvidia.near": "0",
+        "17208628f84f5d6ad33f0da3bbbeb27ffcb398eac501a31bd6ad2011e36133a1": "0"
+      }
+    },
+    {
+      "account": "root.near",
+      "contract": "v2.ref-finance.near",
+      "data": {
+        "token.raidvault.near": "0"
+      }
+    },
+    {
+      "account": "mob.near",
+      "contract": "v2.ref-finance.near",
+      "data": {
+        "f5cfbc74057c610c8ef151a439252680ac68c6dc.factory.bridge.near": "0",
+        "caxap.tkn.near": "0",
+        "play.tkn.near": "0",
+        "6b175474e89094c44da98b954eedeac495271d0f.factory.bridge.near": "0",
+        "c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2.factory.bridge.near": "0",
+        "nbtc.bridge.near": "0",
+        "dac17f958d2ee523a2206206994597c13d831ec7.factory.bridge.near": "0",
+        "a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.factory.bridge.near": "0",
+        "v1.dacha-finance.near": "80165565",
+        "pixeltoken.near": "0",
+        "nearkat.tkn.near": "0",
+        "wrap.near": "0",
+        "meta-pool.near": "0",
+        "token.v2.ref-finance.near": "0",
+        "a4ef4b0b23c1fc81d3f9ecf93510e64f58a4a016.factory.bridge.near": "0",
+        "aurora": "0",
+        "token.skyward.near": "0"
+      }
+    },
+    {
+      "account": "9d9cdaf607efb441f361c951c5b7ed05a6a4b0d8b81339d1a78b4343217b97f7",
+      "contract": "v2.ref-finance.near",
+      "data": {}
+    }
+  ],
+  "storage": [
+    {
+      "account": "ru.near",
+      "contract": "v2.ref-finance.near",
+      "data": {
+        "total": "3500000000000000000000",
+        "available": "0"
+      }
+    },
+    {
+      "account": "meomeo.near",
+      "contract": "v2.ref-finance.near",
+      "data": {
+        "total": "18500000000000000000000",
+        "available": "7760000000000000000000"
+      }
+    },
+    {
+      "account": "lb3.near",
+      "contract": "v2.ref-finance.near",
+      "data": {
+        "total": "1820000000000000000000",
+        "available": "0"
+      }
+    },
+    {
+      "account": "pahol.near",
+      "contract": "v2.ref-finance.near",
+      "data": {
+        "total": "41500000000000000000000",
+        "available": "7920000000000000000000"
+      }
+    },
+    {
+      "account": "ekongmusk.near",
+      "contract": "v2.ref-finance.near",
+      "data": {
+        "total": "10000000000000000000000",
+        "available": "4540000000000000000000"
+      }
+    },
+    {
+      "account": "within4d45.near",
+      "contract": "v2.ref-finance.near",
+      "data": {
+        "total": "19820000000000000000000",
+        "available": "4640000000000000000000"
+      }
+    },
+    {
+      "account": "a_liutiev.near",
+      "contract": "v2.ref-finance.near",
+      "data": {
+        "total": "10000000000000000000000",
+        "available": "6020000000000000000000"
+      }
+    },
+    {
+      "account": "root.near",
+      "contract": "v2.ref-finance.near",
+      "data": {
+        "total": "100000000000000000000000",
+        "available": "97500000000000000000000"
+      }
+    },
+    {
+      "account": "mob.near",
+      "contract": "v2.ref-finance.near",
+      "data": {
+        "total": "31900000000000000000000",
+        "available": "8920000000000000000000"
+      }
+    },
+    {
+      "account": "9d9cdaf607efb441f361c951c5b7ed05a6a4b0d8b81339d1a78b4343217b97f7",
+      "contract": "v2.ref-finance.near",
+      "data": null
+    }
+  ],
+  "checks": [
+    {
+      "contract": "lst.rhealab.near",
+      "method": "get_number_of_accounts",
+      "args": {},
+      "data": 18630
+    },
+    {
+      "contract": "lst.rhealab.near",
+      "method": "is_paused",
+      "args": {},
+      "data": false
+    },
+    {
+      "contract": "v2.ref-finance.near",
+      "method": "get_metadata",
+      "args": {},
+      "error": "We couldn’t read NEAR right now. Your balance is unknown — please try again."
+    },
+    {
+      "contract": "v2.ref-finance.near",
+      "method": "get_frozenlist_tokens",
+      "args": {},
+      "data": []
+    },
+    {
+      "contract": "wrap.near",
+      "method": "ft_balance_of",
+      "args": {
+        "account_id": "v2.ref-finance.near"
+      },
+      "data": "2249485281791935606284296130631"
+    },
+    {
+      "contract": "meteor.poolv1.near",
+      "method": "is_account_unstaked_balance_available",
+      "args": {
+        "account_id": "within4d45.near"
+      },
+      "data": true
+    },
+    {
+      "contract": "shitzu.pool.near",
+      "method": "is_account_unstaked_balance_available",
+      "args": {
+        "account_id": "within4d45.near"
+      },
+      "data": true
+    },
+    {
+      "contract": "v2.ref-finance.near",
+      "method": "storage_balance_bounds",
+      "args": {},
+      "data": {
+        "min": "1020000000000000000000",
+        "max": null
+      }
+    },
+    {
+      "contract": "meteor.poolv1.near",
+      "method": "view_account",
+      "data": {
+        "amount": "92572920737288837038832454685",
+        "block_hash": "FdG3yEbEyM2DHjX9VDJJeEGEtVd9vfDQVjkiZh4dKYSH",
+        "block_height": 223971985,
+        "code_hash": "J1arLz48fgXcGyCPVckFwLnewNH6j1uw79thsvwqGYTY",
+        "locked": "1901326934857942429545325123856",
+        "storage_paid_at": 0,
+        "storage_usage": 7070632
+      }
+    },
+    {
+      "contract": "shitzu.pool.near",
+      "method": "view_account",
+      "data": {
+        "amount": "406429992811797490478101720",
+        "block_hash": "FdG3yEbEyM2DHjX9VDJJeEGEtVd9vfDQVjkiZh4dKYSH",
+        "block_height": 223971985,
+        "code_hash": "AjD4YJaXgpiRdiArqnzyDi7Bkr1gJms9Z2w7Ev5esTKB",
+        "locked": "129130684758479234949930750290",
+        "storage_paid_at": 0,
+        "storage_usage": 455750
+      }
+    },
+    {
+      "contract": "wrap.near",
+      "method": "view_account",
+      "data": {
+        "amount": "36675157233722046428770515262933",
+        "block_hash": "FdG3yEbEyM2DHjX9VDJJeEGEtVd9vfDQVjkiZh4dKYSH",
+        "block_height": 223971985,
+        "code_hash": "DL2f5xmZ44cQRP6vBMt94rvseH5d5KKnAGis2WkTAsh1",
+        "locked": "0",
+        "storage_paid_at": 0,
+        "storage_usage": 168800925
+      }
+    },
+    {
+      "contract": "v2.ref-finance.near",
+      "method": "view_account",
+      "data": {
+        "amount": "32617140016699108091520593634",
+        "block_hash": "FdG3yEbEyM2DHjX9VDJJeEGEtVd9vfDQVjkiZh4dKYSH",
+        "block_height": 223971985,
+        "code_hash": "GZmkbfVLcN7ErxU9RDxP24YTaKmoVixhM6XyycP15Qvi",
+        "locked": "0",
+        "storage_paid_at": 0,
+        "storage_usage": 111267241
+      }
+    },
+    {
+      "contract": "lst.rhealab.near",
+      "method": "view_account",
+      "data": {
+        "amount": "28944603657078164277926507348",
+        "block_hash": "FdG3yEbEyM2DHjX9VDJJeEGEtVd9vfDQVjkiZh4dKYSH",
+        "block_height": 223971985,
+        "code_hash": "EPLT4C61pkVYf5Km6dC4X9x5PMo6rfBwuEwo7vgKpmuv",
+        "locked": "0",
+        "storage_paid_at": 0,
+        "storage_usage": 5202993
+      }
+    }
+  ],
+  "blockHeader": {
+    "height": 223971985,
+    "hash": "FdG3yEbEyM2DHjX9VDJJeEGEtVd9vfDQVjkiZh4dKYSH",
+    "timestamp_nanosec": "1794345885791818077"
+  },
+  "enumerationLimit": {
+    "method": "get_accounts",
+    "args": {
+      "from_index": 12700,
+      "limit": 100
+    },
+    "rpcError": "wasm execution failed with error: HostError(GasLimitExceeded)"
+  }
+}

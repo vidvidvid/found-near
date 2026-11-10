@@ -11,21 +11,21 @@ Run `python3 demo/serve.py` and open http://127.0.0.1:8086/ to preview. The loca
 | 0–5 s | Unstaked your NEAR? It might still be waiting for you. | Night shop, floating lantern spirit, blinking wallet |
 | 5–10 s | Paste a NEAR account. | Genuine ru.near input capture, subtle tap cue |
 | 10–17 s | See what’s ready. | Real LiNEAR result, account and block visible |
-| 17–24 s | Use the official app. | Actual withdrawal instructions; owner approval required |
+| 17–24 s | Withdraw with your wallet. | Current result transitions to the actual NEAR Connect wallet selector; owner approval required |
 | 24–30 s | One account. One check. | Real Meta Pool result; LiNEAR + Meta Pool coverage |
 | 30–37 s | 538 accounts. NEAR waiting. | Dated LiNEAR waiting-room snapshot |
 | 37–44 s | Find the NEAR you left behind. | Night shop, public demo URL, and NEAR mark with “Built on NEAR” |
 
-Visual direction: original dark navy/violet/amber scene, DM Sans, restrained crossfades, tiny drifting lights. The lantern and wallet advance together: a small search sweep, a discovery hop, then a walk toward the official-app handoff. Positions persist through the middle scenes; there are no speech bubbles, confetti, fake balance counters, or recovery claims.
+Visual direction: original dark navy/violet/amber scene, DM Sans, restrained crossfades, tiny drifting lights. The lantern and wallet advance together: a small search sweep, a discovery hop, then a walk toward wallet connection. Positions persist through the middle scenes; there are no speech bubbles, confetti, fake balance counters, or recovery claims.
 
 ## Evidence and editorial treatment
 
-The UI shots are actual browser captures of FOUND on 10 November 2026. The latest result cards use the local checkout with live mainnet reads; the same UI revision is deployed to Railway. They are cropped, resized and edited together, not a continuous screen recording. No UI values were redrawn or substituted. `captures/provenance-hd.json` preserves the two accounts, observed blocks, source URL and capture time. The pixel-art characters are decorative animation outside the captured UI.
+The UI shots are actual browser captures of FOUND on 10 November 2026. The latest result cards use the local checkout with live mainnet reads; the same UI revision is deployed to Railway. They are cropped, resized and edited together, not a continuous screen recording. No UI values were redrawn or substituted. `captures/provenance-current.json` records the refreshed input, result and wallet captures; `captures/provenance-hd.json` preserves the retained leaderboard excerpt. Both record source and capture details. The pixel-art characters are decorative animation outside the captured UI.
 
-- ru.near: LiNEAR, 500.3072 NEAR displayed, block 223963212.
-- lb3.near: Meta Pool, 17,502.401 NEAR displayed, block 223963271.
+- ru.near: LiNEAR, 500.3072 NEAR displayed, block 223972009.
+- lb3.near: Meta Pool, 17,502.401 NEAR displayed, block 223972115.
 - Neither example belongs to us. Neither is presented as recovered funds.
-- The handoff scene displays FOUND’s actual instructions and official app destination; it does not show a completed withdrawal.
+- The withdrawal scene transitions from the real result’s Connect to withdraw button to the actual NEAR Connect wallet selector. No wallet was connected, and no approval or completed withdrawal is shown.
 - The 538 figure is the 9 Nov 2026 LiNEAR snapshot above 0.01 NEAR, not a current all-protocol count or proof of abandonment.
 - The video may be shared as a dated demo. Recheck and recapture if claiming the values are current.
 
@@ -63,14 +63,22 @@ Prompts:
 
 Audio wording was checked with a local faster-whisper transcription, including the 538 figure. This is an automated check, not a claim of human listening review. No music or additional sound effects are mixed in.
 
-On the landing page, character motion follows the real scan state: search while reading RPC, a small hop only for a ready balance, and a guided step when withdrawal instructions open. Empty, pending, and error states do not celebrate a find. Reduced-motion preferences disable all movement. The progression ends at the official app handoff, never a pretend completed withdrawal.
+On the landing page, character motion follows the real scan state: search while reading RPC, a small hop only for a ready balance, and a guided step when withdrawal instructions open. Empty, pending, and error states do not celebrate a find. Reduced-motion preferences disable all movement. The demo progression ends at wallet selection. Approval remains in the owner’s wallet; no completed withdrawal is portrayed.
 
 ## UI clarity pass
 
-The export renders text and graphics natively at 1080p. All five UI shots were recaptured from the live site using `capture-frame.html` (600×1080 CSS viewport, 2× browser rendering) and cropped to measured element bounds. This gives readable type without enlarging the old compressed desktop shots. The leaderboard excerpt includes its complete heading and first three complete rows, rather than shrinking the whole desktop table. Original captures remain archived.
+The export renders text and graphics natively at 1080p. The original UI shots were recaptured from the live site using `capture-frame.html` (600×1080 CSS viewport, 2× browser rendering) and cropped to measured element bounds. This gives readable type without enlarging the old compressed desktop shots. The leaderboard excerpt includes its complete heading and first three complete rows, rather than shrinking the whole desktop table. Original captures remain archived.
 
 The renderer adds no stroke or frame around UI shots. Rounded masks follow the existing component corners. The leaderboard excerpt sits on an unbordered matte with a consistent 24-unit inset on all sides. The input crop has a soft edge mask; the input's focus halo is absent and its tap cue is centered on the button. Each of the seven scenes was visually checked for clipping, overlap, duplicate borders, and readable labels.
 
 The closing frame uses the same NEAR mark as the app (`dist/near.svg`), rasterized in the existing cream foreground color as `assets/near-mark.png`. The mark’s geometry is unchanged.
 
 Currency symbols in the result cards now share the unit label’s cap height and baseline. The live app and recorded UI use the same markup and styles.
+
+## Direct-withdrawal refresh — 10 November 2026
+
+The 44-second structure, original art, sprites, and six unchanged Faye phrases are preserved. The new withdrawal sentence is “Then connect your wallet. Approve the withdrawal, right from FOUND.” Captions use that exact wording. The new sentence uses the same preset, speech rate and pitch; only excess inter-sentence silence was removed. `withdrawal-generated.wav` is the generated source and `withdrawal-source.flac` the lossless edited sentence. Exact edits and generation ID are recorded in `narration-timing.json`.
+
+A local faster-whisper check verified the replacement sentence, with punctuation/capitalization differences only. No manual listening claim. New `*-current.png` crops come from the deployed app at 2× rendering. The two result cards are shown whole, at readable size, with account and block visible. Scene 3 crossfades into the genuine wallet selector. The dated waiting-room excerpt stays unchanged because its snapshot and UI are unchanged.
+
+Verification: all seven scene stills inspected; output video checked at 1920×1080, 30 fps, 44 seconds with AAC audio; captions aligned to scene timing. No withdrawal transaction was created or sent.

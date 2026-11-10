@@ -1,0 +1,792 @@
+{
+  "contract": "lst.rhealab.near",
+  "block": 223971985,
+  "totalAccounts": 18630,
+  "accountsRead": 12700,
+  "complete": false,
+  "stopReason": "get_accounts from_index 12700 with limit 100 exceeded the public RPC view gas limit. Larger pages also hit the limit earlier. No extrapolation from the partial sample.",
+  "threshold": "0.01 NEAR",
+  "candidateCount": 124,
+  "totalMatureYocto": "18890147230181641314813056458",
+  "candidates": [
+    {
+      "account_id": "deportivo.near",
+      "unstaked_balance": "10651535901265475072115647348",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "rektdegen.near",
+      "unstaked_balance": "2175400970845315427949666161",
+      "staked_balance": "5269910618490567821",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "rektpleb.near",
+      "unstaked_balance": "1202876389942013396417410533",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "luckyluke89.near",
+      "unstaked_balance": "1047080288418594947907768158",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "sky123.near",
+      "unstaked_balance": "821622466916813910026377240",
+      "staked_balance": "10295185911102542506",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "8e8fded90b2c0d2f9b52507a7d87e7b68b7f89a9a2a8430e67b67f40d0dd1c7c",
+      "unstaked_balance": "457796362949194157797310365",
+      "staked_balance": "37983052452896957069179",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "tene.near",
+      "unstaked_balance": "405365254094335355475833373",
+      "staked_balance": "2216776999677317300",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "littlehodlboy2.near",
+      "unstaked_balance": "399338651272652603857222707",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "deepwen.near",
+      "unstaked_balance": "340126159986332464463319546",
+      "staked_balance": "179892119154631051142",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "oneoff.near",
+      "unstaked_balance": "189953411344484672764583733",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "i1890578646.tg",
+      "unstaked_balance": "182019870529335175008198051",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "2994aded317e447c99bbebbfd80f044663cf13a010cbb6e8b4817313e86f49c6",
+      "unstaked_balance": "147558539723028406259516310",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "tomalex.near",
+      "unstaked_balance": "141630153612190714289116151",
+      "staked_balance": "2941680988222370062",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "araujomds.near",
+      "unstaked_balance": "100163490530704838488912219",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "colico.near",
+      "unstaked_balance": "81679861526128877943458686",
+      "staked_balance": "6009174582527852006",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "jokerhooker.near",
+      "unstaked_balance": "70812933454844317400464796",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "f7f80c14945a189741707f256b1fcb6d5c5e84ff853596658916141a62d45141",
+      "unstaked_balance": "58473416385347739046844265",
+      "staked_balance": "544383942923781372350607828",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "0xf1b6893de0207476d4c0503220273c1786324414",
+      "unstaked_balance": "34628710039647024451429909",
+      "staked_balance": "1373443046986014892",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "anton-legkyy.near",
+      "unstaked_balance": "32898061355976913460663455",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "lobsterpizza.near",
+      "unstaked_balance": "29703691996163625105956813",
+      "staked_balance": "6305838599824639306",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "37ef4cc074fc6323b4abe6fe9eee065d7691c6c3856493e1ec1e52213efee618",
+      "unstaked_balance": "21301489432657284886986920",
+      "staked_balance": "15727377582350379727642746",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "5143682789-hot.tg",
+      "unstaked_balance": "20078700000000000000000000",
+      "staked_balance": "73689687203130726862",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "6891331560.tg",
+      "unstaked_balance": "17272479926582429559638112",
+      "staked_balance": "668244032708440834083",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "88972a6d66ed6106f1608f04a2a7429e5a4814d3.venear.dao",
+      "unstaked_balance": "16726945970524337018630000",
+      "staked_balance": "848",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "df6fb6a4c73974aa24240653d2f712b0918236b09b3969afcc7e9f5c55b54d7e",
+      "unstaked_balance": "16566869914277061676085809",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "xan2000.near",
+      "unstaked_balance": "14845308658192424799672498",
+      "staked_balance": "9374238435394454931",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "smartfinn.tg",
+      "unstaked_balance": "13756991482168110047129811",
+      "staked_balance": "2420803644065932930",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "64d6cb4b668f7a9605415a3a9d6c293b42148010.venear.dao",
+      "unstaked_balance": "13529396807071245322073989",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "temtem124.near",
+      "unstaked_balance": "12092731080172920646218748",
+      "staked_balance": "4825382436511058827",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "linke2.near",
+      "unstaked_balance": "11418635684984749276832974",
+      "staked_balance": "7861332917973909942",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "418f317ab1c2367dc3e8ae43027c42eb145abb275a28c55b6ccc15d24934eb15",
+      "unstaked_balance": "10582376105751652294943207",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "8ddbd1328e379119628664be6f448c9f2245e3d8edaa30d8f87ab6ff14c23dca",
+      "unstaked_balance": "9620447167764031671716469",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "lucis-finance.near",
+      "unstaked_balance": "9543546627013103266312520",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "alexbul.tg",
+      "unstaked_balance": "7330344941270961482433264",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "420069.near",
+      "unstaked_balance": "6547983800813433046905761",
+      "staked_balance": "2769819737280669279394126",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "d1e85a87a1d3bc40062a097c6d563b636358f4de90d0b7be3d1aa1c17acda953",
+      "unstaked_balance": "6315189038484320301404231",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "i6972647143.tg",
+      "unstaked_balance": "6255722133114378380063621",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "nguyen1507.tg",
+      "unstaked_balance": "6238100148465499430994272",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "morbid_truffle.tg",
+      "unstaked_balance": "6064156691456667247045974",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "520ac184e3a6adc102df41bc5b77bda7f66291b5fdc2d8e65bb6ced015115cf5",
+      "unstaked_balance": "5851595216243549913274942",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "6643010329.tg",
+      "unstaked_balance": "5734667927537255937144424",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "hieuvecto-usd-1.near",
+      "unstaked_balance": "5591159219570092904440613",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "eleonorapo.near",
+      "unstaked_balance": "5344289050207851208884448",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "d1e284ad0f4d7c8dd88cf812a61781528ef265c99527a7e8d014134398ed0095",
+      "unstaked_balance": "5091136609367781956445368",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "9a6a34681e70aea24522fdfb0d06bce90b7611c33c0d77551885670cb0df6f19",
+      "unstaked_balance": "4707852604934630056976333",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "khubickcz.near",
+      "unstaked_balance": "4312143075741826842379391",
+      "staked_balance": "6164779189505560989787642",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "danaat.near",
+      "unstaked_balance": "3986394156240783899919293",
+      "staked_balance": "10358849891606891980",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "cryptomann.near",
+      "unstaked_balance": "3969509162146105582176654",
+      "staked_balance": "5245036308952675914",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "poloz.near",
+      "unstaked_balance": "3875410096454597329940212",
+      "staked_balance": "7023985448093708435",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "6965cbaaebcfffdeb8649d3593388ba1ab220a33.vt.voteagora.near",
+      "unstaked_balance": "3789107614438433429808302",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "db4762385b99430a675996ae328a1cb03408cfdcee4e5c7ca1069ddcb1409e1e",
+      "unstaked_balance": "3684393781678061734867770",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "c33205cd57980e1ca5b150f9478a18ec852415137602965177f71d2a24059606",
+      "unstaked_balance": "3137237562423303541501636",
+      "staked_balance": "1381420663688219080",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "hlfbld.near",
+      "unstaked_balance": "2658876356984206670933987",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "ftstark.tg",
+      "unstaked_balance": "2195874011490088880999374",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "i84346955.tg",
+      "unstaked_balance": "2192628914911703955414808",
+      "staked_balance": "18332102893167814212146234",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "shafin070.tg",
+      "unstaked_balance": "2129126000000000000000000",
+      "staked_balance": "136823414680663007",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "bad73eddc1391fb442f5681d53bbf4e47fa54a3b1065052bd4e527d1c96c8875",
+      "unstaked_balance": "2119046999524007989474886",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "akumanoko.near",
+      "unstaked_balance": "1434532283273368023068368",
+      "staked_balance": "6687431057621711260",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "pineapple67.near",
+      "unstaked_balance": "1340000000000000000000000",
+      "staked_balance": "305478797280810133275",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "jimi_huang.near",
+      "unstaked_balance": "1056762961809321485915123",
+      "staked_balance": "972297704734308943412906",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "mkirdeev.tg",
+      "unstaked_balance": "1051241513441051691352517",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "delifisek.near",
+      "unstaked_balance": "1021491674661056321132441",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "willagao.near",
+      "unstaked_balance": "1013991239114231499392065",
+      "staked_balance": "61639221499728027988",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "andre_kessler.tg",
+      "unstaked_balance": "1005964578999256660206064",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "gnaor.near",
+      "unstaked_balance": "999999999999999999999999",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "arashbitt.tg",
+      "unstaked_balance": "997148883267563442143777",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "377c26bfe1fce6c9e09645393111d84240c6ca095a463e36ce423dd53531d1d8",
+      "unstaked_balance": "922501504644290066066910",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "aea0a2c54dcc165570303918e60d72c4b2f47a46.venear.dao",
+      "unstaked_balance": "903765862892899721365615",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "yavo1003.tg",
+      "unstaked_balance": "823967806561160694483999",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "nearfanboi.near",
+      "unstaked_balance": "791000000000000000000000",
+      "staked_balance": "1014618820686537783274",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "307ac7b0a766b92c7be3421f00c64e11ec5d7a71596e95c38f1d6f9cbab1bf95",
+      "unstaked_balance": "518000000000000000000000",
+      "staked_balance": "119433310801520163714",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "0e746c8e22137e753b28d2913ae34793eafd6914.venear.dao",
+      "unstaked_balance": "511637056055596993749819",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "6859302346.tg",
+      "unstaked_balance": "448443836041514792705361",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "ahmadrrizvi.tg",
+      "unstaked_balance": "444133070546429041997398",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "noredforthedentity.near",
+      "unstaked_balance": "362651414775624091293357",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "tweaxl.tg",
+      "unstaked_balance": "342782286388434317524917",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "alexandrcurtis666.tg",
+      "unstaked_balance": "328000000000000000000000",
+      "staked_balance": "328307516422105240861",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "i6754118840.tg",
+      "unstaked_balance": "325356967351074934013009",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "testaccforever.near",
+      "unstaked_balance": "324610371931782003613277",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "hugo998.near",
+      "unstaked_balance": "318309031921272221389605",
+      "staked_balance": "9283445363909296473",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "kulyk_bohdan.tg",
+      "unstaked_balance": "317923984930214499431733",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "i5162745246.tg",
+      "unstaked_balance": "297491776561525296031423",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "pulluphonda.near",
+      "unstaked_balance": "271000000000000000000000",
+      "staked_balance": "282978798982655462152598",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "mehediy6.tg",
+      "unstaked_balance": "244802967031674182528699",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "7139820882.tg",
+      "unstaked_balance": "236000000000000000000000",
+      "staked_balance": "57790690092107279566",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "7090419049.tg",
+      "unstaked_balance": "235000000000000000000000",
+      "staked_balance": "46422477964456149799",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "i7042356789.tg",
+      "unstaked_balance": "235000000000000000000000",
+      "staked_balance": "310548535309194319885",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "7103484073.tg",
+      "unstaked_balance": "235000000000000000000000",
+      "staked_balance": "148126597755024375831",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "7116329187.tg",
+      "unstaked_balance": "235000000000000000000000",
+      "staked_balance": "45545000757688185381",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "34ee30f8e2b6d88108e9df2e0505d1093c4b8300b1f8cb4e5459c8923baa7f68",
+      "unstaked_balance": "229000000000000000000000",
+      "staked_balance": "26521869179183475118",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "speedsnap49.tg",
+      "unstaked_balance": "223553469280768232752407",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "geost1988.tg",
+      "unstaked_balance": "199000000000000000000000",
+      "staked_balance": "81169773927261113435",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "vayazynin.tg",
+      "unstaked_balance": "194000000000000000000000",
+      "staked_balance": "715538042872730445572",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "risquezricardo22.tg",
+      "unstaked_balance": "192764928776001669536826",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "detskieprazdniki21.tg",
+      "unstaked_balance": "187391929775175473184466",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "moochoolcopol.tg",
+      "unstaked_balance": "174430697679724998582029",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "93d903103ed051649ed19e78227e9cc3bcd5c327caeff1115b9a63333691b483",
+      "unstaked_balance": "157759942102998815714974",
+      "staked_balance": "1068376936853872",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "ilia_sher.tg",
+      "unstaked_balance": "155351147048844241268384",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "jc-t.near",
+      "unstaked_balance": "149983299652161894373960",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "7065696755.tg",
+      "unstaked_balance": "112908272584175685460261",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "nashreeq.near",
+      "unstaked_balance": "107379506439378062401361",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "greatafonso1.near",
+      "unstaked_balance": "99999999999999999999999",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "quicksort.near",
+      "unstaked_balance": "99999999999999999999999",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "9d73e345c3b029897e63e25507c41d8cccda65f6.vt.voteagora.near",
+      "unstaked_balance": "98749999999999999999999",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "w1thoutzy.tg",
+      "unstaked_balance": "93326754633720258317176",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "sachinpetkar1137.tg",
+      "unstaked_balance": "92600000000000000000000",
+      "staked_balance": "21675008047601105284",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "gadjimuradov_m.tg",
+      "unstaked_balance": "90212092524921501456860",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "begenfys.tg",
+      "unstaked_balance": "81717237147770944207458",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "i5822438515.tg",
+      "unstaked_balance": "80339093351179789414633",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "mvd_sled.tg",
+      "unstaked_balance": "78471652507846671865301",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "kaf201920.tg",
+      "unstaked_balance": "77335208629315191854404",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "b1aa6ee2ad3432c8db6f0b4ab003eeb02ab7b4af8adf3233d3566e5500b258be",
+      "unstaked_balance": "75037412625288899634378",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "i6983485326.tg",
+      "unstaked_balance": "50241312648381020409707",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "ahsif12345-hot.tg",
+      "unstaked_balance": "49600000000000000000000",
+      "staked_balance": "19127120990572683094",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "mahadi9831.tg",
+      "unstaked_balance": "49500000000000000000000",
+      "staked_balance": "51932969835822904490",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "s25zd.tg",
+      "unstaked_balance": "49128191371469479313136",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "863a10849bc3d0693afc6b1e0ef69578c9663e84dd2fe3f9aa0cc0aef19e41c8",
+      "unstaked_balance": "39761268518939805632355",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "kvngprado.tg",
+      "unstaked_balance": "37545072681545123222172",
+      "staked_balance": "0",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "i5540675654.tg",
+      "unstaked_balance": "28880460223832655678297",
+      "staked_balance": "33382436633964486",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "siva378.tg",
+      "unstaked_balance": "20000000000000000000000",
+      "staked_balance": "96530571610761081367",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "btcethp.tg",
+      "unstaked_balance": "18600000000000000000000",
+      "staked_balance": "16833161670519968081",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "rrm1210.tg",
+      "unstaked_balance": "13200000000000000000000",
+      "staked_balance": "95204972553376565758",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "nastyadragonessa.tg",
+      "unstaked_balance": "12900000000000000000000",
+      "staked_balance": "47127543568864021660",
+      "can_withdraw": true
+    },
+    {
+      "account_id": "i7055765200.tg",
+      "unstaked_balance": "10600000000000000000000",
+      "staked_balance": "446016131979962052884",
+      "can_withdraw": true
+    }
+  ],
+  "preflight": [
+    {
+      "account_id": "deportivo.near",
+      "unstaked_balance": "10651535901265475072115647348",
+      "staked_balance": "0",
+      "can_withdraw": true,
+      "preflight": {
+        "passed": true,
+        "result": null
+      }
+    },
+    {
+      "account_id": "rektdegen.near",
+      "unstaked_balance": "2175400970845315427949666161",
+      "staked_balance": "5269910618490567821",
+      "can_withdraw": true,
+      "preflight": {
+        "passed": true,
+        "result": null
+      }
+    },
+    {
+      "account_id": "rektpleb.near",
+      "unstaked_balance": "1202876389942013396417410533",
+      "staked_balance": "0",
+      "can_withdraw": true,
+      "preflight": {
+        "passed": true,
+        "result": null
+      }
+    }
+  ],
+  "paused": false,
+  "rawSample": "rnear-raw-partial.json.gz",
+  "rawSampleSha256": "924508ba5ef6fe82af8f12252dd47f367b5231a38dbbfa5e288d3a93dcf62275"
+}

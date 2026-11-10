@@ -4,7 +4,7 @@ Paste your NEAR account. No wallet connection needed.
 
 FOUND checks what’s ready to withdraw, straight from the chain.
 
-Then open the official app. Only you approve the withdrawal.
+Then connect your wallet. Approve the withdrawal, right from FOUND.
 
 One simple check covers Linear and Meta Pool.
 
