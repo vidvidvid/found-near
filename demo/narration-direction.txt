@@ -1,0 +1,3 @@
+Voice direction: lightly magical, airy and warm; young adult rather than childlike. Precise diction, conversational pace, a small smile. Avoid helium pitch, exaggerated squeaks, whispered consonants, heavy reverb, or a sing-song read. Aim for 38–43 seconds including pauses. Brand pronunciations: FOUND = found; NEAR = near; LiNEAR = linear; Meta Pool = met-uh pool.
+
+Status: script prepared; speech audio has not yet been generated. Higgsfield requires an exact voice_id + voice_type selected through its voice picker before generation. Planned processing: restrained loudness normalization, short fades, no background music competing with speech. Use a modest pitch adjustment only if the selected voice benefits from it.

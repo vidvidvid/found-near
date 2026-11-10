@@ -71,6 +71,7 @@ Run `npm run census -- --block 223800610 --check` to independently regenerate an
 
 ## Visual direction
 
-Original generated pixel-art illustration in dist/found-night.png, integrated with
-a dark navy, violet and amber interface. Reduced-motion preferences disable
-ambient fireflies. Financial checks remain read-only and use official protocol handoffs.
+Original generated pixel-art scene, integrated with a dark navy, violet and amber
+interface. The clean background plate and small sprite strips animate the lantern
+spirit and wallet with a gentle float, blink and nod. Reduced-motion preferences
+disable all character motion and ambient fireflies. Financial checks remain read-only and use official protocol handoffs.

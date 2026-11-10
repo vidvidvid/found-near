@@ -33,69 +33,13 @@ npm run census -- --block 223800610 --check
 - Balances are live and may change; no result is hardcoded in the checker.
 - Methodology and protocol sources are documented in [RESEARCH.md](RESEARCH.md).
 
-## 60–90 second demo recording
+## Demo video draft
 
-Record at 1440×1000 or larger, at 100% zoom, with the bookmarks bar hidden. Use the deployed site and a visible terminal for the census check. Confirm that the example accounts still have suitable live balances before recording; do not substitute recorded or invented amounts.
+A 43-second, sound-off demo is prepared in [demo/output/found-demo.mp4](demo/output/found-demo.mp4). Preview it with [demo/index.html](demo/index.html) served locally. The [edit notes](demo/README.md) include timing, capture provenance, asset prompts and rebuild instructions.
 
-### 0:00–0:10 — The problem
+The cut leads with the user task: paste an account, discover a real balance, then show the official withdrawal instructions. Meta Pool coverage and the reproducible LiNEAR census follow as evidence. The existing pixel-art characters are subtly animated. Public examples are labelled; no completed withdrawal is implied.
 
-**Screen:** FOUND hero.
-
-**Narration:**
-
-“Unstaked doesn’t always mean withdrawn. Your NEAR can be ready inside a protocol while still waiting for one final transaction. FOUND helps you find it.”
-
-### 0:10–0:23 — Public evidence
-
-**Screen:** Scroll to The waiting room.
-
-**Narration:**
-
-“We checked 47,882 LiNEAR accounts and found 538 matured balances above 0.01 NEAR. This is public onchain state—not a lost-money list, and not a claim about what owners intend.”
-
-### 0:23–0:34 — Reproducibility
-
-**Screen:** Run the census check in a terminal at the repository root.
-
-```sh
-npm run census -- --block 223800610 --check
-```
-
-**Narration:**
-
-“Anyone can regenerate the complete snapshot at one pinned block. The generator checks every account and rejects incomplete pages or mixed block heights.”
-
-### 0:34–0:50 — LiNEAR live scan
-
-**Screen:** Return to the hero and choose **Try a real account**.
-
-**Narration:**
-
-“No wallet connection, no signature—just a live read. FOUND finds this matured LiNEAR balance and checks the exact withdrawal preflight before calling it ready.”
-
-### 0:50–1:05 — Meta Pool live scan
-
-**Screen:** Enter `lb3.near`, or another account verified to have a current matured Meta Pool balance, and scan.
-
-**Narration:**
-
-“The same simple check now covers Meta Pool. Both protocols are read at one finalized block, with Meta Pool’s reserved-liquidity requirement checked before the withdrawal handoff.”
-
-### 1:05–1:18 — Safe handoff
-
-**Screen:** Open the withdrawal dialog. Show the account copy action and official destination. Do not sign a transaction for the demo unless recording a genuine owner-approved recovery.
-
-**Narration:**
-
-“FOUND never touches the money. The owner withdraws through the official app, then comes back and checks again.”
-
-### 1:18–1:28 — Close
-
-**Screen:** Return to the FOUND hero.
-
-**Narration:**
-
-“Two protocols, one simple check, and a reproducible public census. FOUND—find the NEAR you left behind.”
+This is a local draft, not a published demo URL. Review it before uploading and add the final public video/post links above.
 
 ## X demo post
 
