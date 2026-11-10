@@ -100,7 +100,7 @@ shots={s:Image.open(C/f'{s}.jpg') for s in ['02-account','03-linear','04-handoff
 def scene(i,t):
  im=(plate if i in [0,6] else dim).copy();atmosphere(im,t);header(im,'NEAR MAINNET' if i in [0,6] else 'FOUND / PRODUCT DEMO')
  if i==0:
-  lines(im,64,228,['Unstaked NEAR?','It may still','be waiting.'],58,67)
+  lines(im,64,228,['Unstaked your NEAR?','It might still be','waiting for you.'],58,67)
   text(im,(65,483),'Find the final withdrawal you missed.',22,MUTED)
   characters(im,t,i)
  elif i==1:

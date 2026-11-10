@@ -8,7 +8,7 @@ Open `index.html` through a local static server to preview. Export: `output/foun
 
 | Time | Message | Visual |
 | --- | --- | --- |
-| 0–5 s | Unstaked NEAR? It may still be waiting. | Night shop, floating lantern spirit, blinking wallet |
+| 0–5 s | Unstaked your NEAR? It might still be waiting for you. | Night shop, floating lantern spirit, blinking wallet |
 | 5–10 s | Paste a NEAR account. | Genuine ru.near input capture, subtle tap cue |
 | 10–17 s | See what’s ready. | Real LiNEAR result, account and block visible |
 | 17–24 s | Use the official app. | Actual withdrawal instructions; owner approval required |
