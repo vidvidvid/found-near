@@ -3,11 +3,16 @@ import {createReadStream} from 'node:fs';
 import {stat} from 'node:fs/promises';
 import {resolve,sep,extname} from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {createRecoveryStore,createRecoveryApi} from './recoveries.mjs';
+const recoveryStore=process.env.RECOVERY_DB?createRecoveryStore(process.env.RECOVERY_DB):null;
+const recoveryApi=createRecoveryApi({store:recoveryStore});
 const root=fileURLToPath(new URL('./dist/',import.meta.url));
 const types={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.png':'image/png','.webp':'image/webp'};
 export const server=createServer(async(req,res)=>{
  res.setHeader('X-Content-Type-Options','nosniff');
  res.setHeader('Referrer-Policy','strict-origin-when-cross-origin');
+ let apiPath;try{apiPath=new URL(req.url,'http://localhost').pathname;}catch{res.writeHead(400);res.end();return;}
+ if(await recoveryApi(req,res,apiPath))return;
  if(!['GET','HEAD'].includes(req.method)){res.writeHead(405,{Allow:'GET, HEAD'});res.end();return;}
  try{
   const path=decodeURIComponent(new URL(req.url,'http://localhost').pathname);

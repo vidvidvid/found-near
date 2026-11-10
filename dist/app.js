@@ -1,3 +1,4 @@
+import {recoveryTotals} from './tracking.js';
 import {createWalletUi} from './wallet-ui.js';
 import {scanProtocols,rpc,normalizeAccount,validAccount,formatNear,exactNear,PROTOCOLS,protocolInfo} from './rpc.js';
 const $=id=>document.getElementById(id);let request=null,current=null,example=false,walletUi;
@@ -279,3 +280,7 @@ async function loadLeaderboard(){
 walletUi=createWalletUi({current:()=>current,isExample:()=>example,scan:(account,isExample=false)=>scan(account,isExample,{force:true}),refresh:()=>{if(current&&$('discovery').dataset.state==='done')render('done',current);},accept:result=>{current=result;render('done',result);}});
 render('idle');
 loadLeaderboard();
+
+function refreshRecoveryTotals(){return recoveryTotals().then(data=>{const node=$('recovery-totals');if(!node||!data)return;node.textContent=`${formatNear(data.totalYocto)} NEAR brought home · ${data.accounts} ${data.accounts===1?'account':'accounts'} helped`;node.hidden=false;});}
+void refreshRecoveryTotals();
+window.addEventListener('found:recovery-recorded',refreshRecoveryTotals);

@@ -51,7 +51,7 @@ Scanning needs no wallet. Withdrawing requires the controlling wallet and its ap
 **No real owner-signed withdrawal was executed during QA.** Transaction construction, rejection cases and confirmation handling are covered by fixtures. Live wallet selection and mainnet balance reads are checked separately. See [verification/direct-withdrawals.md](verification/direct-withdrawals.md).
 
 The page sends the entered public account to FastNEAR’s discovery API and public RPC providers (FastNEAR and Intear) for finalized reads.
-It has no analytics, application backend, or account database. Connecting loads the NEAR Connect wallet manifest and the selected wallet’s sandboxed integration. The browser remembers wallet selection and pending transaction metadata, not wallet keys. Typography loads from
+Scanning has no application account database or browsing analytics. A small server stores withdrawal requests and verified public receipts for recovery totals; see below. Connecting loads the NEAR Connect wallet manifest and the selected wallet’s sandboxed integration. The browser remembers wallet selection and pending transaction metadata, not wallet keys. Typography loads from
 Google Fonts with local fallbacks. Amount calculations use BigInt, with exact values
 preserved and a truncated display (never rounded up).
 
@@ -84,3 +84,15 @@ Original generated pixel-art scene, integrated with a dark navy, violet and ambe
 interface. The clean background plate and small sprite strips animate the lantern
 spirit and wallet with a gentle float, blink and nod. Reduced-motion preferences
 disable all character motion and ambient fireflies. Balance checks remain read-only; withdrawals require an explicit wallet-approved contract call.
+
+## Recovery tracking
+
+The app issues an anonymous request ID before opening the wallet. After the client confirms a withdrawal, the server independently verifies the exact transaction, every receipt, its timestamp (within 30 minutes of the request), and the execution-time code hash for rNEAR and validator pools. A failed, incomplete, mismatched or replayed receipt cannot inflate the totals. Amounts use exact integers; each transaction and each account is counted once. Totals report requested withdrawal amounts before gas and exclude any additional automatic Meta Pool dust sweep.
+
+The database contains the public account, protocol, requested amount, transaction hash, block and timestamps. It contains no wallet keys, cookies, browsing events or IP-address column. Unconfirmed requests expire after 30 days. The public endpoint exposes only aggregate counts and amounts, not individual records. Hosting/RPC providers may maintain their own access logs.
+
+Attribution is **app-reported and receipt-verified**, not a cryptographic guarantee that FOUND was the only UI involved. Tracking is best effort: an outage never blocks withdrawal, and a missed request or a closed browser can leave a successful withdrawal uncounted. The browser queues receipt submissions for retry. Zero is shown until real confirmed withdrawals occur; test fixtures never seed production totals.
+
+Production uses Node 24 and SQLite at `/data/recoveries.sqlite` on a Railway persistent volume. The entrypoint prepares volume ownership then runs the server as the unprivileged `node` user. Keep the volume when redeploying; include the database and its WAL in backup procedures or use SQLite's online backup API. For a local full-stack preview: `RECOVERY_DB=/tmp/found-local/recoveries.sqlite PORT=8088 npm start`. Static `npm run dev` still works; tracking is unavailable in that preview.
+
+API: `GET /api/recoveries` returns totals; same-origin JSON POSTs to `/api/recoveries/start` and `/api/recoveries/confirm` create requests and submit receipts. These endpoints do not sign or send transactions.

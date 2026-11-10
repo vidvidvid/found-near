@@ -273,3 +273,5 @@ dialog{background:linear-gradient(145deg,#261c2e,#18111f);border-color:#745343;c
 #pocket-content::-webkit-scrollbar-track{background:#281d2d;border-radius:8px}
 #pocket-content::-webkit-scrollbar-thumb{background:#8d6b80;border-radius:8px}
 #pocket-content:focus-visible{outline:1px solid #d2ab75;outline-offset:4px;border-radius:8px}
+
+.recovery-note{padding-top:10px;padding-bottom:30px;color:#b6a4bf;font-size:11px;line-height:1.7}.recovery-note #recovery-totals{color:#dec292;margin:0 0 8px}.recovery-note summary{cursor:pointer;list-style-position:inside}.recovery-note details p{max-width:590px;margin:10px 0 0}

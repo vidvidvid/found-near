@@ -1,3 +1,4 @@
+import {startRecoveryTracking,trackConfirmedRecovery,flushRecoveries} from './tracking.js';
 import {validAccount} from './rpc.js';
 import {NETWORK,prepareWithdrawal,checkWithdrawal,validPending,validHash} from './withdrawal.js';
 const SESSION_PREFIX='found:wallet:',PENDING_KEY='found:pending-withdrawal:v1';
@@ -76,6 +77,7 @@ export function createWalletUi(hooks){
     for(let attempt=0;attempt<4;attempt++){
      let result;try{result=await checkWithdrawal(item);}catch{}
      if(result?.state==='confirmed'||result?.state==='failed'){
+      if(result.state==='confirmed')trackConfirmedRecovery(item);
       savePending(null);
       notice(result.state==='confirmed'?'Withdrawal confirmed. Your NEAR is back in '+item.account+'.':'The withdrawal did not complete. Check the transaction for details.',{hash:item.hash});
       if(!hooks.current()||hooks.current().account===item.account)await hooks.scan(item.account,false);
@@ -104,7 +106,9 @@ export function createWalletUi(hooks){
    const {fresh,transaction}=await prepareWithdrawal(result,{getAccounts:options=>signingWallet.getAccounts(options)});
    if(wallet!==signingWallet||revision!==connectionRevision)throw Error('Your wallet connection changed. Please try again.');
    if(hooks.current()?.account===result.account)hooks.accept(fresh);
-   const item={network:NETWORK,account:result.account,protocol:result.protocol,codeHash:result.codeHash,amount:result.amount,hash:null,createdAt:Date.now()};
+   const trackingId=await startRecoveryTracking(result);
+   if(wallet!==signingWallet||revision!==connectionRevision)throw Error('Your wallet connection changed. Please try again.');
+   const item={trackingId,network:NETWORK,account:result.account,protocol:result.protocol,codeHash:result.codeHash,amount:result.amount,hash:null,createdAt:Date.now()};
    // Store the intent before opening the wallet so reloads cannot silently resubmit it.
    savePending(item);work(true,'Approve in wallet…');
    notice('Approve the withdrawal in your wallet. Network fees are shown there.');
@@ -131,6 +135,7 @@ export function createWalletUi(hooks){
  try{const stored=JSON.parse(localStorage.getItem(PENDING_KEY)||'null');if(validPending(stored))pending=stored;}catch{}
  // Restore only an existing connection. A fresh visit never opens a wallet prompt.
  try{if(localStorage.getItem(SESSION_PREFIX+'selected-wallet'))connector().then(c=>c.getConnectedWallet()).then(({wallet,accounts})=>setWallet(wallet,accounts)).catch(()=>{});}catch{}
+ void flushRecoveries();
  if(pending)queueMicrotask(()=>confirmPending());
  return {withdraw,actionLabel,disabled:()=>busy||!!pending&&!!checking,owns};
 }
