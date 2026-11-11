@@ -36,10 +36,12 @@ npm ci
 npm test
 npm run census:verify
 npm run dormancy:verify
+npm run dormancy:code:verify
+npm run sizing:figures
 curl -fsS 'https://foundyours.xyz/api/scan/ru.near'
 ```
 
-The first install and API call need network access. Tests, census verification and sampled-history verification run offline after setup. A fresh chain reread is optional and slower:
+The first install and API call need network access. Tests, census verification, sampled-history verification, the contract-code check and the sizing figures run offline after setup. A fresh chain reread is optional and slower:
 
 ```sh
 npm run census:expanded -- --block 223975859 --check

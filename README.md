@@ -6,7 +6,7 @@ Unstaking does not always finish the job: after the unlock period, the account o
 
 ## Try it: do this, see this
 
-Use **Node.js 24 (recommended), or 22.13+ on the 22.x line**. Run `npm ci` once to install the pinned connector and build tool; this setup needs network access. The first three checks below then run offline.
+Use **Node.js 24 (recommended), or 22.13+ on the 22.x line**. Run `npm ci` once to install the pinned connector and build tool; this setup needs network access. The checks marked Offline below then need no network.
 
 | Check | Do this | See this | Access / time |
 | --- | --- | --- | --- |
@@ -17,7 +17,7 @@ Use **Node.js 24 (recommended), or 22.13+ on the 22.x line**. Run `npm ci` once 
 | Size against total supply | `npm run sizing:figures` | Labelled figures including `A5 gross listed as share of total supply: 0.805%` | Offline; a few seconds |
 | Read-only scan API | `curl -fsS 'https://foundyours.xyz/api/scan/ru.near'` | JSON with `account`, finalized `height`/`block`, `results` per checked source, `pools` coverage and cache metadata; amounts are yoctoNEAR strings | Network; up to 45 seconds |
 | Live interface | Open [FOUND](https://foundyours.xyz/), enter `ru.near` and press **Find my NEAR**, or use **Try a real account** | A live check across three protocols and indexed validator pools. LiNEAR showed 500.3072 NEAR at verification; balances can change | Network; usually a few seconds; no wallet needed |
-| Optional independent reread | `npm run census:expanded -- --block 223975859 --check` | A new chain reread matches the archived snapshot | Network; potentially tens of minutes; rate-limited archival RPC access may be required |
+| Optional independent reread | `npm run census:expanded -- --block 223975859 --check` | A new chain reread matches the archived snapshot | Network; several minutes, longer if the provider rate-limits; rate-limited archival RPC access may be required |
 
 A shared link also works: [check ru.near](https://foundyours.xyz/?account=ru.near). These steps scan only; they cannot withdraw from someone else’s account.
 
@@ -25,7 +25,7 @@ Submission text, publication checklist and the pending real-withdrawal recording
 
 ## Run locally and find the source
 
-`npm run dev` serves the full app and read-only APIs on http://127.0.0.1:8084. `npm start` uses PORT (default 8080). Both use Node; **Python is not required to run the app**. Recovery tracking is disabled unless RECOVERY_DB is configured. Use the Node server rather than a static file server: the leaderboard fetches ten rows through its API.
+`npm run dev` serves the full app and read-only APIs on port 8084 (open http://127.0.0.1:8084; the server listens on all interfaces). `npm start` uses PORT (default 8080). Both use Node; **Python is not required to run the app**. Recovery tracking is disabled unless RECOVERY_DB is configured; without it `/api/recoveries` answers 503 and the rest of the app works. Use the Node server rather than a static file server: the leaderboard fetches ten rows through its API.
 
 **`dist/` is the hand-written application source, served as-is.** Only `dist/near-connector.js` is a generated bundle, built from `src/near-connector.js` by `npm run build`. Server/API modules are at the root; tests are in `tests/`; census tools are in `scripts/`. The checked-in connector bundle is ready to serve. Python is used only to compose/preview the demo video.
 
@@ -57,7 +57,7 @@ Adapter methods, gas limits and rejection cases: [direct-withdrawal verification
 
 ## Limits
 
-Coverage is LiNEAR, Meta Pool, rNEAR and supported indexed validator pools. FastNEAR discovery may lag or omit relationships; at most 24 discovered pools are checked. Aurora’s reviewed custom pool has read-only balance coverage with an official wallet link; direct withdrawal is disabled there. Other custom pool code, tokens, bridges and other protocols are not covered. No estimate of missing funds elsewhere,
+Coverage is LiNEAR, Meta Pool, rNEAR (Rhea’s liquid staking token) and supported indexed validator pools. FastNEAR discovery may lag or omit relationships; at most 24 discovered pools are checked. Aurora’s reviewed custom pool has read-only balance coverage with an official wallet link; direct withdrawal is disabled there. Other custom pool code, tokens, bridges and other protocols are not covered. No estimate of missing funds elsewhere,
 no claims that the owner forgot, and no claim about continuous account inactivity. All accounts and balances are public.
 The public leaderboard combines the three staking protocols and recognized pools from two standard factories. It counts each account once and explicitly excludes unrecognized implementations.
 A view preflight is a snapshot, not a guarantee a future transaction succeeds.
@@ -102,9 +102,9 @@ Offline: `npm run dormancy:verify`. Historical age is included in paged API rows
 
 Of those 304, **171** also match at the 36-month sample (10 Nov 2023); 452 named accounts match back to the 12-month sample. `dormancy.checkpoints` in `/api/leaderboard` carries these three counts. A row’s age label states its oldest unchanged balance first, so no row shows a younger date than the group it is counted in. A second clause (`longTerm`) appears only when a larger amount has also been unchanged for at least 12 months; balances unchanged for less than that stay in the tooltip and in `sources`.
 
-**Are the named accounts contracts?** Mostly not. Of the 304, **261 had no contract code** deployed at the census block; the other 43 carry one of two NEAR Wallet contracts (its two-factor multisig, or the empty contract it leaves when two-factor is turned off), not DAO or exchange code. No code does not prove an individual owner. [Method, code hashes and limits](research/dormancy-2026-11-11/README.md); `npm run dormancy:code:verify` recomputes the counts offline.
+**Are the named accounts contracts?** Mostly not. Of the 304, **261 had no contract code** deployed at the census block; the other 43 carry one of two NEAR Wallet contracts (its two-factor multisig, or the empty contract it leaves when two-factor is turned off), not DAO or exchange code. No code does not prove an individual owner. [Method, code hashes and limits](research/dormancy-2026-11-11/README.md); `npm run dormancy:code:verify` recomputes the counts offline. The page shows this split from `dist/dormancy-code.json` (written by `npm run dormancy:code:publish`); the server checks it against the history data and omits it from `/api/leaderboard` (`dormancy.contractCode`) on any mismatch.
 
-**How big is this?** At the census block the gross listed amount was 0.805% of NEAR’s total supply, and the part unchanged at every sampled date for 24 months was 0.184%. The class is persistent but small. [Sizing, concentration, limits and what would change this reading](research/sizing-2026-11-11/README.md); `npm run sizing:figures` recomputes every figure offline.
+**How big is this?** At the census block the gross listed amount was 0.805% of NEAR’s total supply, and the part unchanged at every sampled date for 24 months, across all account kinds (777 accounts, of which the 304 named accounts hold 1,829,552.41 NEAR), was 0.184%. The class is persistent but small. [Sizing, concentration, limits and what would change this reading](research/sizing-2026-11-11/README.md); `npm run sizing:figures` recomputes every figure offline.
 
 ## Visual direction
 

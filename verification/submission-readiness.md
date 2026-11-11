@@ -38,7 +38,7 @@ The rebuild left the checked-in browser bundle unchanged. A full archival census
 
 - Public scan and leaderboard APIs returned HTTP 200 after deployment. A read of `ru.near` at block 223981724 returned the documented exact LiNEAR balance and all four checked sources at that same block. Pool discovery was complete (1/1). This is a dated read, not a future balance promise.
 - An independent README-first reviewer ran the coverage verifier: factory-code checks passed, and five positive rNEAR/pool balances independently matched Intear. Its output is live verification, not a transaction simulation.
-- The first leaderboard page is 3,122 bytes of JSON, rather than the previous approximately 1.3 MB gzip download. The complete census file remains downloadable for audit. Page 2, final page, row counts and previous/next boundaries were checked.
+- The first leaderboard page was 3,122 bytes of JSON at that commit (it has since gained history fields), rather than the previous approximately 1.3 MB gzip download. The complete census file remains downloadable for audit. Page 2, final page, row counts and previous/next boundaries were checked.
 - Account deep links start a read-only scan. Search updates the URL and exposes Copy link. Blur validation, completed-search reuse, current result cards and the NEAR Connect wallet selector remain functional. No wallet was connected and no transaction signed in this UI check.
 - Lockup badges and their exact census total are derived from the snapshot. Zero recovery totals remain hidden. No production recovery was seeded by tests.
 - Public repository visibility, X publication and hackathon submission were not changed. The GitHub description now describes the expanded withdrawal workflow.

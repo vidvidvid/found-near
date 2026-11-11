@@ -17,6 +17,12 @@ The separate public census reads all registered ledger IDs across three protocol
 
 `node scripts/verify-coverage.mjs --output /tmp/found-coverage.json` performs read-only live adapter verification. Public balances can change. Existing saved evidence is in [live-verification.json](research/coverage-expansion/live-verification.json).
 
+## Sampled history, contract code and sizing
+
+- [Sampled history of the 100+ NEAR cohort](research/dormancy-2026-11-11/README.md): balances reread at pinned blocks 1, 3, 6, 12, 24 and 36 months back, and a contract-code check of the named accounts. Verify offline with `npm run dormancy:verify` and `npm run dormancy:code:verify`.
+- [How big is this?](research/sizing-2026-11-11/README.md): the census sized against total supply and active stake, with concentration, limits and what would change the reading. Recompute offline with `npm run sizing:figures`.
+- [Lockup withdrawal path](research/lockup-path-2026-11-11.md): a source reading of how lockup-owned balances would be withdrawn; not implemented.
+
 ## Historical research
 
 - [Original LiNEAR and Meta Pool research](docs/history/2026-11-10-research.md), including the original 538-account LiNEAR snapshot and earlier Meta Pool census. Those counts are retained as dated source-specific evidence.

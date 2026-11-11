@@ -12,7 +12,7 @@ Counters contain only IP, window time and counts in memory, never account histor
 
 ## Verification
 
-- All 67 application tests passed. New cases cover per-caller isolation, concurrency isolation, the aggregate cap, cache/coalescing exceptions, header trust, IPv6 normalization, and bounded/expired bookkeeping.
+- All 67 application tests in the suite at that commit passed (the suite has grown since). New cases cover per-caller isolation, concurrency isolation, the aggregate cap, cache/coalescing exceptions, header trust, IPv6 normalization, and bounded/expired bookkeeping.
 - The offline census verifier still reproduced 30,681 accounts, 858 pools and three protocols at block 223975859. No census data was changed.
 - Deployment `6c3acf63-ea45-4dd8-91d4-99cd44d766ee` succeeded. Its read-only `ru.near` scan returned complete coverage at block 224042234 in 555 ms.
 - One caller then made nine new scans of nonexistent accounts, varying both forwarded-IP headers. Each returned 404; the next returned 429 with Retry-After: 60. Changing those headers did not reset the caller quota. This is a single-source production probe; independent caller isolation is covered locally, not a multi-region load test.
