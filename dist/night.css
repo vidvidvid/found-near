@@ -344,3 +344,8 @@ footer .footer-brand{font-size:21px!important}
 
 /* Centre the dot inside the logo's "o". Em units keep it centred at any logo size. */
 .brand-o:after{left:calc(50% + 1.5px);top:.75em;width:.125em;height:.125em;transform:translate(-50%,-50%)}
+
+/* Hero finding and the three-year line in the finding box. */
+.hero-proof [hidden]{display:none}
+.dormancy-finding .dormancy-deeper{font-size:14px;color:#dcc49a;margin:8px 0 0}
+@media(max-width:620px){#hero-proof-finding{max-width:340px;text-wrap:balance}}

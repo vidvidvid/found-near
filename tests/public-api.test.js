@@ -36,6 +36,30 @@ test('leaderboard API sends ten rows, caches immutable pages and rejects invalid
  const head=await fetch(base+'/api/leaderboard',{method:'HEAD'});assert.equal(head.status,200);assert.equal(await head.text(),'');
 }));
 
+test('leaderboard API exposes the named checkpoints and the half-coverage row label from the shipped dormancy data',async()=>serve(createLeaderboardApi(),async base=>{
+ const page=await (await fetch(base+'/api/leaderboard')).json();
+ assert.equal(page.dormancy.months,24);assert.equal(page.dormancy.accounts,304);
+ assert.deepEqual(page.dormancy.checkpoints.map(c=>[c.months,c.accounts]),[[12,452],[24,304],[36,171]]);
+ const alex=page.accounts.find(row=>row.account_id==='alex.near').dormancy;
+ assert.deepEqual([alex.months,alex.amountYocto,alex.contracts,alex.listedYocto],[36,'1041737304436942751344525804',['ashert.poolv1.near'],'888703508504436942751344525804']);
+ assert.deepEqual(alex.longTerm,{months:24,since:'2024-11-10T22:01:35.404Z',amountYocto:'888703508504436942751344525804',contracts:['ashert.poolv1.near','mockingbird.poolv1.near']});
+ assert.deepEqual(alex.sources.map(s=>[s.contract,s.months]),[['ashert.poolv1.near',36],['mockingbird.poolv1.near',24]]);
+ const plain=createLeaderboard(JSON.parse(await readFile(new URL('../dist/leaderboard.json',import.meta.url),'utf8'))).page(1);
+ assert.equal(plain.dormancy,undefined);assert.ok(plain.accounts.every(row=>!row.dormancy));
+}));
+
+test('no named row shows a younger primary date than the 24 and 36 month groups that count it',async()=>{
+ const read=name=>readFile(new URL('../dist/'+name,import.meta.url),'utf8').then(JSON.parse);
+ const [snapshot,dormancy]=await Promise.all([read('leaderboard.json'),read('dormancy.json')]),ledger=createLeaderboard(snapshot,{dormancy}),first=ledger.page(1);
+ const named=id=>!id.endsWith('.lockup.near')&&!/^[a-f0-9]{64}$/.test(id)&&!/^0x[a-f0-9]{40}$/.test(id),counted={24:0,36:0};
+ for(let page=1;page<=first.totalPages;page++)for(const row of ledger.page(page).accounts){
+  if(!row.dormancy||!named(row.account_id))continue;
+  for(const months of [24,36])if(row.dormancy.sources.some(s=>s.months>=months)){counted[months]++;assert.ok(row.dormancy.months>=months,`${row.account_id} counted at ${months} months but labelled ${row.dormancy.months}`);}
+  if(row.dormancy.longTerm)assert.ok(row.dormancy.longTerm.months>=12&&BigInt(row.dormancy.longTerm.amountYocto)>BigInt(row.dormancy.amountYocto));
+ }
+ assert.deepEqual(counted,{24:first.dormancy.checkpoints[1].accounts,36:first.dormancy.checkpoints[2].accounts});
+});
+
 test('scan API validates before RPC, returns exact results, expires its cache',async()=>{
  let calls=0,time=0;
  await serve(createScanApi({scan:async account=>{calls++;return result(account);},now:()=>time,ttlMs:30}),async base=>{

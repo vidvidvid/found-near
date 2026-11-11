@@ -444,7 +444,91 @@
           },
           "dormancy": {
             "type": "object",
-            "description": "Optional named-account finding from the verified 100+ NEAR cohort, at the 24-month checkpoint. Contains accounts, pairs, exact totalYocto, dates, cohort size and limitations."
+            "description": "Optional named-account finding from the verified 100+ NEAR cohort. The top-level counts are the 24-month checkpoint: named accounts with at least one withdrawable balance unchanged at every sampled date since `since`. Absent when no verified dormancy data is available. Activity between samples is possible; named accounts may be contracts.",
+            "required": [
+              "asOf",
+              "cohortAccounts",
+              "minimumAccountTotalYocto",
+              "months",
+              "since",
+              "accounts",
+              "pairs",
+              "totalYocto",
+              "checkpoints",
+              "limitation"
+            ],
+            "properties": {
+              "asOf": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "cohortAccounts": {
+                "type": "integer"
+              },
+              "minimumAccountTotalYocto": {
+                "$ref": "#/components/schemas/YoctoNEAR"
+              },
+              "months": {
+                "enum": [
+                  24
+                ]
+              },
+              "since": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "accounts": {
+                "type": "integer"
+              },
+              "pairs": {
+                "type": "integer",
+                "description": "Account and source pairs."
+              },
+              "totalYocto": {
+                "$ref": "#/components/schemas/YoctoNEAR"
+              },
+              "checkpoints": {
+                "type": "array",
+                "description": "Named-account counts at the 12, 24 and 36 month sampled checkpoints, oldest last. Each longer checkpoint is a subset of the shorter one.",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "months",
+                    "since",
+                    "accounts",
+                    "pairs",
+                    "totalYocto"
+                  ],
+                  "properties": {
+                    "months": {
+                      "enum": [
+                        12,
+                        24,
+                        36
+                      ]
+                    },
+                    "since": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Date of the oldest sample in this checkpoint."
+                    },
+                    "accounts": {
+                      "type": "integer"
+                    },
+                    "pairs": {
+                      "type": "integer",
+                      "description": "Account and source pairs."
+                    },
+                    "totalYocto": {
+                      "$ref": "#/components/schemas/YoctoNEAR"
+                    }
+                  }
+                }
+              },
+              "limitation": {
+                "type": "string"
+              }
+            }
           }
         },
         "description": "Dated census, not current availability or proof of abandonment. Account IDs are deduplicated, but gross balances can overlap protocol reserves. Lockup balances require another withdrawal route."
@@ -455,7 +539,9 @@
           "months",
           "since",
           "amountYocto",
-          "contracts"
+          "contracts",
+          "listedYocto",
+          "sources"
         ],
         "properties": {
           "months": {
@@ -466,7 +552,8 @@
               12,
               24,
               36
-            ]
+            ],
+            "description": "The row's oldest sampled bucket. Never younger than any checkpoint group that counts this account."
           },
           "since": {
             "type": "string",
@@ -479,10 +566,86 @@
             "type": "array",
             "items": {
               "type": "string"
+            },
+            "description": "Sources in the oldest bucket, counted in amountYocto."
+          },
+          "listedYocto": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/YoctoNEAR"
+              }
+            ],
+            "description": "The row's listed census total, for comparison with amountYocto."
+          },
+          "sources": {
+            "type": "array",
+            "description": "Full per-source breakdown of the sampled sources in this row, oldest first.",
+            "items": {
+              "type": "object",
+              "required": [
+                "contract",
+                "amountYocto",
+                "months",
+                "since"
+              ],
+              "properties": {
+                "contract": {
+                  "type": "string"
+                },
+                "amountYocto": {
+                  "$ref": "#/components/schemas/YoctoNEAR"
+                },
+                "months": {
+                  "enum": [
+                    1,
+                    3,
+                    6,
+                    12,
+                    24,
+                    36
+                  ]
+                },
+                "since": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          "longTerm": {
+            "type": "object",
+            "description": "Optional secondary statement, present only when the sources unchanged for at least 12 months sum to more than amountYocto. months and since are the youngest bucket among those sources, so the statement holds for the whole sum.",
+            "required": [
+              "months",
+              "since",
+              "amountYocto",
+              "contracts"
+            ],
+            "properties": {
+              "months": {
+                "enum": [
+                  12,
+                  24,
+                  36
+                ]
+              },
+              "since": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "amountYocto": {
+                "$ref": "#/components/schemas/YoctoNEAR"
+              },
+              "contracts": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
             }
           }
         },
-        "description": "Only the listed source amount matched at every sampled date through the census; it may be smaller than the full row amount. Absent outside the qualifying analysed subset. No assertion of inactivity between samples."
+        "description": "Primary statement: amountYocto is the sum of the sources in the row's oldest sampled bucket, unchanged at every sampled date since `since`. longTerm optionally adds all sources unchanged for 12+ months. Either may be smaller than the full row amount (listedYocto); sources gives the full breakdown, including sources younger than 12 months that never appear in the label. Absent outside the qualifying analysed subset. No assertion of inactivity between samples."
       }
     }
   }

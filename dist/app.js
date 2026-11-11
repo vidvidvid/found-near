@@ -315,16 +315,22 @@ async function loadLeaderboard(page=1){
   const date=new Date(data.asOf).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'});
   $('leaderboard-count').textContent=data.counts.accountsWithWaiting.toLocaleString('en-US');
   const finding=$('dormancy-finding');finding.replaceChildren();finding.hidden=!data.dormancy?.accounts;
+  const longDate=iso=>new Date(iso).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'});
   if(data.dormancy?.accounts){
-   finding.append(element('strong',`${data.dormancy.accounts.toLocaleString('en-US')} named accounts. Balances unchanged at sampled dates over two years.`));
-   finding.append(element('p',`Each had at least one withdrawable balance matching at every sampled date since ${new Date(data.dormancy.since).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'})}. We checked the ${data.dormancy.cohortAccounts.toLocaleString('en-US')} accounts with 100+ NEAR in the snapshot. Activity between samples is possible; named accounts can be contracts.`));
+   finding.append(element('strong',`${data.dormancy.accounts.toLocaleString('en-US')} named accounts have had the same withdrawable balance at every sampled date for over two years.`));
+   const deeper=data.dormancy.checkpoints?.find(c=>c.months===36);
+   if(deeper?.accounts)finding.append(element('p',`${deeper.accounts.toLocaleString('en-US')} of them for over three years, matching at every sample since ${longDate(deeper.since)}.`,'dormancy-deeper'));
+   finding.append(element('p',`Each had at least one withdrawable balance matching at every sampled date since ${longDate(data.dormancy.since)}. We checked the ${data.dormancy.cohortAccounts.toLocaleString('en-US')} accounts with 100+ NEAR in the snapshot. Activity between samples is possible; named accounts can be contracts.`));
    const evidence=element('a','Read the sampled evidence','share-result');evidence.href='./dormancy.json';finding.append(evidence);
   }
   $('leaderboard-count-label').textContent='accounts with NEAR waiting';
   $('leaderboard-total').textContent=compactNear(data.totalListedYocto);$('leaderboard-total').title=exactNear(data.totalListedYocto)+' NEAR';
   // The hero repeats the two census headline figures; keep them on the same snapshot.
   if($('hero-proof-accounts'))$('hero-proof-accounts').textContent=$('leaderboard-count').textContent;
-  if($('hero-proof-total')){$('hero-proof-total').textContent=$('leaderboard-total').textContent;$('hero-proof-total').title=$('leaderboard-total').title;}
+  // The second hero figure is the two-year finding. Without dormancy data it stays hidden; no number is invented.
+  const heroFinding=$('hero-proof-finding'),heroLink=$('hero-proof-link'),twoYears=data.dormancy?.months===24&&data.dormancy.accounts;
+  if(heroFinding){heroFinding.hidden=!twoYears;if(twoYears)$('hero-proof-dormant').textContent=data.dormancy.accounts.toLocaleString('en-US');}
+  if(heroLink){heroLink.href=twoYears?'#dormancy-finding':'#waiting';heroLink.textContent=twoYears?'See the finding ↓':'See the waiting room ↓';}
   $('leaderboard-protocols').textContent=data.counts.protocols.toLocaleString('en-US');
   $('leaderboard-pools').textContent=data.counts.validatorPools.toLocaleString('en-US');
   $('snapshot-date').textContent=date+' · snapshot';
@@ -349,9 +355,12 @@ async function loadLeaderboard(page=1){
    if(pools)labels.push(pools===1?pool:`${pools} validator pools`);
    const note=element('span',labels.join(' · '),'leaderboard-sources');note.title=a.sources.map(s=>s.contract).join(', ');name.append(note);
    if(a.dormancy){
-    const since=new Date(a.dormancy.since).toLocaleDateString('en-GB',{month:'short',year:'numeric',timeZone:'UTC'});
-    const age=element('span',`${compactNear(a.dormancy.amountYocto)} NEAR unchanged at samples since ${since}`,'leaderboard-age');
-    age.title=`${exactNear(a.dormancy.amountYocto)} NEAR in ${a.dormancy.contracts.join(', ')} matched at every sampled date through ${date}. This may be only part of the listed total; activity between samples is possible.`;name.append(age);
+    const month=iso=>new Date(iso).toLocaleDateString('en-GB',{month:'short',year:'numeric',timeZone:'UTC'}),dormancy=a.dormancy,listed=dormancy.listedYocto??a.unstaked_balance;
+    const long=dormancy.longTerm,age=element('span',`${compactNear(dormancy.amountYocto)} NEAR unchanged at samples since ${month(dormancy.since)}${long?` · ${compactNear(long.amountYocto)} since ${month(long.since)}`:''}`,'leaderboard-age');
+    // The tooltip carries the honest per-source breakdown behind the label.
+    const breakdown=(dormancy.sources??[]).map(s=>`${exactNear(s.amountYocto)} NEAR in ${s.contract}: matched at every sampled date since ${month(s.since)}`);
+    const counted=long?`${exactNear(long.amountYocto)} of ${exactNear(listed)} NEAR listed, in sources unchanged for 12+ months`:`${exactNear(dormancy.amountYocto)} of ${exactNear(listed)} NEAR listed`;
+    age.title=`${breakdown.join('\n')}\nThe label may cover only part of the listed total: it counts ${counted}. Samples run through ${date}; activity between samples is possible.`;name.append(age);
    }
    const amount=element('td',compactNear(a.unstaked_balance),'align-right');amount.title=exactNear(a.unstaked_balance)+' NEAR';row.append(rank,name,amount);rows.push(row);
   });
