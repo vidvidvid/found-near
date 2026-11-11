@@ -30,3 +30,4 @@ jobs:
       - run: npm run dormancy:verify
       - run: npm run dormancy:code:verify
       - run: npm run sizing:figures
+      - run: npm run verify:tx

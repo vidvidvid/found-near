@@ -19,7 +19,8 @@
     "dormancy:code:scan": "node scripts/scan-dormancy-code.mjs",
     "dormancy:code:verify": "node scripts/verify-dormancy-code.mjs",
     "dormancy:code:publish": "node scripts/publish-dormancy-code.mjs",
-    "sizing:figures": "node scripts/sizing-figures.mjs"
+    "sizing:figures": "node scripts/sizing-figures.mjs",
+    "verify:tx": "node scripts/verify-tx.mjs"
   },
   "dependencies": {
     "@hot-labs/near-connect": "0.12.0"

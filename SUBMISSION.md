@@ -38,6 +38,7 @@ npm run census:verify
 npm run dormancy:verify
 npm run dormancy:code:verify
 npm run sizing:figures
+npm run verify:tx
 curl -fsS 'https://foundyours.xyz/api/scan/ru.near'
 ```
 
@@ -89,7 +90,7 @@ No real owner-signed withdrawal was executed during QA. The owner’s vidvid.nea
 | Permission to publish account and receipt | Pending |
 | Optional owner quote | Pending; never fabricate one |
 
-Once the hash exists, add `npm run verify:tx -- <hash>` using FOUND’s existing exact receipt verifier, not a separate looser implementation. Add its real output and the approved record here and in README. Update all current “no owner-signed withdrawal” statements to match the actual evidence. Historical reports remain dated records.
+Once the hash exists, run `npm run verify:tx -- <hash> --account vidvid.near --save`. It reads the transaction from an archival RPC, applies FOUND’s existing exact receipt verifier (not a separate looser implementation), requires the pool’s transfer to the signer, and saves the raw responses to `verification/withdrawals/<hash>.json`. From then on `npm run verify:tx` rechecks that evidence offline and CI runs it on every push. Add its real output and the approved record here and in README. Update all current “no owner-signed withdrawal” statements to match the actual evidence. Historical reports remain dated records.
 
 ## Publication and submission handoff
 

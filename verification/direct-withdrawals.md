@@ -13,6 +13,19 @@ FOUND now supports owner-approved withdrawals on NEAR mainnet. This is an applic
 
 The additional rNEAR and validator-pool readiness/liquidity checks and exact code hashes are documented in [coverage verification](../research/coverage-expansion/README.md). Unknown pool implementations and lockup accounts have no direct withdrawal action.
 
+## Checking a withdrawal after the fact
+
+`npm run verify:tx -- <hash> --account <signer>` reads `EXPERIMENTAL_tx_status` with `wait_until: FINAL` from an archival RPC, plus the header of the transaction’s block and the contract’s `view_account` at the block that executed the call. It then:
+
+1. derives the protocol from the receiver and builds the same pending record the app stores;
+2. passes it to `inspectWithdrawal` in `dist/withdrawal.js`, the function the browser and the recovery server use, so signer, receiver, single `withdraw` call, amount, zero deposit, FOUND’s gas limit, finality, every status and the complete receipt chain are checked by one implementation;
+3. requires the reviewed code hash for rNEAR and validator pools at the execution block;
+4. requires a successful receipt whose only action is a transfer from the contract to the signer for exactly the withdrawn amount (Meta Pool: at least that amount, because of its dust sweep).
+
+`--save` writes the raw responses to `verification/withdrawals/<hash>.json`. `npm run verify:tx` with no arguments rechecks every archived file offline, and `--live` rereads one from the chain and compares everything that decides the verdict. The offline check proves the archived responses are consistent with a confirmed withdrawal; only the live reread proves the chain still says the same. An unreachable provider is reported as unknown, never as a failed withdrawal.
+
+A withdrawal sent by another app with a different gas limit or method (for example `withdraw_all`) is rejected: the command answers “is this the transaction FOUND builds, and did it pay out”, not “did any withdrawal happen”.
+
 ## Source references
 
 - [NEAR Connect](https://docs.near.org/tools/near-connect) and [wallet transaction API](https://docs.near.org/web3-apps/tutorials/wallet-login).
