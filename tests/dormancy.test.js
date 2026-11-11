@@ -61,3 +61,10 @@ test('paged pool reads select the exact account and reject missing, duplicate an
  s.view.result.result=[...Buffer.from(JSON.stringify([rows[0],rows[0]]))];assert.equal(classifySample(s,pair,header,'baseline'),'unknown:shape');
  s.view.params.args_base64=Buffer.from(JSON.stringify({...args,limit:1501})).toString('base64');assert.throws(()=>classifySample(s,pair,header,'baseline'));
 });
+
+test('named concentration excludes recent sources and other account kinds',async()=>{
+ const {namedDistribution}=await import('../scripts/dormancy-model.mjs'),unit=10n**24n;
+ const amount=n=>(BigInt(n)*unit).toString();
+ const summary={rows:{'one.near':[{amount:amount(100),oldestMonths:24},{amount:amount(900),oldestMonths:1}],'two.near':[{amount:amount(50),oldestMonths:36}],['a'.repeat(64)]:[{amount:amount(9999),oldestMonths:36}]},buckets:[{months:24,groups:{named:{accounts:2,totalYocto:amount(150)}}}]};
+ assert.deepEqual(namedDistribution(summary,24),{months:24,accounts:2,accountsWithAtLeast100OldNear:1,totalYocto:amount(150),largestAccountYocto:amount(100),largestShareBasisPoints:6666,totalWithoutLargestYocto:amount(50)});
+});

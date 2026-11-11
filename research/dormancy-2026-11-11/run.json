@@ -1,0 +1,22 @@
+{
+  "endpoint": "https://archival-rpc.mainnet.fastnear.com",
+  "startedAt": "2026-11-11T09:45:55.447Z",
+  "endedAt": "2026-11-11T12:33:33.898Z",
+  "elapsedSeconds": 10058,
+  "requests": 4116,
+  "cacheHits": 401,
+  "rateLimits": 29,
+  "lastProblem": {
+    "at": "2026-11-11T12:30:18.649Z",
+    "code": "UNKNOWN_ACCOUNT",
+    "message": "{\"name\":\"HANDLER_ERROR\",\"cause\":{\"info\":{\"block_hash\":\"7cfgeWXU2aRzo78QRd1G8ZYULSppxJPq15iMvsoVif57\",\"block_height\":105404736,\"requested_account_id\":\"a41.poolv1.near\"},\"name\":\"UNKN"
+  },
+  "archiveSha256": "e96869bd41e050ced1420696c770260cb82c0e73a635cc647a972e1ca4be3170",
+  "cacheProvenance": {
+    "providers": [
+      "https://archival-rpc.mainnet.fastnear.com",
+      "https://archival-rpc.mainnet.near.org"
+    ],
+    "limitation": "Legacy cache records bind method/parameters and pinned block, but do not retain a per-response provider label."
+  }
+}

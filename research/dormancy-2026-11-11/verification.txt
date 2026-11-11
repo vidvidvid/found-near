@@ -1,0 +1,12 @@
+
+> dormancy:verify
+> node scripts/verify-dormancy.mjs
+
+Verified dormancy archive: 2963 accounts, 3703 account-source pairs, 6 historical dates; census block 223975859.
+1 months: 574 named accounts; 2217394126133345201155097879623 yoctoNEAR; sampled since 2026-10-10T22:01:35.947Z.
+3 months: 510 named accounts; 2148854558600970006628131517813 yoctoNEAR; sampled since 2026-08-10T22:01:35.483Z.
+6 months: 487 named accounts; 2127497134417952300760205779176 yoctoNEAR; sampled since 2026-05-10T22:01:35.671Z.
+12 months: 452 named accounts; 2047553785691784800678910396534 yoctoNEAR; sampled since 2025-11-10T22:01:35.438Z.
+24 months: 304 named accounts; 1829552415900001658677150756549 yoctoNEAR; sampled since 2024-11-10T22:01:35.404Z.
+36 months: 171 named accounts; 742382693157632430128235326566 yoctoNEAR; sampled since 2023-11-10T22:01:35.157Z.
+Offline consistency check. Equal balances at samples do not establish inactivity between samples, abandonment, ownership type, or current availability.

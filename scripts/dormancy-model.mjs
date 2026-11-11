@@ -88,3 +88,12 @@ export function summarize(archive,snapshot,snapshotText=JSON.stringify(snapshot)
   buckets:buckets.map(({months,date,header,groups})=>({months,date,block:header.height,hash:header.hash,groups:Object.fromEntries(Object.entries(groups).map(([k,g])=>[k,{accounts:g.ids.size,pairs:g.pairs,totalYocto:g.total.toString()}]))})),
   terminations,rows:Object.fromEntries([...rowGroups].sort(([a],[b])=>a.localeCompare(b)))};
 }
+
+// Concentration is by account's qualifying old sources, never its full census total.
+export function namedDistribution(summary,months){
+ assert.ok(MONTHS.includes(months));
+ const values=Object.entries(summary.rows).filter(([id])=>accountKind(id)==='named').map(([,sources])=>sources.filter(s=>s.oldestMonths>=months).reduce((n,s)=>n+BigInt(s.amount),0n)).filter(n=>n>0n).sort((a,b)=>a>b?-1:a<b?1:0);
+ const total=values.reduce((n,v)=>n+v,0n),largest=values[0]||0n,group=summary.buckets.find(b=>b.months===months).groups.named;
+ assert.equal(values.length,group.accounts);assert.equal(total.toString(),group.totalYocto);
+ return {months,accounts:values.length,accountsWithAtLeast100OldNear:values.filter(v=>v>=MIN_TOTAL).length,totalYocto:total.toString(),largestAccountYocto:largest.toString(),largestShareBasisPoints:total?Number(largest*10000n/total):0,totalWithoutLargestYocto:(total-largest).toString()};
+}

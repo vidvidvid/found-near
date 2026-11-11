@@ -6,12 +6,13 @@ Unstaking does not always finish the job: after the unlock period, the account o
 
 ## Try it: do this, see this
 
-Use **Node.js 24 (recommended), or 22.13+ on the 22.x line**. Run `npm ci` once to install the pinned connector and build tool; this setup needs network access. The first two checks below then run offline.
+Use **Node.js 24 (recommended), or 22.13+ on the 22.x line**. Run `npm ci` once to install the pinned connector and build tool; this setup needs network access. The first three checks below then run offline.
 
 | Check | Do this | See this | Access / time |
 | --- | --- | --- | --- |
 | Application checks | `npm test` | All tests pass: financial states, withdrawal preflights, receipts, census, API and pagination | Offline; a few seconds |
 | Census evidence | `npm run census:verify` | `Verified archive: 30681 unique qualifying accounts from 305908 unique accounts, 858 supported pools + 3 protocols, block 223975859.` | Offline; a few seconds |
+| Sampled history | `npm run dormancy:verify` | Verifies 2963 accounts, 3703 pairs and six historical dates from the archived RPC evidence | Offline; a few seconds |
 | Read-only scan API | `curl -fsS 'https://foundyours.xyz/api/scan/ru.near'` | JSON with `account`, finalized `height`/`block`, `results` per checked source, `pools` coverage and cache metadata; amounts are yoctoNEAR strings | Network; up to 45 seconds |
 | Live interface | Open [FOUND](https://foundyours.xyz/), enter `ru.near` and press **Find my NEAR**, or use **Try a real account** | A live check across three protocols and indexed validator pools. LiNEAR showed 500.3072 NEAR at verification; balances can change | Network; usually a few seconds; no wallet needed |
 | Optional independent reread | `npm run census:expanded -- --block 223975859 --check` | A new chain reread matches the archived snapshot | Network; potentially tens of minutes; rate-limited archival RPC access may be required |
@@ -55,7 +56,7 @@ Adapter methods, gas limits and rejection cases: [direct-withdrawal verification
 ## Limits
 
 Coverage is LiNEAR, Meta Pool, rNEAR and supported indexed validator pools. FastNEAR discovery may lag or omit relationships; at most 24 discovered pools are checked. Aurora’s reviewed custom pool has read-only balance coverage with an official wallet link; direct withdrawal is disabled there. Other custom pool code, tokens, bridges and other protocols are not covered. No estimate of missing funds elsewhere,
-no claims that the owner forgot, and no account-age claim. All accounts and balances are public.
+no claims that the owner forgot, and no claim about continuous account inactivity. All accounts and balances are public.
 The public leaderboard combines the three staking protocols and recognized pools from two standard factories. It counts each account once and explicitly excludes unrecognized implementations.
 A view preflight is a snapshot, not a guarantee a future transaction succeeds.
 Scanning needs no wallet. Withdrawing requires the controlling wallet and its approval; FOUND does not hold keys, custody funds, request an access key, or charge a fee. Network gas is paid by the account. Lockup accounts still require their lockup contract.
@@ -90,6 +91,12 @@ This is a dated snapshot of matured balances, not proof of abandonment or guaran
 - Original LiNEAR-only snapshot: `npm run census -- --block 223800610 --check` now compares the preserved file in research/census/linear-2026-11-09.json.
 
 See [the census evidence](research/census-2026-11-10/README.md) for the exact inclusion rule, source counts, decoding safeguards and reproduction commands.
+
+<!-- sampled-history -->
+In the **100+ NEAR cohort (2,963 accounts)**, **304 named accounts** had at least one balance unchanged and withdrawable at every sampled date from **10 Nov 2024** through **10 Nov 2026**, totalling **1,829,552.41 gross NEAR** in those qualifying balances. Named accounts may be contracts; activity between samples is possible. This is sampled history, not proof of abandonment. [Method, all six buckets and archived evidence](research/dormancy-2026-11-11/README.md).
+
+Offline: `npm run dormancy:verify`. Historical age is included in paged API rows only where supported by this analysis; it names the qualifying amount rather than assigning an old age to the entire account total.
+<!-- /sampled-history -->
 
 ## Visual direction
 

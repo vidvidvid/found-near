@@ -35,3 +35,7 @@ The renderer uses Pillow and FFmpeg and composes archived screenshots; it does n
 ## Attribution
 
 Art/characters: OpenAI image generation; animation/compositing: CSS and Python/Pillow/FFmpeg; narration: Higgsfield Seed Audio 1.0, Faye preset; automated transcript checks: faster-whisper; font: DM Sans under [SIL OFL](assets/FONT-LICENSE.txt). Exact voice jobs/parameters and phrase edits: [narration-timing.json](narration-timing.json). Project-wide [credits](../THIRD_PARTY_NOTICES.md).
+
+## Evidence-led opening — optional edited cut
+
+Open with the real finding: **304 named accounts; qualifying balances matched at every sampled date over two years**. Keep “100+ NEAR cohort · sampled dates, not continuous inactivity” legible alongside it. Then show the owner’s real scan → approval → verified receipt as the payoff. Match narration and captions exactly, and preserve the uncut transaction take separately. This is a recording plan, not evidence that a withdrawal has happened.

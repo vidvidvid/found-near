@@ -1,0 +1,56 @@
+[
+  {
+    "months": 1,
+    "accounts": 574,
+    "accountsWithAtLeast100OldNear": 574,
+    "totalYocto": "2217394126133345201155097879623",
+    "largestAccountYocto": "888703508504436942751344525804",
+    "largestShareBasisPoints": 4007,
+    "totalWithoutLargestYocto": "1328690617628908258403753353819"
+  },
+  {
+    "months": 3,
+    "accounts": 510,
+    "accountsWithAtLeast100OldNear": 509,
+    "totalYocto": "2148854558600970006628131517813",
+    "largestAccountYocto": "888703508504436942751344525804",
+    "largestShareBasisPoints": 4135,
+    "totalWithoutLargestYocto": "1260151050096533063876786992009"
+  },
+  {
+    "months": 6,
+    "accounts": 487,
+    "accountsWithAtLeast100OldNear": 485,
+    "totalYocto": "2127497134417952300760205779176",
+    "largestAccountYocto": "888703508504436942751344525804",
+    "largestShareBasisPoints": 4177,
+    "totalWithoutLargestYocto": "1238793625913515358008861253372"
+  },
+  {
+    "months": 12,
+    "accounts": 452,
+    "accountsWithAtLeast100OldNear": 450,
+    "totalYocto": "2047553785691784800678910396534",
+    "largestAccountYocto": "888703508504436942751344525804",
+    "largestShareBasisPoints": 4340,
+    "totalWithoutLargestYocto": "1158850277187347857927565870730"
+  },
+  {
+    "months": 24,
+    "accounts": 304,
+    "accountsWithAtLeast100OldNear": 299,
+    "totalYocto": "1829552415900001658677150756549",
+    "largestAccountYocto": "888703508504436942751344525804",
+    "largestShareBasisPoints": 4857,
+    "totalWithoutLargestYocto": "940848907395564715925806230745"
+  },
+  {
+    "months": 36,
+    "accounts": 171,
+    "accountsWithAtLeast100OldNear": 170,
+    "totalYocto": "742382693157632430128235326566",
+    "largestAccountYocto": "602089487775424916735306149819",
+    "largestShareBasisPoints": 8110,
+    "totalWithoutLargestYocto": "140293205382207513392929176747"
+  }
+]

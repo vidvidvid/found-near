@@ -1,0 +1,9 @@
+{
+  "command": "DORMANCY_RPC=http://127.0.0.1:1 node scripts/scan-dormancy.mjs --output /tmp/found-dormancy-resume-check",
+  "startedAt": "2026-11-11T12:33:46.307Z",
+  "endedAt": "2026-11-11T12:34:41.562Z",
+  "elapsedSeconds": 55,
+  "requests": 0,
+  "summaryIdentical": true,
+  "scope": "Resumed from saved cache and pair checkpoints; compared parsed summaries exactly. This tests resumption, not an independent chain reread."
+}

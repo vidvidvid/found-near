@@ -1,0 +1,70 @@
+{
+  "block": 223975859,
+  "asOf": "2026-11-10T22:01:36.060Z",
+  "scope": "Dated gross matured census balances; 12-month counts are named IDs in the 100+ cohort, not people.",
+  "sources": [
+    {
+      "name": "LiNEAR",
+      "contract": "linear-protocol.near",
+      "accounts": 538,
+      "totalYocto": "1086474354469713856347957307326",
+      "namedYearAccounts": 10
+    },
+    {
+      "name": "Meta Pool",
+      "contract": "meta-pool.near",
+      "accounts": 435,
+      "totalYocto": "219698219142076820512108109154",
+      "namedYearAccounts": 40
+    },
+    {
+      "name": "Rhea",
+      "contract": "lst.rhealab.near",
+      "accounts": 225,
+      "totalYocto": "27786367642781113537460061298",
+      "namedYearAccounts": 0
+    },
+    {
+      "name": "Meteor",
+      "contract": "meteor.poolv1.near",
+      "accounts": 1106,
+      "totalYocto": "91884172752915872319865391141",
+      "namedYearAccounts": 6
+    },
+    {
+      "name": "AstroStakers",
+      "contract": "astro-stakers.poolv1.near",
+      "accounts": 6132,
+      "totalYocto": "773477874051435112610046599076",
+      "namedYearAccounts": 67
+    },
+    {
+      "name": "HERE",
+      "contract": "here.poolv1.near",
+      "accounts": 4528,
+      "totalYocto": "136870588527311716118109384645",
+      "namedYearAccounts": 6
+    },
+    {
+      "name": "Ledger by Figment",
+      "contract": "ledgerbyfigment.poolv1.near",
+      "accounts": 1873,
+      "totalYocto": "1061618420449941479222126064383",
+      "namedYearAccounts": 1
+    },
+    {
+      "name": "Dragonfly",
+      "contract": "dragonfly.poolv1.near",
+      "accounts": 81,
+      "totalYocto": "121136522764760663524781775402",
+      "namedYearAccounts": 4
+    },
+    {
+      "name": "Electric Capital",
+      "contract": "electric.poolv1.near",
+      "accounts": 82,
+      "totalYocto": "6131867782955082042577364901",
+      "namedYearAccounts": 1
+    }
+  ]
+}
