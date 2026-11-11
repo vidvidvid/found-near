@@ -1,0 +1,82 @@
+{
+  "checkedAt": "2026-11-11T08:45:13.742Z",
+  "deployment": "6c3acf63-ea45-4dd8-91d4-99cd44d766ee",
+  "statuses": [
+    {
+      "request": 1,
+      "status": 404,
+      "code": "UNKNOWN_ACCOUNT"
+    },
+    {
+      "request": 2,
+      "status": 404,
+      "code": "UNKNOWN_ACCOUNT"
+    },
+    {
+      "request": 3,
+      "status": 404,
+      "code": "UNKNOWN_ACCOUNT"
+    },
+    {
+      "request": 4,
+      "status": 404,
+      "code": "UNKNOWN_ACCOUNT"
+    },
+    {
+      "request": 5,
+      "status": 404,
+      "code": "UNKNOWN_ACCOUNT"
+    },
+    {
+      "request": 6,
+      "status": 404,
+      "code": "UNKNOWN_ACCOUNT"
+    },
+    {
+      "request": 7,
+      "status": 404,
+      "code": "UNKNOWN_ACCOUNT"
+    },
+    {
+      "request": 8,
+      "status": 404,
+      "code": "UNKNOWN_ACCOUNT"
+    },
+    {
+      "request": 9,
+      "status": 404,
+      "code": "UNKNOWN_ACCOUNT"
+    },
+    {
+      "request": 10,
+      "status": 429,
+      "code": "RATE_LIMITED"
+    }
+  ],
+  "example": {
+    "http": 200,
+    "height": 224042234,
+    "coverage": {
+      "state": "complete",
+      "discovered": 1,
+      "checked": 1,
+      "limit": 24
+    },
+    "ms": 555,
+    "cached": false
+  },
+  "cacheAfterQuota": {
+    "http": 200,
+    "cached": true,
+    "cacheAgeMs": 10016
+  },
+  "leaderboard": {
+    "rows": 10
+  },
+  "recoveries": {
+    "withdrawals": 0,
+    "accounts": 0,
+    "updatedAt": null,
+    "totalYocto": "0"
+  }
+}
