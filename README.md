@@ -39,27 +39,14 @@ Independent verification findings are in [VERIFICATION.md](VERIFICATION.md).
 
 ## What it does
 
-- Accepts a named or implicit NEAR account and confirms the account exists.
-- Pins all protocol and validator-pool reads to the same finalized block.
-- Reads `linear-protocol.near.get_account_details`. For a positive mature balance,
-  checks `is_paused` and `can_account_withdraw` with the exact amount at that block.
-- Reads `meta-pool.near.get_account`. For a positive mature balance on a regular account,
-  checks `get_contract_state` for enough reserved withdrawal funds and contract balance
-  including the contract’s possible dust sweep, at that block.
-- Identifies lockup accounts separately instead of sending them through a
-  regular wallet withdrawal flow.
-- Reads `lst.rhealab.near.get_account_details` for rNEAR. Requires maturity, global and withdrawal-method pause checks, exact `can_account_withdraw` success, a recognized code hash, and liquid funds after storage/execution reserves.
-- Discovers validator relationships through FastNEAR, then reads balances directly on-chain. Supports the two verified standard pool implementations, including legacy `poolv1.near` and newer `pool.near` deployments. Requires maturity, the independent availability view, and liquid funds after reserves. Unknown implementations remain visibly unsupported.
-- Checks up to 24 discovered pools, four at a time. Discovery outages and truncated coverage are explicit, never reported as zero funds. Empty sources are collapsed; amounts below 0.00001 NEAR remain accessible as tiny balances with a fee note.
-- Connects through NEAR Connect without requesting an access key. Owners can withdraw directly from FOUND; official apps remain available in optional Help.
-- Rechecks ownership, readiness and the exact balance immediately before asking the wallet to approve. Every supported contract receives `withdraw({amount})` with zero attached NEAR. rNEAR uses its SDK’s 200 TGas limit; the other adapters use 100 TGas. New adapters also require a recognized contract code hash and reject a code change during preflight.
-- Verifies the transaction on public RPC: matching signer, contract, method, amount, zero deposit, finalized status, and the complete successful receipt chain. A failed transfer receipt cannot display success.
-- Remembers pending requests through reloads and checks confirmation without submitting again. An uncertain wallet response remains uncertain; it never becomes a successful withdrawal just because the balance changed.
-- Treats RPC failures as unknown, never as zero. A failure in one protocol does not hide
-  successful results from other sources. Zero and pending are shown separately.
-- Account validation runs on blur (and submit), never while typing. Format and mainnet existence errors stay beside the input; previous results remain visible. No guessed addresses. Service failures are distinguished from nonexistent accounts.
-- A completed account search remains on screen when submitted again. The button says Checked; editing the account enables another search. Refresh balance explicitly rereads the shown account without replaying its discovery animation. Incomplete checks can still be retried. Wallet-driven checks and post-withdrawal refreshes always bypass this reuse.
-- The public example reads ru.near from mainnet, not a recorded or invented balance. Repeating the same completed example keeps its displayed snapshot until refreshed.
+- Confirms the account exists and pins all protocol and validator-pool reads to one finalized block.
+- Checks maturity, pauses and available withdrawal funds with each protocol’s own methods. rNEAR and validator pools require recognized contract code. Lockup accounts are identified separately because they need their lockup contract.
+- Discovers validator relationships through FastNEAR, then checks up to 24 pools directly on-chain. Unsupported code, discovery gaps and failed reads stay explicit: **unknown is never zero**.
+- Connects the owner’s wallet without requesting an access key. Before approval, rechecks ownership, readiness, code where required, and the exact amount. Requests only `withdraw({amount})`, with zero attached NEAR.
+- Verifies the signer, contract, method, amount, deposit, finalized transaction and complete successful receipt chain. A failed transfer receipt cannot display success.
+- Remembers pending requests across reloads and checks confirmation without resubmitting. An uncertain wallet response stays uncertain; a balance change alone does not prove a withdrawal.
+
+Adapter methods, gas limits and rejection cases: [direct-withdrawal verification](verification/direct-withdrawals.md) and [coverage evidence](research/coverage-expansion/README.md).
 
 ## Limits
 
@@ -82,10 +69,7 @@ The test suite covers pinned preflights, exact Meta Pool liquidity checks, zero,
 paused, unavailable, malformed responses, lockups, per-protocol failures, missing accounts,
 census pagination/filtering, precision, validation, and static-server safety.
 
-Live mainnet QA verified the LiNEAR result for ru.near, a matured Meta Pool result for
-lb3.near, a pending Meta Pool account, and shared block heights across both protocols.
-Mainnet balances change; no values are hardcoded in the live checker. Browser QA verified
-the withdrawal dialog, official destinations, and desktop/mobile layout.
+Live mainnet QA covers LiNEAR, Meta Pool, rNEAR and recognized validator pools, including mature and pending balances, code checks and reads pinned to a shared block. Independent RPC reads matched the positive rNEAR/pool examples. These are read-only checks, not evidence of a completed withdrawal. Mainnet balances change; no values are hardcoded in the live checker. Browser QA covers wallet selection, result cards, share links and desktop/mobile layout.
 
 New-coverage evidence, code provenance, limitations and live reproduction steps are in [research/coverage-expansion/README.md](research/coverage-expansion/README.md). Run `node scripts/verify-coverage.mjs --output /tmp/found-coverage.json` for a fresh read-only verification.
 
@@ -126,7 +110,9 @@ API: `GET /api/recoveries` returns totals; same-origin JSON POSTs to `/api/recov
 
 `GET /api/scan/<account>` returns the same pinned-block scanner’s account, block/hash, check time, protocol results and pool-coverage status. Amounts are exact **yoctoNEAR strings**. A successful HTTP response can contain partial or unknown source results: inspect each `state` and `pools.state`; never treat an error as zero. Responses include `cached` and `cacheAgeMs`; complete results can be reused for up to 30 seconds. Wallet preflights always perform fresh RPC checks and do not use this cache. No signing endpoint is exposed.
 
-Invalid account syntax returns 400; an account absent from mainnet returns 404; capacity limits return 429 with Retry-After; upstream failure returns 503; timeout returns 504. Four scans can run concurrently, with a shared ceiling of 30 new scans per minute, a 45-second timeout and at most 128 temporarily cached results. Repeated simultaneous requests share work. Public cross-origin GETs are allowed. Accounts are held briefly in memory, not saved to an application scan database; infrastructure providers may maintain request logs. The browser still scans directly through RPC.
+Invalid account syntax returns 400; an account absent from mainnet returns 404; capacity limits return 429 with Retry-After; upstream failure returns 503; timeout returns 504. Each caller IP can start up to 10 new scans per minute and hold two concurrent scans. The server also caps work at four concurrent scans, 30 new scans per minute, a 45-second timeout and 128 cached results. Cache hits and requests joining an existing scan do not consume a new-scan allowance. These are capacity protections, not a guarantee against distributed overload; people sharing an IP share its quota.
+
+Caller identification uses the socket address locally. In the Railway deployment it uses the edge-provided [X-Real-IP header](https://docs.railway.com/networking/public-networking/specs-and-limits), enabled only when Railway project/service environment variables are present. Do not enable that mode behind a proxy that forwards untrusted client headers or expose the server directly through a TCP port. X-Forwarded-For is ignored. Caller counters live only in bounded memory (at most 512); expired idle entries are removed on subsequent scan requests. IP addresses are not written to the recovery database. Public cross-origin GETs are allowed. Scanned accounts are also temporary in-memory entries, not an application scan database; infrastructure providers may maintain request logs. The browser still scans directly through RPC.
 
 `GET /api/leaderboard?page=1` returns ten accounts, counts, the gross listed total, lockup statistics and snapshot block/date. Pages are 1-based; an out-of-range page is 404. The server validates the full snapshot once and caches it in memory. Responses have ETags and a five-minute cache lifetime. The full [leaderboard.json](dist/leaderboard.json) remains available for audit, but the UI does not download it.
 

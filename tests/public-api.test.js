@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {createServer} from 'node:http';
 import {readFile} from 'node:fs/promises';
 import {createLeaderboard,createLeaderboardApi} from '../leaderboard-api.mjs';
-import {createScanApi} from '../scan-api.mjs';
+import {createScanApi,scanCaller} from '../scan-api.mjs';
 
 async function serve(api,run){
  const server=createServer(async(req,res)=>{if(!await api(req,res,new URL(req.url,'http://localhost'))){res.writeHead(404);res.end();}});
@@ -85,5 +85,72 @@ test('scan timeout cancels RPC and rate limit resets without retaining account h
   assert.equal((await fetch(base+'/api/scan/one.near')).status,200);
   assert.equal((await fetch(base+'/api/scan/two.near')).status,429);
   time=60001;assert.equal((await fetch(base+'/api/scan/two.near')).status,200);
+ });
+});
+
+
+test('caller identity ignores spoofable headers unless the Railway edge is explicitly trusted',()=>{
+ const req={socket:{remoteAddress:'127.0.0.1'},headers:{'x-real-ip':'192.0.2.1','x-forwarded-for':'192.0.2.99'}};
+ assert.equal(scanCaller(req),'127.0.0.1');
+ assert.equal(scanCaller(req,{trustRailwayProxy:true}),'192.0.2.1');
+ for(const value of ['192.0.2.1, 192.0.2.2','192.0.2.1:80','not-an-ip','',undefined,['192.0.2.1']]){
+  req.headers['x-real-ip']=value;
+  assert.equal(scanCaller(req,{trustRailwayProxy:true}),'127.0.0.1');
+ }
+ req.headers['x-real-ip']='2001:0db8:0:0:0:0:0:1';
+ assert.equal(scanCaller(req,{trustRailwayProxy:true}),'[2001:db8::1]');
+});
+
+test('per-caller quotas leave capacity for other callers; cached hits bypass quotas',async()=>{
+ let calls=0,time=0;
+ const headers=ip=>({'X-Real-IP':ip});
+ await serve(createScanApi({trustRailwayProxy:true,maxPerCaller:2,maxPerMinute:4,now:()=>time,scan:async account=>{calls++;return result(account);}}),async base=>{
+  const get=(name,ip='192.0.2.1')=>fetch(base+'/api/scan/'+name,{headers:headers(ip)});
+  assert.equal((await get('one.near')).status,200);
+  assert.equal((await get('two.near')).status,200);
+  assert.equal((await get('three.near')).status,429);
+  assert.equal((await (await get('one.near')).json()).cached,true);
+  assert.equal((await get('three.near','192.0.2.2')).status,200);
+  assert.equal((await get('four.near','192.0.2.3')).status,200);
+  assert.equal((await get('five.near','192.0.2.4')).status,429); // aggregate bound still applies
+  assert.equal(calls,4);
+  time=60001;assert.equal((await get('five.near')).status,200);assert.equal(calls,5);
+ });
+ // A directly exposed server does not let arbitrary forwarded headers reset a quota.
+ await serve(createScanApi({maxPerCaller:1,scan:async account=>result(account)}),async base=>{
+  assert.equal((await fetch(base+'/api/scan/one.near',{headers:headers('192.0.2.1')})).status,200);
+  assert.equal((await fetch(base+'/api/scan/two.near',{headers:headers('192.0.2.2')})).status,429);
+ });
+});
+
+test('one caller cannot fill every concurrent slot; joined scans do not start more RPC work',async()=>{
+ let release,entered,enteredSecond,calls=0;
+ const gate=new Promise(resolve=>release=resolve);
+ const ready=new Promise(resolve=>entered=resolve),secondReady=new Promise(resolve=>enteredSecond=resolve);
+ await serve(createScanApi({trustRailwayProxy:true,maxConcurrent:2,maxConcurrentPerCaller:1,scan:async account=>{calls++;entered();if(calls===2)enteredSecond();await gate;return result(account);}}),async base=>{
+  const get=(name,ip)=>fetch(base+'/api/scan/'+name,{headers:{'X-Real-IP':ip}});
+  const first=get('one.near','192.0.2.1');await ready;
+  let second,joined;
+  try{
+   assert.equal((await get('two.near','192.0.2.1')).status,429);
+   second=get('two.near','192.0.2.2');
+   await Promise.race([secondReady,second.then(()=>assert.fail('Second caller rejected while a slot is free'))]);
+   assert.equal((await get('three.near','192.0.2.3')).status,429);
+   joined=get('one.near','192.0.2.1');
+  }finally{release();}
+  for(const response of await Promise.all([first,second,joined]))assert.equal(response.status,200);
+  assert.equal(calls,2);
+  assert.equal((await get('three.near','192.0.2.1')).status,200); // slot released on completion
+ });
+});
+
+test('caller bookkeeping is bounded and expired idle entries are removed',async()=>{
+ let time=0;
+ await serve(createScanApi({trustRailwayProxy:true,maxCallers:1,now:()=>time,scan:async account=>result(account)}),async base=>{
+  const get=(name,ip)=>fetch(base+'/api/scan/'+name,{headers:{'X-Real-IP':ip}});
+  assert.equal((await get('one.near','192.0.2.1')).status,200);
+  assert.equal((await get('two.near','192.0.2.2')).status,429);
+  assert.equal((await (await get('one.near','192.0.2.2')).json()).cached,true);
+  time=60001;assert.equal((await get('two.near','192.0.2.2')).status,200);
  });
 });

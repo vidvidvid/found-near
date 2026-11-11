@@ -1,6 +1,6 @@
 # FOUND demo
 
-**Final recording pending a real owner-approved withdrawal.** No real owner-signed withdrawal was sent in QA. The existing `output/found-demo.mp4` is an earlier 44-second draft: genuine public-account captures and wallet selection, edited together, with no transaction approval or completed recovery. It predates the expanded protocol/pool UI and combined census. Do not present that export as the current end-to-end withdrawal proof.
+**Final recording pending a real owner-approved withdrawal.** No real owner-signed withdrawal was sent in QA. The earlier 44-second MP4 has been removed from the current repository tree. It showed genuine public-account captures and wallet selection, edited together, with no transaction approval or completed recovery. It predates the expanded protocol/pool UI and combined census. It remains in Git history; history has not been rewritten. Do not present that draft as the current end-to-end withdrawal proof.
 
 The original art, soft Faye narration and restrained character animation are retained. The complete draft timing, prompts, assets, provenance, rebuild notes and historical scene counts are preserved in [the dated demo record](../docs/history/2026-11-10-demo.md).
 
@@ -19,7 +19,7 @@ Once an owner-approved transaction exists, record the account/protocol/amount/ha
 
 The optional waiting-room shot must show the **30,681-account, 3-protocol, 858-pool** snapshot at block **223975859**. **10.55M NEAR** is a gross listed total, not unique lost funds; **110 lockup IDs** require their lockup contracts. The simpler withdrawal take can omit these statistics entirely.
 
-## Preview and rebuild the existing draft
+## Archived draft renderer
 
 ```sh
 python3 demo/serve.py
@@ -30,7 +30,7 @@ python3 -m venv /tmp/found-demo-venv
 /tmp/found-demo-venv/bin/python demo/render.py
 ```
 
-The renderer uses Pillow and FFmpeg and composes archived screenshots; it does not record the current browser. Running it now reproduces the older draft, not a new live proof. The preview player labels it as an earlier draft.
+The renderer uses Pillow and FFmpeg and composes archived screenshots; it does not record the current browser. Running it now reproduces the older draft, not a new live proof. Generated MP4s are ignored by Git. The preview page links to the live app until the final recording is ready; it does not serve the old draft. To inspect a locally rebuilt draft, open its output file directly.
 
 ## Attribution
 

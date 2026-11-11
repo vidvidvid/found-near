@@ -5,3 +5,6 @@ node_modules/
 .railway/
 .DS_Store
 .openai/
+
+# Archived demo renderer output; add the reviewed final take deliberately.
+demo/output/*.mp4

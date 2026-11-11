@@ -6,7 +6,7 @@ Updated current README, SUBMISSION, VERIFICATION, RESEARCH, direct-withdrawal no
 
 Preserved earlier reports under `docs/history/`: the two-protocol verification (`7255178` and corrections), research as of `bf2956e`, and recorded-demo notes from `8a4fcf8`. Relative Markdown links were adjusted and checked. The dated initial coverage investigation remains in its dated research folder with a historical banner and links to current implementation evidence. Historical counts are not substituted for current results.
 
-The old video remains a clearly labelled draft. Its artwork and voice were not replaced, and no completed withdrawal was invented. The final one-take recording and public transaction proof remain pending.
+At this check, the old video remained a clearly labelled draft. **11 November follow-up:** the stale MP4 was removed from the current tree and the player replaced with a pending-recording page. Artwork, voice and animation sources are preserved; Git history was not rewritten. The final one-take recording and public transaction proof remain pending.
 
 ## Reproduction
 

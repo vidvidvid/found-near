@@ -8,7 +8,7 @@
 - Live app: https://found-production-e549.up.railway.app/
 - Example: https://found-production-e549.up.railway.app/?account=ru.near
 - Repository: https://github.com/vidvidvid/found-near — **private until the owner publishes it**.
-- Final demo video and public X post: **pending the owner’s real withdrawal and recording**. The older local export is not the final proof.
+- Final demo video and public X post: **pending the owner’s real withdrawal and recording**. The older MP4 has been removed from the current tree; no final video is published.
 - Deadline: **14 November 2026, 23:59 UTC**. Planned early publication date: **13 November**; this is a checklist date, not an automated publication job.
 
 Rules checked against [the official handbook](https://nearhackathon.com/HACKATHON.md). Recheck before submitting. A saved submission cannot be edited directly; the organizers do offer a manual [change-request process](https://nearhackathon.com/request-changes). Do not submit the same project twice.
@@ -47,9 +47,9 @@ npm run census:expanded -- --block 223975859 --check
 
 ## Final demo
 
-Record one continuous take: **scan the owner’s account → connect → owner approves → receipt verified → updated balance**. Keep the approved pixel-art aesthetic, quiet character motion and clear Faye narration for an optional edited cut. Preserve the uncut take as proof. Details and the clearly labelled old export: [demo/README.md](demo/README.md).
+Record one continuous take: **scan the owner’s account → connect → owner approves → receipt verified → updated balance**. Keep the approved pixel-art aesthetic, quiet character motion and clear Faye narration for an optional edited cut. Preserve the uncut take as proof. Recording plan and preserved production assets: [demo/README.md](demo/README.md).
 
-Do not publish the older two-protocol/538-account video as the current UI. The combined count is 30,681; the old 538 number remains valid only for the dated LiNEAR-only dataset.
+The older two-protocol/538-account MP4 remains in Git history only; it is not the current UI or final demo. The combined count is 30,681; the old 538 number remains valid only for the dated LiNEAR-only dataset.
 
 ## X post draft
 

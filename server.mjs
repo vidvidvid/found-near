@@ -6,7 +6,10 @@ import {resolve,sep,extname} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createLeaderboardApi} from './leaderboard-api.mjs';
 import {createScanApi} from './scan-api.mjs';
-const leaderboardApi=createLeaderboardApi(),scanApi=createScanApi();
+// This deployment exposes HTTP through Railway's edge, not a public TCP port.
+const leaderboardApi=createLeaderboardApi(),scanApi=createScanApi({
+ trustRailwayProxy:Boolean(process.env.RAILWAY_PROJECT_ID&&process.env.RAILWAY_SERVICE_ID)
+});
 import {createRecoveryStore,createRecoveryApi} from './recoveries.mjs';
 const recoveryStore=process.env.RECOVERY_DB?createRecoveryStore(process.env.RECOVERY_DB):null;
 const recoveryApi=createRecoveryApi({store:recoveryStore});
