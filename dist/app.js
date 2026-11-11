@@ -1,3 +1,4 @@
+import {readTiming,unlockEstimate,calendarReminder} from './unlock.js';
 import {recoveryTotals} from './tracking.js';
 import {createWalletUi} from './wallet-ui.js';
 import {scanProtocols,rpc,normalizeAccount,validAccount,formatNear,compactNear,exactNear,PROTOCOLS,protocolInfo} from './rpc.js';
@@ -51,6 +52,32 @@ function welcomePanel(){
  panel.append(art,title,description,button,element('p','LiNEAR · Meta Pool · rNEAR + validator pools','welcome-coverage'));
  return panel;
 }
+const timingReads=new Map(),unlockReads=new Map();
+function addUnlockEstimate(section,result){
+ const key=result.block+':'+result.protocol+':'+result.account;
+ if(!unlockReads.has(key)){
+  if(!timingReads.has(result.block)){
+   if(timingReads.size>=8)timingReads.delete(timingReads.keys().next().value);
+   // Share timing reads across all pending pools at this same scan block.
+   const clock=readTiming(result.block);clock.catch(()=>{});timingReads.set(result.block,clock);
+  }
+  if(unlockReads.size>=192)unlockReads.delete(unlockReads.keys().next().value);
+  unlockReads.set(key,unlockEstimate(result,{timing:timingReads.get(result.block)}));
+ }
+ unlockReads.get(key).then(estimate=>{
+  if(!estimate||!section.isConnected)return;
+  const when=new Date(Math.round(Date.parse(estimate.estimatedAt)/900000)*900000),caption=section.querySelector('.result-caption');
+  caption.textContent='Estimated unlock: '+when.toLocaleString(undefined,{month:'short',day:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'})+'. Recheck before withdrawing.';
+  caption.title=estimate.method+' Unlock epoch '+estimate.unlockEpoch+'.';
+  const link=element('button','Add calendar reminder','withdraw-help');link.type='button';
+  link.onclick=()=>{
+   const data=calendarReminder({account:result.account,protocol:result.protocol,estimatedAt:when.toISOString()});
+   const url=URL.createObjectURL(new Blob([data],{type:'text/calendar;charset=utf-8'}));
+   const download=document.createElement('a');download.href=url;download.download='found-withdrawal-reminder.ics';download.click();setTimeout(()=>URL.revokeObjectURL(url),10000);
+  };
+  section.append(link);
+ });
+}
 function protocolResult(result){
  const protocol=protocolInfo(result.protocol),section=element('section','','protocol-result');
  section.dataset.result=result.state;
@@ -75,6 +102,7 @@ function protocolResult(result){
   const captions={idle:'Your balance will appear here.',loading:'Reading directly from NEAR…',pending:'Still unlocking. Check back after the waiting period.',unsupported:result.reason==='implementation'?'This contract version isn’t supported by FOUND yet.':'Use this account’s lockup contract to withdraw.',empty:'No unfinished withdrawals here.'};
   section.append(element('p',captions[result.state]||'','result-caption'));
  }
+ if(result.state==='pending')addUnlockEstimate(section,result);
  return section;
 }
 function incompleteScan(result){return result.pools?.state&&result.pools.state!=='complete'||result.results.some(item=>['error','unavailable','unsupported'].includes(item.state));}

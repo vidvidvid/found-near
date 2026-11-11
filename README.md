@@ -48,6 +48,8 @@ Independent verification findings are in [VERIFICATION.md](VERIFICATION.md).
 
 Aurora’s balance-only exception: [read-only verification](research/aurora-readonly-2026-11-11/README.md).
 
+Pending balances can show a measured unlock-time estimate and a downloadable calendar reminder. Unknown timing stays unknown; reminders never authorize withdrawals. [Timing verification and limits](verification/unlock-estimates.md).
+
 Adapter methods, gas limits and rejection cases: [direct-withdrawal verification](verification/direct-withdrawals.md) and [coverage evidence](research/coverage-expansion/README.md).
 
 ## Limits

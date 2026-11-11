@@ -296,3 +296,8 @@ dialog{background:linear-gradient(145deg,#261c2e,#18111f);border-color:#745343;c
 .lockup-badge{display:inline-block;margin-left:8px;padding:2px 6px;border:1px solid #9c819955;border-radius:5px;color:#cdb8ce;font-size:10px;line-height:1.4;vertical-align:middle;text-decoration:none}
 #leaderboard-error{color:#e2c2b2}
 #leaderboard[aria-busy="true"]{opacity:.7;transition:opacity .15s}
+
+/* Optional timing and read-only actions stay inside their cards. The results viewport keeps its height. */
+#pocket-content .protocol-result[data-result=pending],#pocket-content .protocol-result[data-result=readonly]{height:auto;min-height:138px}
+.protocol-result[data-result=pending] .withdraw-help,.protocol-result[data-result=readonly] .withdraw-help{align-self:flex-start;margin-top:9px;max-width:100%}
+.protocol-result[data-result=pending] .result-caption,.protocol-result[data-result=readonly] .result-caption{margin-top:5px!important;min-height:0}
