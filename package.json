@@ -15,7 +15,10 @@
     "predev": "node scripts/check-runtime.mjs",
     "prebuild": "node scripts/check-runtime.mjs",
     "dormancy:scan": "node scripts/scan-dormancy.mjs",
-    "dormancy:verify": "node scripts/verify-dormancy.mjs"
+    "dormancy:verify": "node scripts/verify-dormancy.mjs",
+    "dormancy:code:scan": "node scripts/scan-dormancy-code.mjs",
+    "dormancy:code:verify": "node scripts/verify-dormancy-code.mjs",
+    "sizing:figures": "node scripts/sizing-figures.mjs"
   },
   "dependencies": {
     "@hot-labs/near-connect": "0.12.0"

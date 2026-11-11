@@ -1,0 +1,17 @@
+{
+  "endpoint": "https://archival-rpc.mainnet.fastnear.com",
+  "cachePolicy": "Cache keys bind method and parameters, not provider. A reused cache may contain earlier reads from another endpoint; disclose providers separately.",
+  "startedAt": "2026-11-11T13:04:39.066Z",
+  "endedAt": "2026-11-11T13:22:22.384Z",
+  "elapsedSeconds": 1063,
+  "requests": 583,
+  "cacheHits": 0,
+  "rateLimits": 8,
+  "lastProblem": {
+    "at": "2026-11-11T13:20:49.276Z",
+    "code": "RATE_LIMIT",
+    "message": "Provider rate limit",
+    "retryAfterSeconds": 60
+  },
+  "archiveSha256": "0b0672a3d24cdec19dae7e8a78125bf678bb6203ab7c186cab34c4cfa0ea5c9d"
+}

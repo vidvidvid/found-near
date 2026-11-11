@@ -95,3 +95,37 @@ Gross sums may include overlapping protocol reserves. Lockups require a differen
 The final resumed pass made **4,116 outgoing RPC attempts**, reused **401 request-cache hits**, and observed **29 rate-limit responses**, over **10,058 seconds**. It reused earlier FastNEAR/NEAR archival reads and completed pair checkpoints. These counters describe that pass, not every exploratory probe or interrupted setup attempt. The archive contains the actual evidence needed by the verifier; caches are only an optimization. Setup probes and interrupted runs were not all timed or counted, so no invented whole-investigation RPC total is reported.
 
 The initial three-account probe was independently reproduced: two amounts matched July 2024 and the census exactly, while the third differed (its earlier balance was 1 yoctoNEAR, not literally zero). The ladder above, not that exploratory probe, defines the published buckets.
+
+## Contract code at the census block
+
+Named accounts can be contracts. To measure how many are, `view_account` was read for every one of the **574** named accounts with any qualifying source (the 1-month group, which contains every longer group), pinned to census block **223975859** (`Fh9a2RkBMC3ZPcadGorbh49VHBaGmfNrJbZJiGbQsCgE`). The block header hash is checked against the census, and each response must carry that exact height and hash. A `code_hash` of `11111111111111111111111111111111` means no contract is deployed. A missing account, RPC error, malformed response or response from another block is **unknown**, never "no code". Dormant amounts are the same qualifying-source sums as the table above, so each row splits the published named bucket exactly.
+
+| At least months | Named accounts | No contract code | NEAR (exact) | Has code | NEAR (exact) | Unknown |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 12 | 452 | **394** | 1970086.989716709973311801445571 | 58 | 77466.795975074827367108950963 | 0 |
+| 24 | 304 | **261** | 1774340.109078870881779314914212 | 43 | 55212.306821130776897835842337 | 0 |
+| 36 | 171 | **145** | 714908.238041362187047574411997 | 26 | 27474.455116270243080660914569 | 0 |
+
+The 1, 3 and 6-month splits are in [code-summary.json](code-summary.json) (502 / 446 / 426 no code). All 574 reads returned a pinned, well-formed result, so there are no unknowns in this run.
+
+Only four distinct code hashes appear. Labels were assigned only where the hash was independently reproduced:
+
+| Code hash | Accounts (12 / 24 / 36 mo) | What it is, and how verified |
+| --- | --- | --- |
+| `E8jZ1giWcVrps8PcV75ATauu6gFRkcwjNtKp7NKmipZG` | 32 / 21 / 7 | NEAR Wallet's 86-byte **empty contract**. It exports no callable methods (only `memory`, `__data_end` and `__heap_base`). Equal to base58(sha256) of `packages/frontend/src/wasm/main.wasm` in `near/near-wallet` (master `98b2cf9d92d7bfe347fdef1fe32b1d4915653b09`), which `twoFactorBase.js` deploys when a user disables two-factor authentication. The accounts' `storage_usage` (for example 268 = 182 + 86) is consistent with this size. |
+| `55E7imniT2uuYrECn17qJAk9fLcwQW4ftNSwmCJL5Di` | 25 / 22 / 19 | NEAR Wallet **two-factor (2FA) multisig**. Equal to base58(sha256) of `packages/frontend/src/wasm/multisig.wasm` at the same commit, which `deployMultisig()` deploys when a user enables 2FA. |
+| `EV4eXNuKVkcYisktcT4sk9XfFFRvcefy51Qs2hQkhnK1` | 0 / 0 / 0 (2 at 1 and 3 mo) | veNEAR lockup. Equal to `lockup_contract_config.contract_hash` returned by `venear.dao` `get_config` at the census block (one read-only call, not part of the archive). Both accounts are `<hex>.venear.dao`. |
+| `4zSoHkLjJWZm34Psd4Eq2WUXHELt6LxtKmUXpsZWAECp` | 1 / 0 / 0 | Not labelled. Its one account is `neat.sputnik-dao.near`. The hash is **not** the factory's current default (`sputnik-dao.near` `get_default_code_hash` returned `DtHZA1mUmGYeScEaUoUZYQGGFHSMpnjMCvkr5U9hJXuF` at the census block). |
+
+A matching hash proves byte-identical code. It does not prove who deployed it. On these figures, most "has code" accounts carry NEAR Wallet artifacts that were deployed to personal accounts (57 of 58 at 12 months, all 43 at 24, all 26 at 36), not DAOs or exchange contracts. Core-contract builds from `near/core-contracts` master (multisig, multisig2, lockup, staking-pool, voting, whitelist, multisig-factory) matched none of the observed hashes.
+
+**Limits.**
+
+- "No contract code" does not prove that an individual controls the account. A company, custodian, validator operator or protocol can hold a plain key, and several of the largest no-code balances sit on names that read as service or operator accounts.
+- "Has contract code" does not prove that the owner is not a person: the wallet artifacts above are exactly that case.
+- The code hash is read at the census block, not at the historical sample dates, so code deployed or removed in between is not seen.
+- The no-code NEAR totals inherit the concentration described above: one no-code account holds about 40% of the 1-month named sum.
+
+The check narrows the "named accounts can be contracts" objection. It does not settle who owns the balances.
+
+Reproduce offline: `npm run dormancy:verify`, then `node scripts/verify-dormancy-code.mjs`. The second command recomputes [code-summary.json](code-summary.json) from [code-archive.json.gz](code-archive.json.gz) and the dormancy `summary.json`, which it binds by SHA-256. It makes no network requests and finishes in under a second. Fresh reads: `DORMANCY_RPC=https://archival-rpc.mainnet.fastnear.com node scripts/scan-dormancy-code.mjs --cache-dir /tmp/found-independent-code --output /tmp/found-independent-code-output`. The original pass ([code-run.json](code-run.json)) made **583 outgoing requests** (1 block header, 574 `view_account` reads and 8 retries after rate-limit responses) with 0 cache hits, over **1,063 seconds** at 1,000 ms spacing. A resume from that cache with an unreachable endpoint made 0 requests and reproduced the identical summary.

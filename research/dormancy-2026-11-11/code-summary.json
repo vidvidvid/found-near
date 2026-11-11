@@ -1,0 +1,239 @@
+{
+  "version": 1,
+  "censusBlock": 223975859,
+  "censusHash": "Fh9a2RkBMC3ZPcadGorbh49VHBaGmfNrJbZJiGbQsCgE",
+  "dormancySummarySha256": "9ca7af68169642e2ecfa7a844ef7be6f2d2b274ba98af85fb54893df61a2ae46",
+  "noCodeHash": "11111111111111111111111111111111",
+  "accountsRead": 574,
+  "definition": "view_account at the census block for every named account with a qualifying sampled-history source. no-code: pinned result with code_hash 11111111111111111111111111111111. code: any other well-formed code_hash. unknown: missing account, RPC error, malformed response or wrong block. Read at the census block only, not at the historical sample dates. Neither class establishes who controls an account.",
+  "buckets": [
+    {
+      "months": 1,
+      "namedAccounts": 574,
+      "namedTotalYocto": "2217394126133345201155097879623",
+      "classes": {
+        "no-code": {
+          "accounts": 502,
+          "totalYocto": "2086798475216909056627485578823"
+        },
+        "code": {
+          "accounts": 72,
+          "totalYocto": "130595650916436144527612300800"
+        },
+        "unknown": {
+          "accounts": 0,
+          "totalYocto": "0"
+        }
+      },
+      "unknownReasons": {},
+      "distinctCodeHashes": 4,
+      "topCodeHashes": [
+        {
+          "codeHash": "E8jZ1giWcVrps8PcV75ATauu6gFRkcwjNtKp7NKmipZG",
+          "accounts": 43,
+          "totalYocto": "86882870865367919692842793986"
+        },
+        {
+          "codeHash": "55E7imniT2uuYrECn17qJAk9fLcwQW4ftNSwmCJL5Di",
+          "accounts": 26,
+          "totalYocto": "35540818316376501513939137076"
+        },
+        {
+          "codeHash": "EV4eXNuKVkcYisktcT4sk9XfFFRvcefy51Qs2hQkhnK1",
+          "accounts": 2,
+          "totalYocto": "7871905195714311337309513739"
+        },
+        {
+          "codeHash": "4zSoHkLjJWZm34Psd4Eq2WUXHELt6LxtKmUXpsZWAECp",
+          "accounts": 1,
+          "totalYocto": "300056538977411983520855999"
+        }
+      ]
+    },
+    {
+      "months": 3,
+      "namedAccounts": 510,
+      "namedTotalYocto": "2148854558600970006628131517813",
+      "classes": {
+        "no-code": {
+          "accounts": 446,
+          "totalYocto": "2034781965624215032863258831932"
+        },
+        "code": {
+          "accounts": 64,
+          "totalYocto": "114072592976754973764872685881"
+        },
+        "unknown": {
+          "accounts": 0,
+          "totalYocto": "0"
+        }
+      },
+      "unknownReasons": {},
+      "distinctCodeHashes": 4,
+      "topCodeHashes": [
+        {
+          "codeHash": "E8jZ1giWcVrps8PcV75ATauu6gFRkcwjNtKp7NKmipZG",
+          "accounts": 36,
+          "totalYocto": "70459812925686748930103179076"
+        },
+        {
+          "codeHash": "55E7imniT2uuYrECn17qJAk9fLcwQW4ftNSwmCJL5Di",
+          "accounts": 25,
+          "totalYocto": "35440818316376501513939137067"
+        },
+        {
+          "codeHash": "EV4eXNuKVkcYisktcT4sk9XfFFRvcefy51Qs2hQkhnK1",
+          "accounts": 2,
+          "totalYocto": "7871905195714311337309513739"
+        },
+        {
+          "codeHash": "4zSoHkLjJWZm34Psd4Eq2WUXHELt6LxtKmUXpsZWAECp",
+          "accounts": 1,
+          "totalYocto": "300056538977411983520855999"
+        }
+      ]
+    },
+    {
+      "months": 6,
+      "namedAccounts": 487,
+      "namedTotalYocto": "2127497134417952300760205779176",
+      "classes": {
+        "no-code": {
+          "accounts": 426,
+          "totalYocto": "2021415865787911638332642607036"
+        },
+        "code": {
+          "accounts": 61,
+          "totalYocto": "106081268630040662427563172140"
+        },
+        "unknown": {
+          "accounts": 0,
+          "totalYocto": "0"
+        }
+      },
+      "unknownReasons": {},
+      "distinctCodeHashes": 3,
+      "topCodeHashes": [
+        {
+          "codeHash": "E8jZ1giWcVrps8PcV75ATauu6gFRkcwjNtKp7NKmipZG",
+          "accounts": 35,
+          "totalYocto": "70340393774686748930103179074"
+        },
+        {
+          "codeHash": "55E7imniT2uuYrECn17qJAk9fLcwQW4ftNSwmCJL5Di",
+          "accounts": 25,
+          "totalYocto": "35440818316376501513939137067"
+        },
+        {
+          "codeHash": "4zSoHkLjJWZm34Psd4Eq2WUXHELt6LxtKmUXpsZWAECp",
+          "accounts": 1,
+          "totalYocto": "300056538977411983520855999"
+        }
+      ]
+    },
+    {
+      "months": 12,
+      "namedAccounts": 452,
+      "namedTotalYocto": "2047553785691784800678910396534",
+      "classes": {
+        "no-code": {
+          "accounts": 394,
+          "totalYocto": "1970086989716709973311801445571"
+        },
+        "code": {
+          "accounts": 58,
+          "totalYocto": "77466795975074827367108950963"
+        },
+        "unknown": {
+          "accounts": 0,
+          "totalYocto": "0"
+        }
+      },
+      "unknownReasons": {},
+      "distinctCodeHashes": 3,
+      "topCodeHashes": [
+        {
+          "codeHash": "E8jZ1giWcVrps8PcV75ATauu6gFRkcwjNtKp7NKmipZG",
+          "accounts": 32,
+          "totalYocto": "41725921119720913869648957897"
+        },
+        {
+          "codeHash": "55E7imniT2uuYrECn17qJAk9fLcwQW4ftNSwmCJL5Di",
+          "accounts": 25,
+          "totalYocto": "35440818316376501513939137067"
+        },
+        {
+          "codeHash": "4zSoHkLjJWZm34Psd4Eq2WUXHELt6LxtKmUXpsZWAECp",
+          "accounts": 1,
+          "totalYocto": "300056538977411983520855999"
+        }
+      ]
+    },
+    {
+      "months": 24,
+      "namedAccounts": 304,
+      "namedTotalYocto": "1829552415900001658677150756549",
+      "classes": {
+        "no-code": {
+          "accounts": 261,
+          "totalYocto": "1774340109078870881779314914212"
+        },
+        "code": {
+          "accounts": 43,
+          "totalYocto": "55212306821130776897835842337"
+        },
+        "unknown": {
+          "accounts": 0,
+          "totalYocto": "0"
+        }
+      },
+      "unknownReasons": {},
+      "distinctCodeHashes": 2,
+      "topCodeHashes": [
+        {
+          "codeHash": "55E7imniT2uuYrECn17qJAk9fLcwQW4ftNSwmCJL5Di",
+          "accounts": 22,
+          "totalYocto": "25343883746788716024764035748"
+        },
+        {
+          "codeHash": "E8jZ1giWcVrps8PcV75ATauu6gFRkcwjNtKp7NKmipZG",
+          "accounts": 21,
+          "totalYocto": "29868423074342060873071806589"
+        }
+      ]
+    },
+    {
+      "months": 36,
+      "namedAccounts": 171,
+      "namedTotalYocto": "742382693157632430128235326566",
+      "classes": {
+        "no-code": {
+          "accounts": 145,
+          "totalYocto": "714908238041362187047574411997"
+        },
+        "code": {
+          "accounts": 26,
+          "totalYocto": "27474455116270243080660914569"
+        },
+        "unknown": {
+          "accounts": 0,
+          "totalYocto": "0"
+        }
+      },
+      "unknownReasons": {},
+      "distinctCodeHashes": 2,
+      "topCodeHashes": [
+        {
+          "codeHash": "55E7imniT2uuYrECn17qJAk9fLcwQW4ftNSwmCJL5Di",
+          "accounts": 19,
+          "totalYocto": "24985422955208077746234798587"
+        },
+        {
+          "codeHash": "E8jZ1giWcVrps8PcV75ATauu6gFRkcwjNtKp7NKmipZG",
+          "accounts": 7,
+          "totalYocto": "2489032161062165334426115982"
+        }
+      ]
+    }
+  ]
+}

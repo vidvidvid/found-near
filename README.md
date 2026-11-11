@@ -13,6 +13,8 @@ Use **Node.js 24 (recommended), or 22.13+ on the 22.x line**. Run `npm ci` once 
 | Application checks | `npm test` | All tests pass: financial states, withdrawal preflights, receipts, census, API and pagination | Offline; a few seconds |
 | Census evidence | `npm run census:verify` | `Verified archive: 30681 unique qualifying accounts from 305908 unique accounts, 858 supported pools + 3 protocols, block 223975859.` | Offline; a few seconds |
 | Sampled history | `npm run dormancy:verify` | Verifies 2963 accounts, 3703 pairs and six historical dates from the archived RPC evidence | Offline; a few seconds |
+| Contract-code check | `npm run dormancy:code:verify` | `24 months: 304 named; no code 261 (...); code 43 (...); unknown 0 (0).` among six bucket lines | Offline; under a second |
+| Size against total supply | `npm run sizing:figures` | Labelled figures including `A5 gross listed as share of total supply: 0.805%` | Offline; a few seconds |
 | Read-only scan API | `curl -fsS 'https://foundyours.xyz/api/scan/ru.near'` | JSON with `account`, finalized `height`/`block`, `results` per checked source, `pools` coverage and cache metadata; amounts are yoctoNEAR strings | Network; up to 45 seconds |
 | Live interface | Open [FOUND](https://foundyours.xyz/), enter `ru.near` and press **Find my NEAR**, or use **Try a real account** | A live check across three protocols and indexed validator pools. LiNEAR showed 500.3072 NEAR at verification; balances can change | Network; usually a few seconds; no wallet needed |
 | Optional independent reread | `npm run census:expanded -- --block 223975859 --check` | A new chain reread matches the archived snapshot | Network; potentially tens of minutes; rate-limited archival RPC access may be required |
@@ -97,6 +99,12 @@ In the **100+ NEAR cohort (2,963 accounts)**, **304 named accounts** had at leas
 
 Offline: `npm run dormancy:verify`. Historical age is included in paged API rows only where supported by this analysis; it names the qualifying amount rather than assigning an old age to the entire account total.
 <!-- /sampled-history -->
+
+Of those 304, **171** also match at the 36-month sample (10 Nov 2023); 452 named accounts match back to the 12-month sample. `dormancy.checkpoints` in `/api/leaderboard` carries these three counts. A row’s age label states its oldest unchanged balance first, so no row shows a younger date than the group it is counted in. A second clause (`longTerm`) appears only when a larger amount has also been unchanged for at least 12 months; balances unchanged for less than that stay in the tooltip and in `sources`.
+
+**Are the named accounts contracts?** Mostly not. Of the 304, **261 had no contract code** deployed at the census block; the other 43 carry one of two NEAR Wallet contracts (its two-factor multisig, or the empty contract it leaves when two-factor is turned off), not DAO or exchange code. No code does not prove an individual owner. [Method, code hashes and limits](research/dormancy-2026-11-11/README.md); `npm run dormancy:code:verify` recomputes the counts offline.
+
+**How big is this?** At the census block the gross listed amount was 0.805% of NEAR’s total supply, and the part unchanged at every sampled date for 24 months was 0.184%. The class is persistent but small. [Sizing, concentration, limits and what would change this reading](research/sizing-2026-11-11/README.md); `npm run sizing:figures` recomputes every figure offline.
 
 ## Visual direction
 

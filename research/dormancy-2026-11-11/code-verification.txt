@@ -1,0 +1,8 @@
+Verified contract-code archive: 574 named accounts read with view_account at census block 223975859; dormancy summary sha256 9ca7af68169642e2ecfa7a844ef7be6f2d2b274ba98af85fb54893df61a2ae46.
+1 months: 574 named; no code 502 (2086798475216909056627485578823 yoctoNEAR); code 72 (130595650916436144527612300800); unknown 0 (0).
+3 months: 510 named; no code 446 (2034781965624215032863258831932 yoctoNEAR); code 64 (114072592976754973764872685881); unknown 0 (0).
+6 months: 487 named; no code 426 (2021415865787911638332642607036 yoctoNEAR); code 61 (106081268630040662427563172140); unknown 0 (0).
+12 months: 452 named; no code 394 (1970086989716709973311801445571 yoctoNEAR); code 58 (77466795975074827367108950963); unknown 0 (0).
+24 months: 304 named; no code 261 (1774340109078870881779314914212 yoctoNEAR); code 43 (55212306821130776897835842337); unknown 0 (0).
+36 months: 171 named; no code 145 (714908238041362187047574411997 yoctoNEAR); code 26 (27474455116270243080660914569); unknown 0 (0).
+Offline consistency check. No contract code does not prove an individual owner; deployed code does not prove the owner is not a person. Code is read at the census block, not at the sample dates.
