@@ -527,6 +527,109 @@
               },
               "limitation": {
                 "type": "string"
+              },
+              "contractCode": {
+                "type": "object",
+                "description": "Optional contract-code split of the 24-month named group, read with view_account at the census block (not at the sample dates). Served only after the server checks that the derivative was built from the exact dormancy data and that noCode + code + unknown split the named group exactly, in accounts and in yoctoNEAR; otherwise absent. No code does not prove an individual owner; code does not prove the owner is not a person.",
+                "required": [
+                  "months",
+                  "censusBlock",
+                  "namedAccounts",
+                  "noCode",
+                  "code",
+                  "unknown",
+                  "codeHashes"
+                ],
+                "properties": {
+                  "months": {
+                    "enum": [
+                      24
+                    ]
+                  },
+                  "censusBlock": {
+                    "type": "integer"
+                  },
+                  "namedAccounts": {
+                    "type": "integer"
+                  },
+                  "noCode": {
+                    "type": "object",
+                    "required": [
+                      "accounts",
+                      "totalYocto"
+                    ],
+                    "properties": {
+                      "accounts": {
+                        "type": "integer"
+                      },
+                      "totalYocto": {
+                        "$ref": "#/components/schemas/YoctoNEAR"
+                      }
+                    }
+                  },
+                  "code": {
+                    "type": "object",
+                    "required": [
+                      "accounts",
+                      "totalYocto"
+                    ],
+                    "properties": {
+                      "accounts": {
+                        "type": "integer"
+                      },
+                      "totalYocto": {
+                        "$ref": "#/components/schemas/YoctoNEAR"
+                      }
+                    }
+                  },
+                  "unknown": {
+                    "type": "object",
+                    "required": [
+                      "accounts",
+                      "totalYocto"
+                    ],
+                    "properties": {
+                      "accounts": {
+                        "type": "integer"
+                      },
+                      "totalYocto": {
+                        "$ref": "#/components/schemas/YoctoNEAR"
+                      }
+                    }
+                  },
+                  "codeHashes": {
+                    "type": "array",
+                    "description": "Every distinct code hash among the accounts with code; accounts and totals sum to `code`.",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "codeHash",
+                        "accounts",
+                        "totalYocto",
+                        "label"
+                      ],
+                      "properties": {
+                        "codeHash": {
+                          "type": "string"
+                        },
+                        "accounts": {
+                          "type": "integer"
+                        },
+                        "totalYocto": {
+                          "$ref": "#/components/schemas/YoctoNEAR"
+                        },
+                        "label": {
+                          "description": "Set only for hashes reproduced from NEAR Wallet sources; otherwise null.",
+                          "enum": [
+                            "nearWalletTwoFactorMultisig",
+                            "nearWalletEmptyContract",
+                            null
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
               }
             }
           }

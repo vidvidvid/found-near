@@ -4,9 +4,9 @@ import {createHash} from 'node:crypto';
 
 export const PAGE_SIZE=10;
 // Derived presentation metadata. The archived census stays byte-for-byte reproducible.
-export function createLeaderboard(snapshot,{dormancy=null}={}){
+export function createLeaderboard(snapshot,{dormancy=null,dormancyText=null,dormancyCode=null}={}){
  if(snapshot.version!==2||!snapshot.complete||!Array.isArray(snapshot.accounts)||snapshot.accounts.length!==snapshot.counts?.accountsWithWaiting)throw Error('Incomplete census');
- const ages=dormancyPresentation(snapshot,dormancy);
+ const ages=dormancyPresentation(snapshot,dormancy,{text:dormancyText,code:dormancyCode});
  const total=snapshot.accounts.reduce((sum,row)=>sum+BigInt(row.unstaked_balance),0n);
  if(total.toString()!==snapshot.totalListedYocto)throw Error('Census total mismatch');
  const lockups=snapshot.accounts.filter(row=>row.account_id.endsWith('.lockup.near'));
@@ -19,7 +19,7 @@ export function createLeaderboard(snapshot,{dormancy=null}={}){
   return {...metadata,page:number,accounts:snapshot.accounts.slice((number-1)*PAGE_SIZE,number*PAGE_SIZE).map(row=>({...row,accountKind:row.account_id.endsWith('.lockup.near')?'lockup':'unclassified',...(ages.rows.has(row.account_id)?{dormancy:ages.rows.get(row.account_id)}:{})}))};
  }};
 }
-export function createLeaderboardApi({file=new URL('./dist/leaderboard.json',import.meta.url),dormancyFile=new URL('./dist/dormancy.json',import.meta.url)}={}){
+export function createLeaderboardApi({file=new URL('./dist/leaderboard.json',import.meta.url),dormancyFile=new URL('./dist/dormancy.json',import.meta.url),codeFile=new URL('./dist/dormancy-code.json',import.meta.url)}={}){
  let cached;
  return async(req,res,url)=>{
   if(url.pathname!=='/api/leaderboard')return false;
@@ -28,7 +28,10 @@ export function createLeaderboardApi({file=new URL('./dist/leaderboard.json',imp
   const param=url.searchParams.get('page')??'1';
   if(!/^[1-9]\d{0,5}$/.test(param)||url.searchParams.getAll('page').length>1){res.writeHead(400,{'Content-Type':'application/json'});res.end(req.method==='HEAD'?undefined:JSON.stringify({error:'Use a positive integer page number.'}));return true;}
   try{
-   cached??=Promise.all([readFile(file,'utf8'),readFile(dormancyFile,'utf8').catch(error=>{if(error.code==='ENOENT')return null;throw error;})]).then(([text,age])=>createLeaderboard(JSON.parse(text),{dormancy:age?JSON.parse(age):null})).catch(error=>{cached=null;throw error;});
+   const optional=path=>readFile(path,'utf8').catch(error=>{if(error.code==='ENOENT')return null;throw error;});
+   // A malformed contract-code file is withheld rather than failing the census.
+   const parseCode=text=>{try{return text?JSON.parse(text):null;}catch{return null;}};
+   cached??=Promise.all([readFile(file,'utf8'),optional(dormancyFile),optional(codeFile)]).then(([text,age,code])=>createLeaderboard(JSON.parse(text),{dormancy:age?JSON.parse(age):null,dormancyText:age,dormancyCode:parseCode(code)})).catch(error=>{cached=null;throw error;});
    const dataset=await cached,page=dataset.page(Number(param));
    if(!page){res.writeHead(404,{'Content-Type':'application/json'});res.end(req.method==='HEAD'?undefined:JSON.stringify({error:'Page not found.'}));return true;}
    const etag=`"${dataset.revision}-${param}"`;

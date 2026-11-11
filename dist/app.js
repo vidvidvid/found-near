@@ -1,5 +1,6 @@
 import {readTiming,unlockEstimate,calendarReminder} from './unlock.js';
 import {recoveryTotals} from './tracking.js';
+import {codeSentence,findingLimitation} from './finding.js';
 import {createWalletUi} from './wallet-ui.js';
 import {scanProtocols,rpc,normalizeAccount,validAccount,formatNear,compactNear,exactNear,PROTOCOLS,protocolInfo} from './rpc.js';
 const $=id=>document.getElementById(id);
@@ -320,7 +321,8 @@ async function loadLeaderboard(page=1){
    finding.append(element('strong',`${data.dormancy.accounts.toLocaleString('en-US')} named accounts have had the same withdrawable balance at every sampled date for over two years.`));
    const deeper=data.dormancy.checkpoints?.find(c=>c.months===36);
    if(deeper?.accounts)finding.append(element('p',`${deeper.accounts.toLocaleString('en-US')} of them for over three years, matching at every sample since ${longDate(deeper.since)}.`,'dormancy-deeper'));
-   finding.append(element('p',`Each had at least one withdrawable balance matching at every sampled date since ${longDate(data.dormancy.since)}. We checked the ${data.dormancy.cohortAccounts.toLocaleString('en-US')} accounts with 100+ NEAR in the snapshot. Activity between samples is possible; named accounts can be contracts.`));
+   finding.append(element('p',findingLimitation(data.dormancy)));
+   const code=codeSentence(data.dormancy);if(code)finding.append(element('p',code,'dormancy-code'));
    const evidence=element('a','Read the sampled evidence','share-result');evidence.href='./dormancy.json';finding.append(evidence);
   }
   $('leaderboard-count-label').textContent='accounts with NEAR waiting';
