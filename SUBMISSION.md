@@ -5,8 +5,8 @@
 - Project: **FOUND**
 - Pitch: **Find the NEAR you left behind.**
 - Recommended primary track: **Open Innovation** (`open`). Unstoppable DeFi (`defi`) is a possible secondary choice, but FOUND does not implement cross-chain settlement or a trading protocol; confirm the final selection.
-- Live app: https://found-production-e549.up.railway.app/
-- Example: https://found-production-e549.up.railway.app/?account=ru.near
+- Live app: https://foundyours.xyz/
+- Example: https://foundyours.xyz/?account=ru.near
 - Repository: https://github.com/vidvidvid/found-near — **private until the owner publishes it**.
 - Final demo video and public X post: **pending the owner’s real withdrawal and recording**. The older MP4 has been removed from the current tree; no final video is published.
 - Deadline: **14 November 2026, 23:59 UTC**. Planned early publication date: **13 November**; this is a checklist date, not an automated publication job.
@@ -31,7 +31,7 @@ Start with [README.md](README.md), which lists commands, expected outputs, netwo
 npm ci
 npm test
 npm run census:verify
-curl -fsS 'https://found-production-e549.up.railway.app/api/scan/ru.near'
+curl -fsS 'https://foundyours.xyz/api/scan/ru.near'
 ```
 
 The first install and API call need network access. Tests and the archived census check run offline after setup. A fresh chain reread is optional and slower:
@@ -62,7 +62,7 @@ FOUND checks 3 protocols + 858 NEAR pools. Snapshot: 30,681 accounts, 10.55M NEA
 
 Built at NEAR HACKATHON
 @NEARProtocol #NEARHackathon
-https://found-production-e549.up.railway.app/
+https://foundyours.xyz/
 https://github.com/vidvidvid/found-near
 ```
 

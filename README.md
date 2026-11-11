@@ -12,11 +12,11 @@ Use **Node.js 24 (recommended), or 22.13+ on the 22.x line**. Run `npm ci` once 
 | --- | --- | --- | --- |
 | Application checks | `npm test` | All tests pass: financial states, withdrawal preflights, receipts, census, API and pagination | Offline; a few seconds |
 | Census evidence | `npm run census:verify` | `Verified archive: 30681 unique qualifying accounts from 305908 unique accounts, 858 supported pools + 3 protocols, block 223975859.` | Offline; a few seconds |
-| Read-only scan API | `curl -fsS 'https://found-production-e549.up.railway.app/api/scan/ru.near'` | JSON with `account`, finalized `height`/`block`, `results` per checked source, `pools` coverage and cache metadata; amounts are yoctoNEAR strings | Network; up to 45 seconds |
-| Live interface | Open [FOUND](https://found-production-e549.up.railway.app/), enter `ru.near` and press **Find my NEAR**, or use **Try a real account** | A live check across three protocols and indexed validator pools. LiNEAR showed 500.3072 NEAR at verification; balances can change | Network; usually a few seconds; no wallet needed |
+| Read-only scan API | `curl -fsS 'https://foundyours.xyz/api/scan/ru.near'` | JSON with `account`, finalized `height`/`block`, `results` per checked source, `pools` coverage and cache metadata; amounts are yoctoNEAR strings | Network; up to 45 seconds |
+| Live interface | Open [FOUND](https://foundyours.xyz/), enter `ru.near` and press **Find my NEAR**, or use **Try a real account** | A live check across three protocols and indexed validator pools. LiNEAR showed 500.3072 NEAR at verification; balances can change | Network; usually a few seconds; no wallet needed |
 | Optional independent reread | `npm run census:expanded -- --block 223975859 --check` | A new chain reread matches the archived snapshot | Network; potentially tens of minutes; rate-limited archival RPC access may be required |
 
-A shared link also works: [check ru.near](https://found-production-e549.up.railway.app/?account=ru.near). These steps scan only; they cannot withdraw from someone else’s account.
+A shared link also works: [check ru.near](https://foundyours.xyz/?account=ru.near). These steps scan only; they cannot withdraw from someone else’s account.
 
 Submission text, publication checklist and the pending real-withdrawal recording: [SUBMISSION.md](SUBMISSION.md).
 
@@ -122,4 +122,4 @@ Caller counters and cached scans are bounded, temporary in-memory records; no IP
 
 `/?account=ru.near` automatically performs a read-only scan. A completed search updates the URL; **Copy link** shares the account for a fresh check, not a promise that its balance stays unchanged.
 
-Machine-readable read-only API schema: [OpenAPI 3.1](https://found-production-e549.up.railway.app/openapi.json). Wallets and agents could embed this scan API; adoption and a revenue model have not been established.
+Machine-readable read-only API schema: [OpenAPI 3.1](https://foundyours.xyz/openapi.json). Wallets and agents could embed this scan API; adoption and a revenue model have not been established.

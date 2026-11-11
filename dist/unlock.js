@@ -71,7 +71,7 @@ const escape=text=>text.replace(/\\/g,'\\\\').replace(/\r?\n/g,'\\n').replace(/;
 const stamp=value=>new Date(value).toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'');
 export function calendarReminder({account,protocol,estimatedAt,now=new Date().toISOString()}){
  if(!validAccount(account)||!protocolInfo(protocol)||!Number.isFinite(Date.parse(estimatedAt)))throw Error('Invalid reminder');
- const url='https://found-production-e549.up.railway.app/?account='+encodeURIComponent(account);
+ const url='https://foundyours.xyz/?account='+encodeURIComponent(account);
  const lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//FOUND//Withdrawal reminder//EN','CALSCALE:GREGORIAN','BEGIN:VEVENT',
   'UID:'+account+'-'+protocol.replace(/[^a-z0-9.-]/g,'-')+'-'+stamp(estimatedAt)+'@found-near',
   'DTSTAMP:'+stamp(now),'DTSTART:'+stamp(estimatedAt),'DTEND:'+stamp(Date.parse(estimatedAt)+15*60000),

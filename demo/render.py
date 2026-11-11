@@ -177,7 +177,7 @@ def scene(i,t):
   text(im,(65,433),'No custody. No finder’s fee.',22,MUTED)
   characters(im,t,i)
   text(im,(65,578),'Try FOUND',24,INK,600)
-  text(im,(65,617),'found-production-e549.up.railway.app',21,GOLD)
+  text(im,(65,617),'foundyours.xyz',21,GOLD)
   im.paste(near_mark,(px(65),px(672)),near_mark)
   text(im,(101,672),'Built on NEAR',18,INK,500)
  return im

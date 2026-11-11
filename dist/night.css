@@ -341,3 +341,6 @@ footer .footer-links{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8p
 .snapshot-note,.steps p,.withdraw-button{font-size:13px!important}
 footer .footer-brand{font-size:21px!important}
 @media(max-width:620px){#wallet-connect,.network{font-size:11px!important}.hero-proof{font-size:12px}.account-link,td.align-right,#scan-button{font-size:12.5px!important}.waiting-heading{flex-direction:column;align-items:flex-start;gap:12px}}
+
+/* Centre the dot inside the logo's "o". Em units keep it centred at any logo size. */
+.brand-o:after{left:calc(50% + 1.5px);top:.75em;width:.125em;height:.125em;transform:translate(-50%,-50%)}

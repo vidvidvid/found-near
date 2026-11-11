@@ -28,7 +28,7 @@ test('protocol timing validates account, amount, maturity and a numeric unlock e
 test('calendar file is UTC, bounded, correctly folded and explicitly requests a recheck',()=>{
  const data=calendarReminder({account:'vidvid.near',protocol:'pool:meteor.poolv1.near',estimatedAt:'2026-11-12T00:02:39.780Z',now:'2026-11-11T09:00:00.000Z'});
  const unfolded=data.replace(/\r\n /g,'');assert.match(unfolded,/DTSTART:20261112T000239Z/);assert.match(unfolded,/DTEND:20261112T001739Z/);
- assert.match(unfolded,/Timing may change/);assert.match(unfolded,/No automatic transaction\.\\nhttps:/);assert.match(unfolded,/URL:https:\/\/found-production-e549.up.railway.app\/\?account=vidvid.near/);
+ assert.match(unfolded,/Timing may change/);assert.match(unfolded,/No automatic transaction\.\\nhttps:/);assert.match(unfolded,/URL:https:\/\/foundyours.xyz\/\?account=vidvid.near/);
  assert.match(unfolded,/BEGIN:VALARM/);assert.ok(data.split('\r\n').every(line=>Buffer.byteLength(line)<=75));
  assert.throws(()=>calendarReminder({account:'bad\nSUMMARY:hacked',protocol:'linear',estimatedAt:'2026-11-12'}));
 });
