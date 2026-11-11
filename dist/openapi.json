@@ -1,0 +1,489 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "FOUND read-only API",
+    "version": "1.0.0",
+    "description": "No credentials, signing or financial actions. Scan complete results cache for 30 seconds. Each caller IP: 10 new scans/minute and 2 concurrently; global: 30/minute and 4 concurrently. Quotas and caches are temporary, in memory. Unknown is never zero. Calendar timing is an optional browser feature, not a readiness field."
+  },
+  "servers": [
+    {
+      "url": "https://found-production-e549.up.railway.app"
+    }
+  ],
+  "paths": {
+    "/api/scan/{account}": {
+      "get": {
+        "operationId": "scanAccount",
+        "summary": "Check unfinished NEAR withdrawals",
+        "parameters": [
+          {
+            "name": "account",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 64
+            },
+            "description": "NEAR mainnet account ID. Whitespace/case are normalized; existence is checked."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Scan returned; inspect individual source states and coverage.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Scan"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid account syntax or URL encoding.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Account absent on NEAR mainnet.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Per-caller or global capacity reached. Cached/coalesced hits do not consume a new scan.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Seconds before retry; currently 60."
+              }
+            }
+          },
+          "503": {
+            "description": "Upstream unavailable; balances unknown.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Scan exceeded 45 seconds.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/leaderboard": {
+      "get": {
+        "operationId": "listWaitingAccounts",
+        "summary": "Read ten rows from the pinned census",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 999999,
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "One page; ETag and five-minute cache headers are supplied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Leaderboard"
+                }
+              }
+            },
+            "headers": {
+              "ETag": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "ETag matches; no body."
+          },
+          "400": {
+            "description": "Invalid page parameter.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Page out of range.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Census unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "YoctoNEAR": {
+        "type": "string",
+        "pattern": "^[0-9]+$",
+        "description": "Exact yoctoNEAR integer encoded as a decimal string; never parse as a JavaScript Number."
+      },
+      "Error": {
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          }
+        }
+      },
+      "Source": {
+        "type": "object",
+        "required": [
+          "protocol",
+          "state",
+          "account"
+        ],
+        "properties": {
+          "account": {
+            "type": "string"
+          },
+          "protocol": {
+            "type": "string",
+            "description": "linear, metapool, rnear, or pool:<contract account>"
+          },
+          "state": {
+            "enum": [
+              "found",
+              "empty",
+              "pending",
+              "readonly",
+              "unsupported",
+              "unavailable",
+              "error"
+            ]
+          },
+          "amount": {
+            "$ref": "#/components/schemas/YoctoNEAR"
+          },
+          "height": {
+            "type": "integer"
+          },
+          "block": {
+            "type": "string"
+          },
+          "codeHash": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "reportedCanWithdraw": {
+            "type": "boolean"
+          },
+          "withdrawalSupported": {
+            "const": false
+          }
+        },
+        "description": "found passed snapshot preflights, not a guarantee of transaction success. empty is a verified zero. pending is still unlocking. readonly reports a validated balance but cannot sign in FOUND. Errors/unsupported/unavailable are never inferred to be zero; amount may be absent."
+      },
+      "Scan": {
+        "type": "object",
+        "required": [
+          "account",
+          "height",
+          "block",
+          "results",
+          "pools",
+          "cached",
+          "cacheAgeMs"
+        ],
+        "properties": {
+          "account": {
+            "type": "string"
+          },
+          "height": {
+            "type": "integer"
+          },
+          "block": {
+            "type": "string"
+          },
+          "checkedAt": {
+            "type": "integer",
+            "description": "Unix milliseconds"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Source"
+            }
+          },
+          "pools": {
+            "type": "object",
+            "required": [
+              "state",
+              "checked",
+              "discovered",
+              "limit"
+            ],
+            "properties": {
+              "state": {
+                "enum": [
+                  "complete",
+                  "partial",
+                  "error"
+                ]
+              },
+              "checked": {
+                "type": "integer"
+              },
+              "discovered": {
+                "type": "integer"
+              },
+              "limit": {
+                "type": "integer"
+              }
+            }
+          },
+          "cached": {
+            "type": "boolean"
+          },
+          "cacheAgeMs": {
+            "type": "integer"
+          }
+        },
+        "description": "Read-only mainnet result. All source reads share the scan block. Discovery can lag; at most 24 indexed pools are scanned. A 200 response may contain failed or unsupported sources; inspect every state and pool coverage."
+      },
+      "LeaderboardAccount": {
+        "type": "object",
+        "required": [
+          "account_id",
+          "unstaked_balance",
+          "sources",
+          "accountKind"
+        ],
+        "properties": {
+          "account_id": {
+            "type": "string"
+          },
+          "unstaked_balance": {
+            "$ref": "#/components/schemas/YoctoNEAR"
+          },
+          "accountKind": {
+            "enum": [
+              "lockup",
+              "unclassified"
+            ]
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "contract",
+                "amount"
+              ],
+              "properties": {
+                "contract": {
+                  "type": "string"
+                },
+                "amount": {
+                  "$ref": "#/components/schemas/YoctoNEAR"
+                }
+              }
+            }
+          },
+          "dormancy": {
+            "$ref": "#/components/schemas/DormancyRow"
+          }
+        }
+      },
+      "Leaderboard": {
+        "type": "object",
+        "required": [
+          "version",
+          "complete",
+          "page",
+          "pageSize",
+          "totalPages",
+          "accounts",
+          "counts",
+          "block",
+          "hash",
+          "asOf",
+          "totalListedYocto",
+          "lockups"
+        ],
+        "properties": {
+          "version": {
+            "const": 2
+          },
+          "complete": {
+            "const": true
+          },
+          "page": {
+            "type": "integer"
+          },
+          "pageSize": {
+            "const": 10
+          },
+          "totalPages": {
+            "type": "integer"
+          },
+          "block": {
+            "type": "integer"
+          },
+          "hash": {
+            "type": "string"
+          },
+          "asOf": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "totalListedYocto": {
+            "$ref": "#/components/schemas/YoctoNEAR"
+          },
+          "accounts": {
+            "type": "array",
+            "maxItems": 10,
+            "items": {
+              "$ref": "#/components/schemas/LeaderboardAccount"
+            }
+          },
+          "counts": {
+            "type": "object",
+            "properties": {
+              "accountsWithWaiting": {
+                "type": "integer"
+              },
+              "accountsChecked": {
+                "type": "integer"
+              },
+              "protocols": {
+                "type": "integer"
+              },
+              "validatorPools": {
+                "type": "integer"
+              },
+              "unsupportedPools": {
+                "type": "integer"
+              },
+              "closedPools": {
+                "type": "integer"
+              }
+            }
+          },
+          "lockups": {
+            "type": "object",
+            "properties": {
+              "accounts": {
+                "type": "integer"
+              },
+              "totalYocto": {
+                "$ref": "#/components/schemas/YoctoNEAR"
+              },
+              "classification": {
+                "type": "string"
+              }
+            }
+          },
+          "dormancy": {
+            "type": "object",
+            "description": "Optional named-account finding from the verified 100+ NEAR cohort, at the 24-month checkpoint. Contains accounts, pairs, exact totalYocto, dates, cohort size and limitations."
+          }
+        },
+        "description": "Dated census, not current availability or proof of abandonment. Account IDs are deduplicated, but gross balances can overlap protocol reserves. Lockup balances require another withdrawal route."
+      },
+      "DormancyRow": {
+        "type": "object",
+        "required": [
+          "months",
+          "since",
+          "amountYocto",
+          "contracts"
+        ],
+        "properties": {
+          "months": {
+            "enum": [
+              1,
+              3,
+              6,
+              12,
+              24,
+              36
+            ]
+          },
+          "since": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "amountYocto": {
+            "$ref": "#/components/schemas/YoctoNEAR"
+          },
+          "contracts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "description": "Only the listed source amount matched at every sampled date through the census; it may be smaller than the full row amount. Absent outside the qualifying analysed subset. No assertion of inactivity between samples."
+      }
+    }
+  }
+}

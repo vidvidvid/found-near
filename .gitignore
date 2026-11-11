@@ -8,3 +8,6 @@ node_modules/
 
 # Archived demo renderer output; add the reviewed final take deliberately.
 demo/output/*.mp4
+
+# Private outreach preparation; the owner reviews and sends.
+outreach/local/

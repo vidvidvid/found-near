@@ -1,4 +1,4 @@
-import {createHash} from 'node:crypto';
+import {createArchiveRpc} from './archive-rpc.mjs';
 import {mkdir,readFile,writeFile,rename} from 'node:fs/promises';
 import {gzipSync,gunzipSync} from 'node:zlib';
 import {resolve,dirname} from 'node:path';
@@ -8,26 +8,10 @@ import {decodeRnear,decodeFactory,MINIMUM,publishSnapshot} from './census-model.
 
 const DEFAULT_BLOCK=223975859;
 export async function scanCensus({block=DEFAULT_BLOCK,cacheDir='/tmp/found-expanded-census',rpcUrl=process.env.CENSUS_RPC||'https://near.drpc.org',stateUrl=process.env.CENSUS_STATE_RPC||'https://rpc.intea.rs',intervalMs=250}={}){
- await mkdir(cacheDir+'/cache',{recursive:true});
- let nextRequest=0,header,requests=0;
- async function request(method,params,endpoint=rpcUrl){
-  const file=cacheDir+'/cache/'+createHash('sha256').update(JSON.stringify({method,params})).digest('hex')+'.json';
-  const validate=r=>{if(method==='query'&&(r.block_height!==block||r.block_hash!==header.hash))throw Error('RPC ignored the pinned block');return r;};
-  try{return validate(JSON.parse(await readFile(file,'utf8')));}catch(error){if(error.code!=='ENOENT')throw error;}
-  for(let attempt=0;attempt<5;attempt++){
-   // Shared cooldown also applies to workers already waiting for their slot.
-   while(Date.now()<nextRequest)await new Promise(r=>setTimeout(r,Math.min(1000,nextRequest-Date.now())));
-   nextRequest=Date.now()+intervalMs;requests++;
-   try{
-    const response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:'found-census',method,params}),signal:AbortSignal.timeout(45000)});
-    if(response.status===429){const message=await response.text(),delay=Number(response.headers.get('retry-after'))||Number(message.match(/retry after (\d+)/i)?.[1])||60;nextRequest=Date.now()+(delay+1)*1000;throw Error('Provider rate limit');}
-    if(!response.ok)throw Error('RPC HTTP '+response.status);
-    const body=await response.json();
-    if(body.error||body.result?.error){const payload=body.error||body.result.error,text=JSON.stringify(payload);throw Object.assign(Error(text),{permanent:/UNKNOWN_ACCOUNT|MethodNotFound|GasLimitExceeded|TooLargeContractState/.test(text),missingAccount:/"name":"UNKNOWN_ACCOUNT"/.test(text)});}
-    const result=validate(body.result);await writeFile(file,JSON.stringify(result));return result;
-   }catch(error){if(error.permanent||attempt===4)throw error;await new Promise(r=>setTimeout(r,3000*2**attempt));}
-  }
- }
+ let header;
+ const {request,stats}=await createArchiveRpc({cacheDir,endpoint:rpcUrl,intervalMs,validate:(r,method)=>{
+  if(method==='query'&&(r.block_height!==block||r.block_hash!==header.hash))throw Error('RPC ignored the pinned block');return r;
+ }});
  const blockData=await request('block',{block_id:block});header=blockData.header;
  if(header.height!==block||typeof header.hash!=='string'||!/^\d+$/.test(header.timestamp))throw Error('Invalid block header');
  const query=(account_id,request_type,extra={},endpoint)=>request('query',{request_type,account_id,...extra,block_id:block},endpoint);
@@ -65,7 +49,7 @@ export async function scanCensus({block=DEFAULT_BLOCK,cacheDir='/tmp/found-expan
  meta.complete=meta.errors.length===0;meta.unsupported.sort((a,b)=>(a.contract<b.contract?-1:a.contract>b.contract?1:0));meta.closed.sort();meta.errors.sort((a,b)=>(a.contract<b.contract?-1:a.contract>b.contract?1:0));
  await writeFile(cacheDir+'/raw-accounts.json.gz',gzipSync(JSON.stringify(raw)));await writeFile(cacheDir+'/metadata.json',JSON.stringify(meta,null,2));
  const snapshot=publishSnapshot(meta,raw);
- console.log(snapshot.accounts.length,'unique accounts with qualifying balances;',requests,'new RPC reads');
+ console.log(snapshot.accounts.length,'unique accounts with qualifying balances;',stats.requests,'new RPC reads');
  return snapshot;
 }
 

@@ -314,6 +314,12 @@ async function loadLeaderboard(page=1){
   leaderboardPage=page;
   const date=new Date(data.asOf).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'});
   $('leaderboard-count').textContent=data.counts.accountsWithWaiting.toLocaleString('en-US');
+  const finding=$('dormancy-finding');finding.replaceChildren();finding.hidden=!data.dormancy?.accounts;
+  if(data.dormancy?.accounts){
+   finding.append(element('strong',`${data.dormancy.accounts.toLocaleString('en-US')} named accounts. Balances unchanged at sampled dates over two years.`));
+   finding.append(element('p',`Each had at least one withdrawable balance matching at every sampled date since ${new Date(data.dormancy.since).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'})}. We checked the ${data.dormancy.cohortAccounts.toLocaleString('en-US')} accounts with 100+ NEAR in the snapshot. Activity between samples is possible; named accounts can be contracts.`));
+   const evidence=element('a','Read the sampled evidence','share-result');evidence.href='./dormancy.json';finding.append(evidence);
+  }
   $('leaderboard-count-label').textContent='accounts with NEAR waiting';
   $('leaderboard-total').textContent=compactNear(data.totalListedYocto);$('leaderboard-total').title=exactNear(data.totalListedYocto)+' NEAR';
   // The hero repeats the two census headline figures; keep them on the same snapshot.
@@ -342,6 +348,11 @@ async function loadLeaderboard(page=1){
    // A single pool is named; several stay a count, with the full list in the tooltip.
    if(pools)labels.push(pools===1?pool:`${pools} validator pools`);
    const note=element('span',labels.join(' · '),'leaderboard-sources');note.title=a.sources.map(s=>s.contract).join(', ');name.append(note);
+   if(a.dormancy){
+    const since=new Date(a.dormancy.since).toLocaleDateString('en-GB',{month:'short',year:'numeric',timeZone:'UTC'});
+    const age=element('span',`${compactNear(a.dormancy.amountYocto)} NEAR unchanged at samples since ${since}`,'leaderboard-age');
+    age.title=`${exactNear(a.dormancy.amountYocto)} NEAR in ${a.dormancy.contracts.join(', ')} matched at every sampled date through ${date}. This may be only part of the listed total; activity between samples is possible.`;name.append(age);
+   }
    const amount=element('td',compactNear(a.unstaked_balance),'align-right');amount.title=exactNear(a.unstaked_balance)+' NEAR';row.append(rank,name,amount);rows.push(row);
   });
   body.replaceChildren(...rows);$('pagination').hidden=false;

@@ -121,3 +121,5 @@ Caller counters and cached scans are bounded, temporary in-memory records; no IP
 `GET /api/leaderboard?page=1` returns ten accounts, counts, the gross listed total, lockup statistics and snapshot block/date. Pages are 1-based; an out-of-range page is 404. The server validates the full snapshot once and caches it in memory. Responses have ETags and a five-minute cache lifetime. The full [leaderboard.json](dist/leaderboard.json) remains available for audit, but the UI does not download it.
 
 `/?account=ru.near` automatically performs a read-only scan. A completed search updates the URL; **Copy link** shares the account for a fresh check, not a promise that its balance stays unchanged.
+
+Machine-readable read-only API schema: [OpenAPI 3.1](https://found-production-e549.up.railway.app/openapi.json). Wallets and agents could embed this scan API; adoption and a revenue model have not been established.

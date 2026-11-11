@@ -1,0 +1,250 @@
+{
+  "checkedAt": "2026-11-11T09:50:49.338Z",
+  "scope": "Four sequential ordinary scans, not a load test or uptime guarantee.",
+  "checks": [
+    {
+      "account": "ru.near",
+      "status": 200,
+      "elapsedMs": 473,
+      "body": {
+        "account": "ru.near",
+        "block": "E23meusJ4uJPP3HhMjw4QhWexc4DMkUwyUKULSChtn7Q",
+        "height": 224048986,
+        "checkedAt": 1794390648655,
+        "results": [
+          {
+            "account": "ru.near",
+            "protocol": "linear",
+            "amount": "500307262171597331335415343",
+            "block": "E23meusJ4uJPP3HhMjw4QhWexc4DMkUwyUKULSChtn7Q",
+            "height": 224048986,
+            "checkedAt": 1794390648545,
+            "state": "found"
+          },
+          {
+            "account": "ru.near",
+            "protocol": "metapool",
+            "amount": "0",
+            "block": "E23meusJ4uJPP3HhMjw4QhWexc4DMkUwyUKULSChtn7Q",
+            "height": 224048986,
+            "checkedAt": 1794390648571,
+            "state": "empty"
+          },
+          {
+            "account": "ru.near",
+            "protocol": "rnear",
+            "amount": "0",
+            "block": "E23meusJ4uJPP3HhMjw4QhWexc4DMkUwyUKULSChtn7Q",
+            "height": 224048986,
+            "checkedAt": 1794390648567,
+            "state": "empty"
+          },
+          {
+            "account": "ru.near",
+            "protocol": "pool:erm.poolv1.near",
+            "codeHash": "J1arLz48fgXcGyCPVckFwLnewNH6j1uw79thsvwqGYTY",
+            "block": "E23meusJ4uJPP3HhMjw4QhWexc4DMkUwyUKULSChtn7Q",
+            "height": 224048986,
+            "checkedAt": 1794390648554,
+            "amount": "0",
+            "state": "empty"
+          }
+        ],
+        "pools": {
+          "state": "complete",
+          "discovered": 1,
+          "checked": 1,
+          "limit": 24
+        },
+        "cached": false,
+        "cacheAgeMs": 0
+      }
+    },
+    {
+      "account": "illia.near",
+      "status": 200,
+      "elapsedMs": 368,
+      "body": {
+        "account": "illia.near",
+        "block": "AtYigj2fVdrRues8QG7u9wNW38UtTgqJ5bjwdKBPv2xn",
+        "height": 224048987,
+        "checkedAt": 1794390649004,
+        "results": [
+          {
+            "account": "illia.near",
+            "protocol": "linear",
+            "amount": "0",
+            "block": "AtYigj2fVdrRues8QG7u9wNW38UtTgqJ5bjwdKBPv2xn",
+            "height": 224048987,
+            "checkedAt": 1794390648936,
+            "state": "empty"
+          },
+          {
+            "account": "illia.near",
+            "protocol": "metapool",
+            "amount": "0",
+            "block": "AtYigj2fVdrRues8QG7u9wNW38UtTgqJ5bjwdKBPv2xn",
+            "height": 224048987,
+            "checkedAt": 1794390648943,
+            "state": "empty"
+          },
+          {
+            "account": "illia.near",
+            "protocol": "rnear",
+            "amount": "0",
+            "block": "AtYigj2fVdrRues8QG7u9wNW38UtTgqJ5bjwdKBPv2xn",
+            "height": 224048987,
+            "checkedAt": 1794390648939,
+            "state": "empty"
+          },
+          {
+            "account": "illia.near",
+            "protocol": "pool:aurora.pool.near",
+            "codeHash": "5vf2Jkqpk11H7szLnY4XdPA6maJi1ND8xe346xtbtX8e",
+            "block": "AtYigj2fVdrRues8QG7u9wNW38UtTgqJ5bjwdKBPv2xn",
+            "height": 224048987,
+            "checkedAt": 1794390648936,
+            "state": "readonly",
+            "amount": "0",
+            "reportedCanWithdraw": true,
+            "withdrawalSupported": false
+          }
+        ],
+        "pools": {
+          "state": "complete",
+          "discovered": 1,
+          "checked": 1,
+          "limit": 24
+        },
+        "cached": false,
+        "cacheAgeMs": 0
+      }
+    },
+    {
+      "account": "vidvid.near",
+      "status": 200,
+      "elapsedMs": 262,
+      "body": {
+        "account": "vidvid.near",
+        "block": "AtYigj2fVdrRues8QG7u9wNW38UtTgqJ5bjwdKBPv2xn",
+        "height": 224048987,
+        "checkedAt": 1794390649269,
+        "results": [
+          {
+            "account": "vidvid.near",
+            "protocol": "linear",
+            "amount": "0",
+            "block": "AtYigj2fVdrRues8QG7u9wNW38UtTgqJ5bjwdKBPv2xn",
+            "height": 224048987,
+            "checkedAt": 1794390649194,
+            "state": "empty"
+          },
+          {
+            "account": "vidvid.near",
+            "protocol": "metapool",
+            "amount": "0",
+            "block": "AtYigj2fVdrRues8QG7u9wNW38UtTgqJ5bjwdKBPv2xn",
+            "height": 224048987,
+            "checkedAt": 1794390649206,
+            "state": "empty"
+          },
+          {
+            "account": "vidvid.near",
+            "protocol": "rnear",
+            "amount": "0",
+            "block": "AtYigj2fVdrRues8QG7u9wNW38UtTgqJ5bjwdKBPv2xn",
+            "height": 224048987,
+            "checkedAt": 1794390649212,
+            "state": "empty"
+          },
+          {
+            "account": "vidvid.near",
+            "protocol": "pool:meteor.poolv1.near",
+            "codeHash": "J1arLz48fgXcGyCPVckFwLnewNH6j1uw79thsvwqGYTY",
+            "block": "AtYigj2fVdrRues8QG7u9wNW38UtTgqJ5bjwdKBPv2xn",
+            "height": 224048987,
+            "checkedAt": 1794390649202,
+            "amount": "999999000000000000000002",
+            "state": "pending"
+          },
+          {
+            "account": "vidvid.near",
+            "protocol": "pool:figment.poolv1.near",
+            "codeHash": "J1arLz48fgXcGyCPVckFwLnewNH6j1uw79thsvwqGYTY",
+            "block": "AtYigj2fVdrRues8QG7u9wNW38UtTgqJ5bjwdKBPv2xn",
+            "height": 224048987,
+            "checkedAt": 1794390649194,
+            "amount": "999999000000000000000003",
+            "state": "pending"
+          }
+        ],
+        "pools": {
+          "state": "complete",
+          "discovered": 2,
+          "checked": 2,
+          "limit": 24
+        },
+        "cached": false,
+        "cacheAgeMs": 0
+      }
+    },
+    {
+      "account": "ru.near",
+      "status": 200,
+      "elapsedMs": 32,
+      "body": {
+        "account": "ru.near",
+        "block": "E23meusJ4uJPP3HhMjw4QhWexc4DMkUwyUKULSChtn7Q",
+        "height": 224048986,
+        "checkedAt": 1794390648655,
+        "results": [
+          {
+            "account": "ru.near",
+            "protocol": "linear",
+            "amount": "500307262171597331335415343",
+            "block": "E23meusJ4uJPP3HhMjw4QhWexc4DMkUwyUKULSChtn7Q",
+            "height": 224048986,
+            "checkedAt": 1794390648545,
+            "state": "found"
+          },
+          {
+            "account": "ru.near",
+            "protocol": "metapool",
+            "amount": "0",
+            "block": "E23meusJ4uJPP3HhMjw4QhWexc4DMkUwyUKULSChtn7Q",
+            "height": 224048986,
+            "checkedAt": 1794390648571,
+            "state": "empty"
+          },
+          {
+            "account": "ru.near",
+            "protocol": "rnear",
+            "amount": "0",
+            "block": "E23meusJ4uJPP3HhMjw4QhWexc4DMkUwyUKULSChtn7Q",
+            "height": 224048986,
+            "checkedAt": 1794390648567,
+            "state": "empty"
+          },
+          {
+            "account": "ru.near",
+            "protocol": "pool:erm.poolv1.near",
+            "codeHash": "J1arLz48fgXcGyCPVckFwLnewNH6j1uw79thsvwqGYTY",
+            "block": "E23meusJ4uJPP3HhMjw4QhWexc4DMkUwyUKULSChtn7Q",
+            "height": 224048986,
+            "checkedAt": 1794390648554,
+            "amount": "0",
+            "state": "empty"
+          }
+        ],
+        "pools": {
+          "state": "complete",
+          "discovered": 1,
+          "checked": 1,
+          "limit": 24
+        },
+        "cached": true,
+        "cacheAgeMs": 667
+      }
+    }
+  ]
+}

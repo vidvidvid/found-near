@@ -1,0 +1,7 @@
+# Production reliability spot check — 11 November 2026
+
+[Four sequential ordinary scans](reliability-2026-11-11.json) all returned HTTP 200 with complete discovery: the public LiNEAR example, the Aurora read-only case, the owner's two pending standard pools, then a repeat of the first account. Observed durations were 473, 368, 262 and 32 ms; the repeat was a cache hit. These are single-location observations, not a load test, latency SLA or judging-week uptime guarantee.
+
+The browser still reads balances directly through FastNEAR and Intear; the JSON API runs the same scanner with bounded work and per-caller quotas. Tests cover failed providers, partial discovery, missing accounts and unknown availability. Optional unlock timing can fail without blocking scans or allowing a withdrawal. The original census and new archived historical research need no live RPC to verify after install.
+
+Operational handoff: keep the Railway service and recovery volume running through judging (16–18 November; ideally through 25 November). Check `/health`, one ordinary `/api/scan/ru.near` request, `/api/leaderboard?page=1` and the recovery endpoint after each deployment. Do not load-test shared public RPCs. If real traffic reaches capacity, first preserve accurate retry/unknown states and provision an explicitly authorized provider plan before increasing concurrency; free endpoints are an ongoing dependency. No uptime monitor or paid provider was configured in this pass.

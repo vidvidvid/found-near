@@ -302,6 +302,10 @@ dialog{background:linear-gradient(145deg,#261c2e,#18111f);border-color:#745343;c
 .protocol-result[data-result=pending] .withdraw-help,.protocol-result[data-result=readonly] .withdraw-help{align-self:flex-start;margin-top:9px;max-width:100%}
 .protocol-result[data-result=pending] .result-caption,.protocol-result[data-result=readonly] .result-caption{margin-top:5px!important;min-height:0}
 
+.dormancy-finding{margin:0 0 22px;padding:20px 22px;border:1px solid #88613f55;border-radius:14px;background:#2b1e234d}
+.dormancy-finding[hidden]{display:none}.dormancy-finding strong{color:#ebce93;font-size:16px;font-weight:550}.dormancy-finding p{font-size:12px;line-height:1.6;color:#b7a9bf;margin:10px 0}.dormancy-finding a{font-size:12px}
+.leaderboard-age{display:block;font-size:12px;color:#c4aa85;margin-top:4px;line-height:1.5}
+
 /* Landing polish: proof line in the hero, calmer census stats, trust section. */
 .hero-proof{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 26px;max-width:560px;margin:34px 0 0;padding-top:20px;border-top:1px solid #3a2b4299;font-size:12px;line-height:1.5;color:#ac9eb7}
 .hero-proof strong{margin-right:7px;font-size:20px;font-weight:600;letter-spacing:-.3px;color:#e9ca90;font-variant-numeric:tabular-nums}
