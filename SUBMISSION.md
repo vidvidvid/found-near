@@ -59,22 +59,21 @@ Record one continuous take: **scan the owner’s account → connect → owner a
 
 The older two-protocol/538-account MP4 remains in Git history only; it is not the current UI or final demo. The combined count is 30,681; the old 538 number remains valid only for the dated LiNEAR-only dataset.
 
-## X post draft
+## X post
 
-Attach the final video directly. Publish only after the repository is public and the recorded receipt is genuine. This draft fits a standard 280-character post with X’s URL counting:
+Chosen by the owner on 11 November 2026. Attach the final video directly. Publish only after the repository is public and the recorded receipt is genuine. The text is 224 characters with X’s URL counting, inside the 280 limit; recheck the handbook tags before posting.
 
 ```text
-Unstaked isn’t withdrawn.
+304 named NEAR accounts. Same withdrawable balances at every sampled date over 2 years.
 
-FOUND checks 3 protocols + 858 NEAR pools. Snapshot: 30,681 accounts, 10.55M NEAR listed—not unique lost funds.
-
+FOUND helps finish the withdrawal.
 Built at NEAR HACKATHON
 @NEARProtocol #NEARHackathon
 https://foundyours.xyz/
 https://github.com/vidvidvid/found-near
 ```
 
-The app page explains lockups, overlap, snapshot dates and supported scope. The post must not describe the census amount as recovered money.
+The video should open on the same finding; the page keeps “100+ NEAR cohort” and “sampled dates” legible beside it. The post must not describe any listed amount as recovered money, and it is not a claim of abandonment.
 
 ## Real recovery evidence — pending
 
@@ -82,12 +81,12 @@ No real owner-signed withdrawal was executed during QA. The owner’s vidvid.nea
 
 | Field | Status |
 | --- | --- |
-| Owner-provided account | vidvid.near; final receipt publication review pending |
+| Owner-provided account | vidvid.near |
 | Protocol / contract | meteor.poolv1.near and backup figment.poolv1.near; still unlocking at last check |
 | Amount and pre-withdrawal block | Pending |
 | Final transaction hash / explorer URL | Pending |
 | Result after recheck | Pending |
-| Permission to publish account and receipt | Pending |
+| Permission to publish account and receipt | Granted by the owner, 11 November 2026 |
 | Optional owner quote | Pending; never fabricate one |
 
 Once the hash exists, run `npm run verify:tx -- <hash> --account vidvid.near --save`. It reads the transaction from an archival RPC, applies FOUND’s existing exact receipt verifier (not a separate looser implementation), requires the pool’s transfer to the signer, and saves the raw responses to `verification/withdrawals/<hash>.json`. From then on `npm run verify:tx` rechecks that evidence offline and CI runs it on every push. Add its real output and the approved record here and in README. Update all current “no owner-signed withdrawal” statements to match the actual evidence. Historical reports remain dated records.
@@ -103,20 +102,6 @@ The owner publishes and submits; this packet does not send a submission or sched
 5. Supply/confirm team lead name, contact email, team size, selected tracks, mainnet payout account, public repo/post links and contact-notice consent. Do not guess these values or commit the private payload.
 6. Review the exact submission payload before the single submission. Record its successful response privately. Corrections go through the organizers’ request-changes process.
 
-**Still required from the owner:** approval of a matured withdrawal in the wallet; publication permission for its receipt; final video/X link; submission identity, payout address, track selection and consent. No submission has been sent as part of this preparation.
-
-## Evidence-led post option — owner review before posting
-
-Use this only with the final real-withdrawal video. The video/site must explain the 100+ NEAR cohort, account types and sampling limits. This is a draft, not a published claim of abandonment. Verify X length and the handbook tags before posting.
-
-```text
-304 named NEAR accounts. Same withdrawable balances at every sampled date over 2 years.
-
-FOUND helps finish the withdrawal.
-Built at NEAR HACKATHON
-@NEARProtocol #NEARHackathon
-https://foundyours.xyz/
-https://github.com/vidvidvid/found-near
-```
+**Still required from the owner:** approval of a matured withdrawal in the wallet; final video/X link; submission identity, payout address, track selection and consent. No submission has been sent as part of this preparation.
 
 The primary recommendation remains Open Innovation. The history data alone does not establish a long-term investment thesis for NEAR; no Investment Thesis entry has been prepared.
