@@ -31,7 +31,7 @@ Submission text, publication checklist and the pending real-withdrawal recording
 
 ## Built with
 
-- Plain JavaScript/HTML/CSS, **Node.js / SQLite**, **NEAR Connect 0.12.0**, **esbuild 0.28.2**; **Railway** hosting.
+- Plain JavaScript/HTML/CSS, **Node.js / SQLite**, **NEAR Connect 0.12.0**, **esbuild 0.28.2**; **Railway** hosting. **GitHub Actions** runs the offline checks on every push ([workflow](.github/workflows/ci.yml)); production deploys from `main` only after that run passes.
 - **FastNEAR** staking API and RPC; **Intear** fallback RPC/state reads; **dRPC** census reads. Existing LiNEAR, Meta Pool, rNEAR and NEAR staking-pool contracts provide the withdrawal methods.
 - **OpenAI Codex / ChatGPT**, **Kimi** and **Anthropic Claude** for coding, research and review assistance; OpenAI image generation for the original art and character assets, animated with CSS/Python.
 - **Higgsfield Seed Audio 1.0 / Faye** synthetic narration; Python, Pillow, FFmpeg and faster-whisper for demo production/checks; **DM Sans** via Google Fonts under SIL OFL.
