@@ -301,3 +301,39 @@ dialog{background:linear-gradient(145deg,#261c2e,#18111f);border-color:#745343;c
 #pocket-content .protocol-result[data-result=pending],#pocket-content .protocol-result[data-result=readonly]{height:auto;min-height:138px}
 .protocol-result[data-result=pending] .withdraw-help,.protocol-result[data-result=readonly] .withdraw-help{align-self:flex-start;margin-top:9px;max-width:100%}
 .protocol-result[data-result=pending] .result-caption,.protocol-result[data-result=readonly] .result-caption{margin-top:5px!important;min-height:0}
+
+/* Landing polish: proof line in the hero, calmer census stats, trust section. */
+.hero-proof{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 26px;max-width:560px;margin:34px 0 0;padding-top:20px;border-top:1px solid #3a2b4299;font-size:12px;line-height:1.5;color:#ac9eb7}
+.hero-proof strong{margin-right:7px;font-size:20px;font-weight:600;letter-spacing:-.3px;color:#e9ca90;font-variant-numeric:tabular-nums}
+.hero-proof a{margin-left:auto;padding-bottom:2px;border-bottom:1px solid #705246;color:#dec5a0;white-space:nowrap}
+.hero-proof a:hover{border-color:#dec5a0}
+.waiting-summary{display:block;margin:30px 0 26px}
+.waiting-stats{display:flex;flex-wrap:wrap;align-items:flex-start;gap:20px 64px;width:auto}
+.waiting-stat{align-items:flex-start;text-align:left;gap:6px}
+.waiting-stat .stat-value{justify-content:flex-start;gap:10px}
+.waiting-stat strong,.waiting-summary #leaderboard-count{margin:0;font-size:44px;font-weight:500;line-height:1.05;letter-spacing:-1.5px}
+.waiting-stat .stat-value .near-icon{width:26px;height:26px}
+.waiting-stat>span{font-size:13px;color:#c3b3cb}
+.waiting-summary .waiting-scope{flex-basis:100%;max-width:660px;margin:0;font-size:12px;line-height:1.7;color:#ac9eb7}
+.waiting-summary .waiting-scope strong{margin:0;font-size:inherit;font-weight:600;letter-spacing:0;line-height:inherit;color:#e4d3c0}
+.trust{border-top:1px solid var(--line);padding-top:46px;padding-bottom:38px}
+.trust h2{margin:8px 0 28px;font-family:'DM Sans',sans-serif;font-size:30px;font-weight:500;letter-spacing:-1px;color:#eee1e5}
+.trust-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.trust-grid article{padding:22px;border:1px solid #3a2b42;border-radius:14px;background:#17101f99}
+.trust-grid svg{display:block;width:22px;height:22px;margin-bottom:14px;fill:none;stroke:#e9ca90;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.trust-grid h3{margin:0 0 8px;font-size:15px;font-weight:600;letter-spacing:-.2px;color:#f0e4dc}
+.trust-grid p{margin:0;font-size:13px;line-height:1.65;color:#b5a6bf}
+.trust-grid a,footer .footer-links a{color:#dec5a0;text-decoration:underline;text-underline-offset:3px}
+.trust-scope{max-width:760px;margin:24px 0 0;font-size:12px;line-height:1.75;color:#a596af}
+.trust-scope strong{font-weight:600;color:#d9c9d6}
+footer .footer-links{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px 22px}
+@media(max-width:850px){.trust-grid{grid-template-columns:1fr;gap:12px}}
+@media(max-width:620px){.hero-proof{justify-content:center;gap:4px 18px;margin:22px 0 18px;padding-top:16px;font-size:11px}.hero-proof strong{font-size:17px}.hero-proof a{margin-left:0}.waiting-summary{margin:22px 0 20px}.waiting-stats{gap:16px 34px}.waiting-stat strong,.waiting-summary #leaderboard-count{font-size:34px;letter-spacing:-1px}.waiting-stat .stat-value .near-icon{width:20px;height:20px}.waiting-stat>span{font-size:12px}.trust{padding-top:30px;padding-bottom:26px}.trust h2{font-size:24px;margin-bottom:20px}.trust-grid article{padding:18px}footer .footer-links{width:100%;justify-content:flex-start}}
+
+/* Readability floor: body copy is at least 12px and short labels at least 11px, at every width.
+   !important is deliberate here. These rules must win over the many per-breakpoint sizes above. */
+.tiny-label,.eyebrow,.step-n,.snapshot-badge,.lockup-badge,.status,.result-state,.protocol-result-heading .result-state{font-size:11px!important}
+.form-note,#scan-form label,.scan-summary,.art-foot,.welcome-coverage,.checked-account,.results-summary,.result-coverage,.proof,.proof a,.proof button,#refresh-balance,.withdraw-help,.checked-sources summary,.checked-sources li,.checked-sources li span,.pocket .discovery-notice p,.coverage-retry,th,td.rank,.leaderboard-sources,.leaderboard-age,.pagination,.pagination button,.page-ellipsis,.snapshot-source,.census-details,.recovery-note,footer,dialog small,.wallet-notice-actions a,.wallet-notice-actions button,#wallet-connect,.network{font-size:12px!important}
+.snapshot-note,.steps p,.withdraw-button{font-size:13px!important}
+footer .footer-brand{font-size:21px!important}
+@media(max-width:620px){#wallet-connect,.network{font-size:11px!important}.hero-proof{font-size:12px}.account-link,td.align-right,#scan-button{font-size:12.5px!important}.waiting-heading{flex-direction:column;align-items:flex-start;gap:12px}}

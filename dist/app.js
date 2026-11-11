@@ -316,6 +316,9 @@ async function loadLeaderboard(page=1){
   $('leaderboard-count').textContent=data.counts.accountsWithWaiting.toLocaleString('en-US');
   $('leaderboard-count-label').textContent='accounts with NEAR waiting';
   $('leaderboard-total').textContent=compactNear(data.totalListedYocto);$('leaderboard-total').title=exactNear(data.totalListedYocto)+' NEAR';
+  // The hero repeats the two census headline figures; keep them on the same snapshot.
+  if($('hero-proof-accounts'))$('hero-proof-accounts').textContent=$('leaderboard-count').textContent;
+  if($('hero-proof-total')){$('hero-proof-total').textContent=$('leaderboard-total').textContent;$('hero-proof-total').title=$('leaderboard-total').title;}
   $('leaderboard-protocols').textContent=data.counts.protocols.toLocaleString('en-US');
   $('leaderboard-pools').textContent=data.counts.validatorPools.toLocaleString('en-US');
   $('snapshot-date').textContent=date+' · snapshot';
@@ -334,9 +337,10 @@ async function loadLeaderboard(page=1){
    if(a.accountKind==='lockup'){
     const badge=element('span','Lockup','lockup-badge');badge.title='Requires the lockup contract; FOUND cannot withdraw this directly.';name.append(badge);
    }
-   const labels=[],known={'linear-protocol.near':'LiNEAR','meta-pool.near':'Meta Pool','lst.rhealab.near':'rNEAR'};let pools=0;
-   for(const source of a.sources){if(known[source.contract])labels.push(known[source.contract]);else pools++;}
-   if(pools)labels.push(`${pools} validator ${pools===1?'pool':'pools'}`);
+   const labels=[],known={'linear-protocol.near':'LiNEAR','meta-pool.near':'Meta Pool','lst.rhealab.near':'rNEAR'};let pools=0,pool;
+   for(const source of a.sources){if(known[source.contract])labels.push(known[source.contract]);else{pools++;pool=source.contract;}}
+   // A single pool is named; several stay a count, with the full list in the tooltip.
+   if(pools)labels.push(pools===1?pool:`${pools} validator pools`);
    const note=element('span',labels.join(' · '),'leaderboard-sources');note.title=a.sources.map(s=>s.contract).join(', ');name.append(note);
    const amount=element('td',compactNear(a.unstaked_balance),'align-right');amount.title=exactNear(a.unstaked_balance)+' NEAR';row.append(rank,name,amount);rows.push(row);
   });
