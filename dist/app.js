@@ -55,7 +55,7 @@ function protocolResult(result){
  const protocol=protocolInfo(result.protocol),section=element('section','','protocol-result');
  section.dataset.result=result.state;
  const heading=element('div','','protocol-result-heading');
- const labels={idle:'Not checked',loading:'Checking…',found:'Ready to withdraw',pending:'Still unlocking',unsupported:result.reason==='implementation'?'Not supported yet':'Lockup account',unavailable:'Availability unknown',empty:'All clear',error:'Couldn’t check'};
+ const labels={idle:'Not checked',loading:'Checking…',found:'Ready to withdraw',readonly:'Balance checked · read only',pending:'Still unlocking',unsupported:result.reason==='implementation'?'Not supported yet':'Lockup account',unavailable:'Availability unknown',empty:'All clear',error:'Couldn’t check'};
  const title=element('h3',protocol.name);title.title=protocol.contract;
  heading.append(title,element('span',labels[result.state],'result-state'));
  section.append(heading);
@@ -66,6 +66,9 @@ function protocolResult(result){
   link.type='button';link.disabled=walletUi.disabled();link.onclick=()=>walletUi.withdraw(result);
   const help=element('button','Help','withdraw-help');help.type='button';help.setAttribute('aria-label',`How to withdraw from ${protocol.name}`);help.onclick=()=>openWithdrawal(result);
   actions.append(link,help);section.append(actions);
+ }else if(result.state==='readonly'){
+  section.append(element('p',BigInt(result.amount)===0n?'No unstaked NEAR here. This pool is read-only in FOUND.':result.reportedCanWithdraw?'Unstaked NEAR reported by the pool. Use MyNearWallet to check and withdraw.':'The pool reports this balance is still unlocking. Manage it in MyNearWallet.','result-caption'));
+  const link=element('a','Open MyNearWallet','withdraw-help');link.href=protocol.appUrl;link.target='_blank';link.rel='noopener noreferrer';link.append(linkIcon());section.append(link);
  }else if(result.state==='unavailable'||result.state==='error'){
   const button=element('button','Check again','retry-button');button.type='button';button.onclick=()=>scan(result.account,example,{force:true});section.append(button);
  }else{
@@ -80,7 +83,7 @@ function resultPanels(result){
  const tiny=result.results.filter(smallBalance);
  const active=result.results.filter(row=>row.state!=='empty'&&!smallBalance(row));
  const empty=result.results.filter(row=>row.state==='empty');
- const rank={found:0,pending:1,unavailable:2,error:3,unsupported:4};
+ const rank={found:0,pending:1,readonly:2,unavailable:3,error:4,unsupported:5};
  active.sort((a,b)=>(rank[a.state]??5)-(rank[b.state]??5));
  if(active.length){
   const ready=active.filter(row=>row.state==='found').length;

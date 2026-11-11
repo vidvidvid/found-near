@@ -7,6 +7,8 @@ export const CONTRACT=PROTOCOLS.linear.contract;
 export const ENDPOINTS=['https://free.rpc.fastnear.com','https://rpc.intea.rs'];
 // These exact bytes were verified against NEAR's pool factories. See research/coverage-expansion.
 export const POOL_CODE_HASHES=Object.freeze(['J1arLz48fgXcGyCPVckFwLnewNH6j1uw79thsvwqGYTY','AjD4YJaXgpiRdiArqnzyDi7Bkr1gJms9Z2w7Ev5esTKB']);
+// Balance reads only: this is deliberately NOT in the withdrawal allowlist.
+export const AURORA_READ_CODE_HASH='5vf2Jkqpk11H7szLnY4XdPA6maJi1ND8xe346xtbtX8e';
 export const RNEAR_CODE_HASH='EPLT4C61pkVYf5Km6dC4X9x5PMo6rfBwuEwo7vgKpmuv';
 export const MAX_POOLS=24;
 export const STAKING_API='https://api.fastnear.com/v1/account/';
@@ -15,6 +17,7 @@ const STORAGE_BYTE_COST=10n**19n,EXECUTION_RESERVE=10n**22n;
 export function protocolInfo(id){
  if(Object.hasOwn(PROTOCOLS,id))return PROTOCOLS[id];
  const contract=typeof id==='string'&&id.startsWith('pool:')?id.slice(5):'';
+ if(contract==='aurora.pool.near')return {id,name:'Aurora pool',contract,kind:'pool',appUrl:'https://app.mynearwallet.com/staking/aurora.pool.near',appHost:'app.mynearwallet.com'};
  if(validAccount(contract)&&!Object.values(PROTOCOLS).some(p=>p.contract===contract))return {id,name:contract,contract,kind:'pool',appUrl:'https://near-staking.trezu.org',appHost:'near-staking.trezu.org'};
  return null;
 }
@@ -168,7 +171,13 @@ export async function scanValidatorPool(account,contract,options={}){
  if(!protocolInfo(protocol))throw new QueryError('Unsupported validator pool.','INVALID');
  const view=await rpc({request_type:'view_account',account_id:contract,...(options.block?{block_id:options.block}:{finality:'final'})},options);
  const result={account,protocol,codeHash:view.code_hash,block:view.block_hash,height:view.block_height,checkedAt:Date.now()};
- // Never classify an unknown implementation as empty or expose a signing action.
+ // A reviewed balance view is not approval to sign against a custom implementation.
+ if(contract==='aurora.pool.near'&&view.code_hash===AURORA_READ_CODE_HASH){
+  const details=await caller(contract,options)('get_account',{account_id:account},view.block_hash);
+  validateDetails(details.data,account,contract);
+  return {...result,state:'readonly',amount:details.data.unstaked_balance,reportedCanWithdraw:details.data.can_withdraw,withdrawalSupported:false};
+ }
+ // Never classify any other unknown implementation as empty or expose a signing action.
  if(!POOL_CODE_HASHES.includes(view.code_hash))return {...result,state:'unsupported',reason:'implementation'};
  const call=caller(contract,options),details=await call('get_account',{account_id:account},view.block_hash),d=details.data;
  validateDetails(d,account,contract);

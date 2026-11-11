@@ -46,11 +46,13 @@ Independent verification findings are in [VERIFICATION.md](VERIFICATION.md).
 - Verifies the signer, contract, method, amount, deposit, finalized transaction and complete successful receipt chain. A failed transfer receipt cannot display success.
 - Remembers pending requests across reloads and checks confirmation without resubmitting. An uncertain wallet response stays uncertain; a balance change alone does not prove a withdrawal.
 
+Aurora’s balance-only exception: [read-only verification](research/aurora-readonly-2026-11-11/README.md).
+
 Adapter methods, gas limits and rejection cases: [direct-withdrawal verification](verification/direct-withdrawals.md) and [coverage evidence](research/coverage-expansion/README.md).
 
 ## Limits
 
-Coverage is LiNEAR, Meta Pool, rNEAR and supported indexed validator pools. FastNEAR discovery may lag or omit relationships; at most 24 discovered pools are checked. Custom pool code, tokens, bridges and other protocols are not covered. No estimate of missing funds elsewhere,
+Coverage is LiNEAR, Meta Pool, rNEAR and supported indexed validator pools. FastNEAR discovery may lag or omit relationships; at most 24 discovered pools are checked. Aurora’s reviewed custom pool has read-only balance coverage with an official wallet link; direct withdrawal is disabled there. Other custom pool code, tokens, bridges and other protocols are not covered. No estimate of missing funds elsewhere,
 no claims that the owner forgot, and no account-age claim. All accounts and balances are public.
 The public leaderboard combines the three staking protocols and recognized pools from two standard factories. It counts each account once and explicitly excludes unrecognized implementations.
 A view preflight is a snapshot, not a guarantee a future transaction succeeds.
@@ -77,7 +79,7 @@ New-coverage evidence, code provenance, limitations and live reproduction steps 
 
 The Waiting room contains **30,681 unique account IDs** with at least one matured balance above 0.01 NEAR at block **223975859**, 2026-11-10T22:01:36.060Z. The census read 305,908 distinct account IDs across LiNEAR, Meta Pool, rNEAR and **858 recognized validator pools**. Accounts shared across protocols or pools appear once. Each row shows its qualifying sources; ten rows appear per page.
 
-The pool inventory includes all 862 entries in the poolv1.near and pool.near factories: 858 recognized implementations, 4 unsupported versions, and 0 deleted accounts. Pools outside these factories are outside the census. Ledger IDs include contract and lockup accounts and are not a count of people or confirmed currently existing wallets. **110 IDs ending in `.lockup.near` hold 777,029.79408724816839127411321 NEAR** in this table. These rows are labelled Lockup: they require their lockup contract and cannot withdraw directly in FOUND. This suffix classification does not identify every possible contract-controlled account.
+The pool inventory includes all 862 entries in the poolv1.near and pool.near factories: 858 recognized implementations, 4 excluded pools running 2 unrecognized code versions, and 0 deleted accounts. Pools outside these factories are outside the census. Ledger IDs include contract and lockup accounts and are not a count of people or confirmed currently existing wallets. **110 IDs ending in `.lockup.near` hold 777,029.79408724816839127411321 NEAR** in this table. These rows are labelled Lockup: they require their lockup contract and cannot withdraw directly in FOUND. This suffix classification does not identify every possible contract-controlled account.
 
 This is a dated snapshot of matured balances, not proof of abandonment or guaranteed immediate withdrawal. Pool liquidity and current account state are checked when the user scans live. The displayed **10.55M total listed NEAR** sums the table’s balances exactly (10,558,075.187594404327945091284701 NEAR). A protocol’s own balance can represent the same NEAR as its users’ balances, so adding both can count the same money twice. This is a gross listed total, not unique lost assets or confirmed recoveries. K/M values are truncated for display; full exact amounts remain on hover and in account results.
 
