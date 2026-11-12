@@ -4,6 +4,8 @@ Find unfinished LiNEAR, Meta Pool, rNEAR and validator-pool withdrawals on NEAR 
 
 Unstaking does not always finish the job: after the unlock period, the account owner still needs to withdraw. FOUND checks these unfinished withdrawals in one place and requests the exact contract call through the owner’s wallet.
 
+Demo video (48 seconds, with the owner’s real withdrawal): [X post, 12 November 2026](https://x.com/viiiiiiiiiiiid/status/2120914430607471080).
+
 ## Try it: do this, see this
 
 Use **Node.js 24 (recommended), or 22.13+ on the 22.x line**. Run `npm ci` once to install the pinned connector and build tool; this setup needs network access. The checks marked Offline below then need no network.

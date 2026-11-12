@@ -1,6 +1,6 @@
 # FOUND demo
 
-**Final recording in progress.** The owner’s real withdrawal was completed on 12 November 2026 and is recorded in [SUBMISSION.md](../SUBMISSION.md); the final video is not published yet. The earlier 44-second MP4 has been removed from the current repository tree. It showed genuine public-account captures and wallet selection, edited together, with no transaction approval or completed recovery. It predates the expanded protocol/pool UI and combined census. It remains in Git history; history has not been rewritten. Do not present that draft as the current end-to-end withdrawal proof.
+**Final video published 12 November 2026:** https://x.com/viiiiiiiiiiiid/status/2120914430607471080. It is a 48-second edited walkthrough assembled from real captures of the owner’s withdrawal, which is recorded in [SUBMISSION.md](../SUBMISSION.md); the wallet approval happened off-camera. The earlier 44-second MP4 has been removed from the current repository tree. It showed genuine public-account captures and wallet selection, edited together, with no transaction approval or completed recovery. It predates the expanded protocol/pool UI and combined census. It remains in Git history; history has not been rewritten. Do not present that draft as the current end-to-end withdrawal proof.
 
 The original art, soft Faye narration and restrained character animation are retained. The complete draft timing, prompts, assets, provenance, rebuild notes and historical scene counts are preserved in [the dated demo record](../docs/history/2026-11-10-demo.md).
 

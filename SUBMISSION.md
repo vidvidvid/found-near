@@ -7,8 +7,8 @@
 - Recommended primary track: **Open Innovation** (`open`). Unstoppable DeFi (`defi`) is a possible secondary choice, but FOUND does not implement cross-chain settlement or a trading protocol; confirm the final selection.
 - Live app: https://foundyours.xyz/
 - Example: https://foundyours.xyz/?account=ru.near
-- Repository: https://github.com/vidvidvid/found-near — **private until the owner publishes it**.
-- Final demo video and public X post: **pending; the owner’s real withdrawal was completed on 12 November 2026 and the recording is being edited**. The older MP4 has been removed from the current tree; no final video is published.
+- Repository: https://github.com/vidvidvid/found-near — public since 12 November 2026.
+- Final demo video and public X post: https://x.com/viiiiiiiiiiiid/status/2120914430607471080 (published 12 November 2026, video attached). The 48-second video is an edited walkthrough assembled from real captures of the owner’s withdrawal; the wallet approval itself happened off-camera. The older MP4 has been removed from the current tree.
 - Deadline: **14 November 2026, 23:59 UTC**. Planned early publication date: **13 November**; this is a checklist date, not an automated publication job.
 
 Rules checked against [the official handbook](https://nearhackathon.com/HACKATHON.md). Recheck before submitting. A saved submission cannot be edited directly; the organizers do offer a manual [change-request process](https://nearhackathon.com/request-changes). Do not submit the same project twice.
@@ -61,21 +61,20 @@ The older two-protocol/538-account MP4 remains in Git history only; it is not th
 
 ## X post
 
-Chosen by the owner on 11 November 2026 and revised by the owner on 12 November 2026 to open on the census count, with the two-year finding as the supporting line. Attach the final video directly. Publish only after the repository is public and the recorded receipt is genuine. The text is 279 characters with X’s URL counting, inside the 280 limit; recheck the handbook tags before posting.
+Published by the owner’s account on 12 November 2026 with the final video attached: https://x.com/viiiiiiiiiiiid/status/2120914430607471080. The owner revised the 11 November draft to open on the census count and ask the reader to check their own account. The text below is what was posted.
 
 ```text
-30,681 accounts have unstaked NEAR waiting to be withdrawn.
+30,681 accounts have unstaked NEAR still waiting to be withdrawn. Some for 2+ years.
 
-304 of them: same balance at every sampled date for 2 years. 1.8M NEAR.
+Is one of them yours? Type your account and see in 10 seconds. No wallet needed to look.
 
-Check yours in 10 seconds, no wallet needed.
 Built at NEAR HACKATHON
 @NEARProtocol #NEARHackathon
 https://foundyours.xyz/
 https://github.com/vidvidvid/found-near
 ```
 
-The 30,681 figure is the 10 November 2026 census (block 223975859): unique account IDs with a matured, withdrawable balance at that snapshot. It says nothing about how long each balance has waited. The 304 are named accounts from the 100+ NEAR cohort, all within the census, and 1.8M is the rounded 1,829,552.41 gross NEAR in their qualifying balances. The video opens on the two-year finding; the page keeps “100+ NEAR cohort” and “sampled dates” legible beside it. The post must not describe any listed amount as recovered money, and it is not a claim of abandonment.
+The 30,681 figure is the 10 November 2026 census (block 223975859): unique account IDs with a matured, withdrawable balance at that snapshot. It says nothing about how long each balance has waited. “Some for 2+ years” rests on the sampled-history finding: 304 named accounts in the 100+ NEAR cohort showed the same withdrawable balance at every sampled date from 10 Nov 2024 through 10 Nov 2026. The page keeps “100+ NEAR cohort” and “sampled dates” legible beside it. The post must not describe any listed amount as recovered money, and it is not a claim of abandonment.
 
 ## Real recovery evidence
 
@@ -114,13 +113,13 @@ Historical reports that say no owner-signed withdrawal had been sent remain date
 
 The owner publishes and submits; this packet does not send a submission or schedule one.
 
-1. Finish the real-withdrawal take, review the final video and add its public URL here and in README.
-2. On **13 November**, or earlier once ready, make the repo public and keep it public through judging. GitHub description has been updated to the expanded withdrawal workflow.
+1. Done 12 November: real withdrawal completed, final video published with the X post linked above.
+2. Done 12 November: the repo is public. Keep it public through judging. GitHub description has been updated to the expanded withdrawal workflow.
 3. Confirm the final commit passes the fresh-clone checks, then tag it `hackathon-submission`. Keep the live app available through judging (ideally through 25 November).
-4. Publish the X post with the video attached, then add its public URL here.
+4. Done 12 November: X post with the video attached: https://x.com/viiiiiiiiiiiid/status/2120914430607471080
 5. Supply/confirm team lead name, contact email, team size, selected tracks, mainnet payout account, public repo/post links and contact-notice consent. Do not guess these values or commit the private payload.
 6. Review the exact submission payload before the single submission. Record its successful response privately. Corrections go through the organizers’ request-changes process.
 
-**Still required from the owner:** approval of a matured withdrawal in the wallet; final video/X link; submission identity, payout address, track selection and consent. No submission has been sent as part of this preparation.
+**Still required from the owner:** submission identity, payout address, track selection and consent. No submission has been sent as part of this preparation.
 
 The primary recommendation remains Open Innovation. The history data alone does not establish a long-term investment thesis for NEAR; no Investment Thesis entry has been prepared.
