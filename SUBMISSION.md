@@ -8,7 +8,7 @@
 - Live app: https://foundyours.xyz/
 - Example: https://foundyours.xyz/?account=ru.near
 - Repository: https://github.com/vidvidvid/found-near — **private until the owner publishes it**.
-- Final demo video and public X post: **pending the owner’s real withdrawal and recording**. The older MP4 has been removed from the current tree; no final video is published.
+- Final demo video and public X post: **pending; the owner’s real withdrawal was completed on 12 November 2026 and the recording is being edited**. The older MP4 has been removed from the current tree; no final video is published.
 - Deadline: **14 November 2026, 23:59 UTC**. Planned early publication date: **13 November**; this is a checklist date, not an automated publication job.
 
 Rules checked against [the official handbook](https://nearhackathon.com/HACKATHON.md). Recheck before submitting. A saved submission cannot be edited directly; the organizers do offer a manual [change-request process](https://nearhackathon.com/request-changes). Do not submit the same project twice.
@@ -25,7 +25,7 @@ The public waiting room lists 30,681 unique account IDs with qualifying matured 
 In the **100+ NEAR cohort (2,963 accounts)**, **304 named accounts** had at least one balance unchanged and withdrawable at every sampled date from **10 Nov 2024** through **10 Nov 2026**, totalling **1,829,552.41 gross NEAR** in those qualifying balances. Named accounts may be contracts; activity between samples is possible. This is sampled history, not proof of abandonment. [Method, all six buckets and archived evidence](research/dormancy-2026-11-11/README.md).
 <!-- /sampled-history -->
 
-Read-only account links and a JSON scan API make results shareable. A fast offline command reproduces the archived census, while a separate tool can reread the chain. No claim is made that the owners forgot their balances. Real owner-withdrawal evidence remains pending; local simulations are labelled as simulations.
+Read-only account links and a JSON scan API make results shareable. A fast offline command reproduces the archived census, while a separate tool can reread the chain. No claim is made that the owners forgot their balances. One real owner-signed withdrawal through FOUND is archived and can be rechecked offline; local simulations are labelled as simulations.
 
 ## Checks judges can run
 
@@ -75,21 +75,38 @@ https://github.com/vidvidvid/found-near
 
 The video should open on the same finding; the page keeps “100+ NEAR cohort” and “sampled dates” legible beside it. The post must not describe any listed amount as recovered money, and it is not a claim of abandonment.
 
-## Real recovery evidence — pending
+## Real recovery evidence
 
-No real owner-signed withdrawal was executed during QA. The owner’s vidvid.near account has pending balances in meteor.poolv1.near and figment.poolv1.near; final recording waits for a real readiness check. The owner signs in their own wallet; no private keys or recovery phrases are needed by FOUND or the developer.
+One real owner-signed withdrawal was completed through FOUND on 12 November 2026. The owner approved it in their own wallet; no private keys or recovery phrases were needed by FOUND or the developer. It is a single withdrawal from one validator pool, not evidence about LiNEAR, Meta Pool, rNEAR or other pools.
 
-| Field | Status |
+| Field | Record |
 | --- | --- |
 | Owner-provided account | vidvid.near |
-| Protocol / contract | meteor.poolv1.near and backup figment.poolv1.near; still unlocking at last check |
-| Amount and pre-withdrawal block | Pending |
-| Final transaction hash / explorer URL | Pending |
-| Result after recheck | Pending |
+| Protocol / contract | meteor.poolv1.near (validator pool), reviewed code `J1arLz48fgXcGyCPVckFwLnewNH6j1uw79thsvwqGYTY` |
+| Amount | 0.999999000000000000000002 NEAR (`withdraw`, deposit 0, gas 100 TGas) |
+| Final transaction hash / explorer URL | [`3TcvgZqdJ29SGTDkg49n9oNSXH2GyHB8GvR4SMs33mtK`](https://nearblocks.io/txns/3TcvgZqdJ29SGTDkg49n9oNSXH2GyHB8GvR4SMs33mtK) |
+| Block and time | 224220895 · 2026-11-12T13:33:19.659Z |
+| Result | 4 receipts, all successful; transfer receipt `6CvXAQiP8mgUXFS7CkSD2yo1nwo2UW5hwH1wv4WA6HDG` moved the exact amount from meteor.poolv1.near to vidvid.near |
+| Production recovery counter after it | 1 withdrawal, 1 account, 999999000000000000000002 yoctoNEAR |
+| Not yet withdrawn | The owner’s figment.poolv1.near balance is untouched |
 | Permission to publish account and receipt | Granted by the owner, 11 November 2026 |
-| Optional owner quote | Pending; never fabricate one |
+| Optional owner quote | None; never fabricate one |
 
-Once the hash exists, run `npm run verify:tx -- <hash> --account vidvid.near --save`. It reads the transaction from an archival RPC, applies FOUND’s existing exact receipt verifier (not a separate looser implementation), requires the pool’s transfer to the signer, and saves the raw responses to `verification/withdrawals/<hash>.json`. From then on `npm run verify:tx` rechecks that evidence offline and CI runs it on every push. Add its real output and the approved record here and in README. Update all current “no owner-signed withdrawal” statements to match the actual evidence. Historical reports remain dated records.
+Reproduce offline with `npm run verify:tx`. It applies FOUND’s existing exact receipt verifier (not a separate looser implementation) to the archived archival-RPC responses in `verification/withdrawals/3TcvgZqdJ29SGTDkg49n9oNSXH2GyHB8GvR4SMs33mtK.json` and requires the pool’s transfer to the signer; CI runs it on every push. To reread the chain instead: `npm run verify:tx -- 3TcvgZqdJ29SGTDkg49n9oNSXH2GyHB8GvR4SMs33mtK --account vidvid.near`. Output of the saving run on 12 November 2026:
+
+```text
+Withdrawal 3TcvgZqdJ29SGTDkg49n9oNSXH2GyHB8GvR4SMs33mtK
+  signer     vidvid.near
+  contract   meteor.poolv1.near (meteor.poolv1.near) · reviewed code J1arLz48fgXcGyCPVckFwLnewNH6j1uw79thsvwqGYTY
+  call       withdraw {"amount":"999999000000000000000002"} · deposit 0 · gas 100000000000000
+  amount     0.999999000000000000000002 NEAR
+  receipts   4, all successful, every referenced receipt present
+  transfer   6CvXAQiP8mgUXFS7CkSD2yo1nwo2UW5hwH1wv4WA6HDG: meteor.poolv1.near -> vidvid.near, 0.999999000000000000000002 NEAR
+  block      224220895 · 2026-11-12T13:33:19.659Z
+Confirmed by FOUND's receipt verifier against a fresh archival read.
+```
+
+Historical reports that say no owner-signed withdrawal had been sent remain dated records.
 
 ## Publication and submission handoff
 

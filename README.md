@@ -15,14 +15,14 @@ Use **Node.js 24 (recommended), or 22.13+ on the 22.x line**. Run `npm ci` once 
 | Sampled history | `npm run dormancy:verify` | Verifies 2963 accounts, 3703 pairs and six historical dates from the archived RPC evidence | Offline; a few seconds |
 | Contract-code check | `npm run dormancy:code:verify` | `24 months: 304 named; no code 261 (...); code 43 (...); unknown 0 (0).` among six bucket lines | Offline; under a second |
 | Size against total supply | `npm run sizing:figures` | Labelled figures including `A5 gross listed as share of total supply: 0.805%` | Offline; a few seconds |
-| Withdrawal receipt check | `npm run verify:tx` | Verifies every archived withdrawal in `verification/withdrawals/` with the app’s own receipt verifier. Until the first real withdrawal is archived it prints `No archived withdrawal evidence` and exits cleanly. Any transaction: `npm run verify:tx -- <hash> --account <signer>` | Offline for archived evidence; a hash given on the command line needs an archival RPC |
+| Withdrawal receipt check | `npm run verify:tx` | Verifies every archived withdrawal in `verification/withdrawals/` with the app’s own receipt verifier. Ends with `Verified 1 archived withdrawal offline with FOUND's receipt verifier.` for the owner’s 12 November 2026 withdrawal from `meteor.poolv1.near`. Any transaction: `npm run verify:tx -- <hash> --account <signer>` | Offline for archived evidence; a hash given on the command line needs an archival RPC |
 | Read-only scan API | `curl -fsS 'https://foundyours.xyz/api/scan/ru.near'` | JSON with `account`, finalized `height`/`block`, `results` per checked source, `pools` coverage and cache metadata; amounts are yoctoNEAR strings | Network; up to 45 seconds |
 | Live interface | Open [FOUND](https://foundyours.xyz/), enter `ru.near` and press **Find my NEAR**, or use **Try a real account** | A live check across three protocols and indexed validator pools. LiNEAR showed 500.3072 NEAR at verification; balances can change | Network; usually a few seconds; no wallet needed |
 | Optional independent reread | `npm run census:expanded -- --block 223975859 --check` | A new chain reread matches the archived snapshot | Network; several minutes, longer if the provider rate-limits; rate-limited archival RPC access may be required |
 
 A shared link also works: [check ru.near](https://foundyours.xyz/?account=ru.near). These steps scan only; they cannot withdraw from someone else’s account.
 
-Submission text, publication checklist and the pending real-withdrawal recording: [SUBMISSION.md](SUBMISSION.md).
+Submission text, publication checklist and the real-withdrawal record: [SUBMISSION.md](SUBMISSION.md).
 
 ## Run locally and find the source
 
@@ -64,7 +64,7 @@ The public leaderboard combines the three staking protocols and recognized pools
 A view preflight is a snapshot, not a guarantee a future transaction succeeds.
 Scanning needs no wallet. Withdrawing requires the controlling wallet and its approval; FOUND does not hold keys, custody funds, request an access key, or charge a fee. Network gas is paid by the account. Lockup accounts still require their lockup contract.
 
-**No real owner-signed withdrawal was executed during QA.** Transaction construction, rejection cases and confirmation handling are covered by fixtures. Live wallet selection and mainnet balance reads are checked separately. See [verification/direct-withdrawals.md](verification/direct-withdrawals.md). `npm run verify:tx -- <hash> --account <signer>` checks any finalized withdrawal against the same receipt verifier the app uses.
+**One real owner-signed withdrawal has been completed through FOUND.** On 12 November 2026 the owner withdrew 0.999999000000000000000002 NEAR from `meteor.poolv1.near` to `vidvid.near` ([transaction](https://nearblocks.io/txns/3TcvgZqdJ29SGTDkg49n9oNSXH2GyHB8GvR4SMs33mtK), block 224220895), approved in their own wallet. The raw archival responses are in [verification/withdrawals/](verification/withdrawals/) and `npm run verify:tx` rechecks them offline. This is one withdrawal from one pool; LiNEAR, Meta Pool, rNEAR and other pools have not had a real withdrawal through FOUND. Transaction construction, rejection cases and confirmation handling are covered by fixtures. Live wallet selection and mainnet balance reads are checked separately. See [verification/direct-withdrawals.md](verification/direct-withdrawals.md). `npm run verify:tx -- <hash> --account <signer>` checks any finalized withdrawal against the same receipt verifier the app uses.
 
 The page sends the entered public account to FastNEAR’s discovery API and public RPC providers (FastNEAR and Intear) for finalized reads.
 Scanning has no application account database or browsing analytics. A small server stores withdrawal requests and verified public receipts for recovery totals; see below. Connecting loads the NEAR Connect wallet manifest and the selected wallet’s sandboxed integration. The browser remembers wallet selection and pending transaction metadata, not wallet keys. Typography loads from

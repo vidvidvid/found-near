@@ -1,6 +1,6 @@
 # FOUND demo
 
-**Final recording pending a real owner-approved withdrawal.** No real owner-signed withdrawal was sent in QA. The earlier 44-second MP4 has been removed from the current repository tree. It showed genuine public-account captures and wallet selection, edited together, with no transaction approval or completed recovery. It predates the expanded protocol/pool UI and combined census. It remains in Git history; history has not been rewritten. Do not present that draft as the current end-to-end withdrawal proof.
+**Final recording in progress.** The owner’s real withdrawal was completed on 12 November 2026 and is recorded in [SUBMISSION.md](../SUBMISSION.md); the final video is not published yet. The earlier 44-second MP4 has been removed from the current repository tree. It showed genuine public-account captures and wallet selection, edited together, with no transaction approval or completed recovery. It predates the expanded protocol/pool UI and combined census. It remains in Git history; history has not been rewritten. Do not present that draft as the current end-to-end withdrawal proof.
 
 The original art, soft Faye narration and restrained character animation are retained. The complete draft timing, prompts, assets, provenance, rebuild notes and historical scene counts are preserved in [the dated demo record](../docs/history/2026-11-10-demo.md).
 
@@ -15,7 +15,7 @@ Record one continuous screen capture at a readable resolution:
 
 Preserve the uncut take. Any edited narrated version must be identified as an edit. No fabricated wallet, simulated approval, substituted balance, or inferred success is acceptable as the real recording. A new wallet alone is not enough: it needs a withdrawal whose unlock period has finished.
 
-Once an owner-approved transaction exists, record the account/protocol/amount/hash/date and permission to publish in [SUBMISSION.md](../SUBMISSION.md). Add a reproducible receipt command using the app’s existing verifier, and align spoken words and captions with the new scene. Until then, the honest statement remains that no real owner-signed withdrawal was sent in QA.
+The owner-approved transaction, its account/protocol/amount/hash/date and the permission to publish are recorded in [SUBMISSION.md](../SUBMISSION.md), with `npm run verify:tx` as the reproducible receipt command. Align spoken words and captions with that real withdrawal; the wallet approval itself happened off-camera.
 
 The optional waiting-room shot must show the **30,681-account, 3-protocol, 858-pool** snapshot at block **223975859**. **10.55M NEAR** is a gross listed total, not unique lost funds; **110 lockup IDs** require their lockup contracts. The simpler withdrawal take can omit these statistics entirely.
 

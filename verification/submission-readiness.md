@@ -49,4 +49,4 @@ The independent reviewer found no broken local Markdown targets. It found a stal
 
 A redacted Gitleaks scan of full Git history and the working files found no credentials. This is a tool result, not a guarantee that secret detection is exhaustive. `.openai/hosting.json` is retained locally, untracked and excluded from future commits; its existing historical hosting ID is not a credential, and history was not rewritten.
 
-The remaining owner-dependent items are recorded in [SUBMISSION.md](../SUBMISSION.md): a matured withdrawal and approved public receipt, final demo, public repo/X post, final tag, and confirmed submission details/consent. No real owner-signed withdrawal was sent in QA.
+The remaining owner-dependent items are recorded in [SUBMISSION.md](../SUBMISSION.md): final demo, public repo/X post, final tag, and confirmed submission details/consent. The matured withdrawal and approved public receipt were completed on 12 November 2026 and are recorded there.
