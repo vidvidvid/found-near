@@ -4,14 +4,15 @@
 
 - Project: **FOUND**
 - Pitch: **Find the NEAR you left behind.**
-- Recommended primary track: **Open Innovation** (`open`). Unstoppable DeFi (`defi`) is a possible secondary choice, but FOUND does not implement cross-chain settlement or a trading protocol; confirm the final selection.
+- Track submitted: **Open Innovation** (`open`) only. Unstoppable DeFi (`defi`) was considered and left out, because FOUND does not implement cross-chain settlement or a trading protocol.
 - Live app: https://foundyours.xyz/
 - Example: https://foundyours.xyz/?account=ru.near
 - Repository: https://github.com/vidvidvid/found-near — public since 12 November 2026.
 - Final demo video and public X post: https://x.com/viiiiiiiiiiiid/status/2120914430607471080 (published 12 November 2026, video attached). The 48-second video is an edited walkthrough assembled from real captures of the owner’s withdrawal; the wallet approval itself happened off-camera. The older MP4 has been removed from the current tree.
-- Deadline: **14 November 2026, 23:59 UTC**. Planned early publication date: **13 November**; this is a checklist date, not an automated publication job.
+- Deadline: **14 November 2026, 23:59 UTC**.
+- **Submitted 12 November 2026, 19:14 UTC.** The organizers' endpoint answered `201` (saved). The submitted commit is tagged [`hackathon-submission`](https://github.com/vidvidvid/found-near/tree/hackathon-submission).
 
-Rules checked against [the official handbook](https://nearhackathon.com/HACKATHON.md). Recheck before submitting. A saved submission cannot be edited directly; the organizers do offer a manual [change-request process](https://nearhackathon.com/request-changes). Do not submit the same project twice.
+Rules checked against [the official handbook](https://nearhackathon.com/HACKATHON.md). The submission is saved and cannot be edited directly; corrections go through the organizers' manual [change-request process](https://nearhackathon.com/request-changes). Do not submit the same project again.
 
 ## Project description
 
@@ -111,15 +112,15 @@ Historical reports that say no owner-signed withdrawal had been sent remain date
 
 ## Publication and submission handoff
 
-The owner publishes and submits; this packet does not send a submission or schedule one.
+All six steps are done. The record is kept so the order of events can be checked.
 
 1. Done 12 November: real withdrawal completed, final video published with the X post linked above.
 2. Done 12 November: the repo is public. Keep it public through judging. GitHub description has been updated to the expanded withdrawal workflow.
-3. Confirm the final commit passes the fresh-clone checks, then tag it `hackathon-submission`. Keep the live app available through judging (ideally through 25 November).
+3. Done 12 November: a fresh clone of the public repo passed the tests and offline verifiers, and commit `b44c4b3` is tagged `hackathon-submission`. Still to do: keep the live app available through judging (ideally through 25 November).
 4. Done 12 November: X post with the video attached: https://x.com/viiiiiiiiiiiid/status/2120914430607471080
-5. Supply/confirm team lead name, contact email, team size, selected tracks, mainnet payout account, public repo/post links and contact-notice consent. Do not guess these values or commit the private payload.
-6. Review the exact submission payload before the single submission. Record its successful response privately. Corrections go through the organizers’ request-changes process.
+5. Done 12 November: the owner confirmed team lead name, contact email, team size, track, mainnet payout account, repo and post links, and agreed to the contact notice. The private payload is not committed.
+6. Done 12 November, 19:14 UTC: the owner reviewed the values, and the single submission was sent and saved (`201`). Corrections go through the organizers’ request-changes process.
 
-**Still required from the owner:** submission identity, payout address, track selection and consent. No submission has been sent as part of this preparation.
+**Still required from the owner:** nothing for the submission. Keep the repo public and the live app up through judging.
 
-The primary recommendation remains Open Innovation. The history data alone does not establish a long-term investment thesis for NEAR; no Investment Thesis entry has been prepared.
+The entry is in Open Innovation. The history data alone does not establish a long-term investment thesis for NEAR; no Investment Thesis entry has been prepared.
