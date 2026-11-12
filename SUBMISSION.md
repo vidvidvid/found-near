@@ -61,19 +61,21 @@ The older two-protocol/538-account MP4 remains in Git history only; it is not th
 
 ## X post
 
-Chosen by the owner on 11 November 2026. Attach the final video directly. Publish only after the repository is public and the recorded receipt is genuine. The text is 224 characters with X’s URL counting, inside the 280 limit; recheck the handbook tags before posting.
+Chosen by the owner on 11 November 2026 and revised by the owner on 12 November 2026 to open on the census count, with the two-year finding as the supporting line. Attach the final video directly. Publish only after the repository is public and the recorded receipt is genuine. The text is 279 characters with X’s URL counting, inside the 280 limit; recheck the handbook tags before posting.
 
 ```text
-304 named NEAR accounts. Same withdrawable balances at every sampled date over 2 years.
+30,681 accounts have unstaked NEAR waiting to be withdrawn.
 
-FOUND helps finish the withdrawal.
+304 of them: same balance at every sampled date for 2 years. 1.8M NEAR.
+
+Check yours in 10 seconds, no wallet needed.
 Built at NEAR HACKATHON
 @NEARProtocol #NEARHackathon
 https://foundyours.xyz/
 https://github.com/vidvidvid/found-near
 ```
 
-The video should open on the same finding; the page keeps “100+ NEAR cohort” and “sampled dates” legible beside it. The post must not describe any listed amount as recovered money, and it is not a claim of abandonment.
+The 30,681 figure is the 10 November 2026 census (block 223975859): unique account IDs with a matured, withdrawable balance at that snapshot. It says nothing about how long each balance has waited. The 304 are named accounts from the 100+ NEAR cohort, all within the census, and 1.8M is the rounded 1,829,552.41 gross NEAR in their qualifying balances. The video opens on the two-year finding; the page keeps “100+ NEAR cohort” and “sampled dates” legible beside it. The post must not describe any listed amount as recovered money, and it is not a claim of abandonment.
 
 ## Real recovery evidence
 
